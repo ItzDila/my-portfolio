@@ -18,7 +18,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${geistMono.variable} font-mono antialiased bg-white text-neutral-900`}>
+      <body className={`${geistMono.variable} font-mono antialiased bg-white text-neutral-950`}>
         <Header />
         <main className="min-h-screen">{children}</main>
       </body>

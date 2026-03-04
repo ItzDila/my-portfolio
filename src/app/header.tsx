@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
 import { Menu, X, ChevronDown } from "lucide-react";
+import Image from "next/image";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -201,6 +202,14 @@ export default function Header() {
                         </li>
                         <li>
                           <NavigationMenuLink
+                            href="/about/experiences"
+                            className="dropdown-item block text-sm font-medium text-white hover:text-white/80 transition-all duration-200"
+                          >
+                            Experiences
+                          </NavigationMenuLink>
+                        </li>
+                        <li>
+                          <NavigationMenuLink
                             href="/contact"
                             className="dropdown-item block text-sm font-medium text-white hover:text-white/80 transition-all duration-200"
                           >
@@ -306,6 +315,7 @@ export default function Header() {
               {openSection === "About" && (
                 <div className="accordion-content ml-3 mb-2 flex flex-col border-l border-white/20 pl-3">
                   <a href="/about" className="py-2 text-sm text-white/80 hover:text-white transition-colors" onClick={() => setMobileOpen(false)}>About Me</a>
+                  <a href="/about/experiences" className="py-2 text-sm text-white/80 hover:text-white transition-colors" onClick={() => setMobileOpen(false)}>Experience</a>
                   <a href="/contact" className="py-2 text-sm text-white/80 hover:text-white transition-colors" onClick={() => setMobileOpen(false)}>Contact</a>
                 </div>
               )}

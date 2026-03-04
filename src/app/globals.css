@@ -125,3 +125,43 @@
     @apply bg-background text-foreground;
   }
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  --page-x: clamp(1rem, 4vw, 2rem);
+  --page-y: clamp(1rem, 4vw, 2.5rem);
+}
+
+.page-container {
+  width: min(1200px, 100% - (var(--page-x) * 2));
+  margin-inline: auto;
+  padding-block: var(--page-y);
+}
+
+@media (max-width: 640px) {
+  h1 {
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    line-height: 1.6;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
