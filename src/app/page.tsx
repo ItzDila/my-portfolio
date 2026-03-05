@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -69,6 +69,22 @@ export default function Home() {
           box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5) !important;
           transform: translateY(-2px);
         }
+
+        @font-face {
+          font-family: "Momo Signature";
+          src: url("/fonts/MomoSignature.ttf") format("truetype");
+          font-weight: 400;
+          font-style: normal;
+          font-display: swap;
+        }
+
+        .momo-signature {
+          font-family: "Momo Signature", cursive;
+        }
+
+        .alex-brush {
+          font-family: var(--font-alex-brush), cursive;
+        }
       `}</style>
 
       <LiveBackground />
@@ -88,7 +104,7 @@ export default function Home() {
             <div className="flex flex-col gap-4 max-w-4xl">
               <h1 className="title-animate text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight drop-shadow-2xl">
                 <span className="text-white">Hey Guys, <br></br>I'm </span><br></br>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-yellow-300 to-red-500 animate-pulse text-outline-white ">
+                <span className="alex-brush text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-yellow-300 to-red-500 animate-pulse text-outline-white ">
                   Timesh Dillon
                 </span>
               </h1>
@@ -113,7 +129,7 @@ export default function Home() {
 
             {/* Stats */}
             <div className={`stats-animate flex flex-wrap gap-8 justify-center mt-8 glassmorphic px-10 py-6 rounded-2xl ${isScrolled ? 'bg-black/20 backdrop-blur-sm' : ''}`}>
-              {[
+              { [
                 { value: "7+", label: "Years Experience" },
                 { value: "40+", label: "Projects Done" },
                 { value: "30+", label: "Happy Clients" },
@@ -139,7 +155,7 @@ export default function Home() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto w-full">
-            {[
+            { [
               {
                 title: "Who I Am",
                 desc: "A visual storyteller specializing in graphic design and video editing, with a growing expertise in building smart digital solutions.",
@@ -186,7 +202,7 @@ export default function Home() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
+            { [
               {
                 title: "Portfolio",
                 desc: "Explore a curated selection of my latest graphic design, video editing, and digital creative projects crafted for real brands and clients.",
@@ -245,7 +261,7 @@ export default function Home() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
+            { [
               {
                 title: "Graphic Design",
                 desc: "Crafting compelling brand identities, marketing creatives, and digital visuals that capture attention and communicate with clarity.",

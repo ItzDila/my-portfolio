@@ -1,11 +1,47 @@
 import type { Metadata } from "next";
-import { Geist_Mono } from "next/font/google";
+import React from "react";
+import {
+  Geist_Mono,
+  Geist,
+  Inter,
+  Source_Code_Pro,
+  Exile,
+  Alex_Brush,
+} from "next/font/google";
 import "./globals.css";
 import Header from "./header";
+import ChunkErrorHandler from "@/components/ChunkErrorHandler";
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const geist = Geist({
+  variable: "--font-geist",
+  subsets: ["latin"],
+});
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+});
+
+const sourceCodePro = Source_Code_Pro({
+  variable: "--font-source-code-pro",
+  subsets: ["latin"],
+});
+
+const exile = Exile({
+  variable: "--font-exile",
+  subsets: ["latin"],
+  weight: "400",
+});
+
+const alexBrush = Alex_Brush({
+  variable: "--font-alex-brush",
+  subsets: ["latin"],
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -18,7 +54,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${geistMono.variable} font-mono antialiased bg-white text-neutral-950`}>
+      <body
+        className={`${geistMono.variable} ${geist.variable} ${inter.variable} ${sourceCodePro.variable} ${exile.variable} ${alexBrush.variable} font-mono antialiased bg-black text-white`}
+      >
+        <ChunkErrorHandler />
         <Header />
         <main className="min-h-screen">{children}</main>
       </body>
