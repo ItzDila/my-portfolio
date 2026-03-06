@@ -3,12 +3,12 @@
 import { useEffect, useRef } from "react";
 
 export default function LiveBackground() {
-  const glowRef = useRef(null);
+  const glowRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (window.matchMedia("(pointer: coarse)").matches) return;
 
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       if (glowRef.current) {
         glowRef.current.style.setProperty("--x", `${e.clientX - 150}px`);
         glowRef.current.style.setProperty("--y", `${e.clientY - 150}px`);

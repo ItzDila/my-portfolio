@@ -186,7 +186,7 @@ export default function Header() {
                 {/* Projects Dropdown */}
                 <NavigationMenuItem className="nav-item">
                   <NavigationMenuTrigger className="nav-link-glow px-4 py-2 text-sm font-medium cursor-pointer drop-shadow-sm bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent text-white data-[state=open]:text-white">
-                    Projects
+                    View My Work
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <div className="w-[340px] bg-black/80 backdrop-blur-2xl rounded-xl shadow-2xl border border-white/10 mt-2">

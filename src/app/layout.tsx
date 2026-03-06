@@ -5,7 +5,6 @@ import {
   Geist,
   Inter,
   Source_Code_Pro,
-  Exile,
   Alex_Brush,
 } from "next/font/google";
 import "./globals.css";
@@ -32,12 +31,6 @@ const sourceCodePro = Source_Code_Pro({
   subsets: ["latin"],
 });
 
-const exile = Exile({
-  variable: "--font-exile",
-  subsets: ["latin"],
-  weight: "400",
-});
-
 const alexBrush = Alex_Brush({
   variable: "--font-alex-brush",
   subsets: ["latin"],
@@ -55,7 +48,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${geistMono.variable} ${geist.variable} ${inter.variable} ${sourceCodePro.variable} ${exile.variable} ${alexBrush.variable} font-mono antialiased bg-black text-white`}
+        className={`${geistMono.variable} ${geist.variable} ${inter.variable} ${sourceCodePro.variable} ${alexBrush.variable} font-mono antialiased bg-black text-white`}
       >
         <ChunkErrorHandler />
         <Header />
