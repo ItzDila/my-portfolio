@@ -10,6 +10,7 @@ import {
 import "./globals.css";
 import Header from "./header";
 import ChunkErrorHandler from "@/components/ChunkErrorHandler";
+import AppFooter from "@/components/AppFooter";
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -53,6 +54,7 @@ export default function RootLayout({
         <ChunkErrorHandler />
         <Header />
         <main className="min-h-screen">{children}</main>
+        <AppFooter />
       </body>
     </html>
   );

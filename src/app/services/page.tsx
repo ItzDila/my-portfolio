@@ -17,8 +17,10 @@ import {
   CheckCircle2,
   ArrowRight,
   Sparkles,
+  Zap,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 export default function Services() {
   const [isMounted, setIsMounted] = useState(false);
@@ -109,9 +111,17 @@ export default function Services() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <Badge className="mb-4 bg-white/10 text-white border border-white/20 hover:bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full shadow-lg">
-            ✦ Let's Work Together
-          </Badge>
+          {/* Grouped badges for better spacing and alignment */}
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-3 mb-8">
+            <Badge className="bg-white/10 text-white border border-white/20 hover:bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full shadow-lg">
+              ✦ Let's Work Together
+            </Badge>
+
+            <Badge className="bg-amber-500/20 text-amber-200 border border-amber-500/30 px-4 py-1.5 rounded-full shadow-lg">
+              🚀 Priority Client Focus
+            </Badge>
+          </div>
+
           <h1 className="flex flex-col gap-y-0 title-animate text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight drop-shadow-2xl mb-6">
             <span className="text-white">
               Services <span className="text-6xl text-white/50">&</span>
@@ -121,9 +131,12 @@ export default function Services() {
               Pricing
             </span>
           </h1>
+
           <p className="text-neutral-300 text-lg max-w-2xl mx-auto drop-shadow-sm">
             Professional design, editing, and development services to elevate
-            your digital presence. Choose a package that fits your needs.
+            your digital presence. Choose a package that fits your needs. I
+            prioritize your project and focus on creating visually appealing,
+            client-centered solutions that make your brand stand out and look its best.
           </p>
         </motion.div>
 
@@ -148,10 +161,8 @@ export default function Services() {
                     : "border-white/10 hover:border-white/30"
                 }`}
               >
-                {/* Subtle gradient hover effect inside the card */}
                 <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-                {/* Popular Badge */}
                 {service.popular && (
                   <div className="absolute top-0 right-0 bg-gradient-to-r from-amber-600 to-yellow-500 text-white text-xs font-bold px-4 py-1.5 rounded-bl-xl z-20 flex items-center gap-1 shadow-lg">
                     <Sparkles className="w-3 h-3" /> Most Popular
@@ -198,9 +209,7 @@ export default function Services() {
                       <div key={i} className="flex items-start gap-3">
                         <CheckCircle2
                           className={`w-5 h-5 shrink-0 ${
-                            service.popular
-                              ? "text-amber-400"
-                              : "text-neutral-400"
+                            service.popular ? "text-amber-400" : "text-neutral-400"
                           }`}
                         />
                         <span className="text-sm text-neutral-200">
@@ -210,7 +219,8 @@ export default function Services() {
                     ))}
                   </div>
 
-                  <button
+                  <Link
+                    href="/contact"
                     className={`mt-auto w-full py-3 px-4 rounded-xl flex items-center justify-center gap-2 font-semibold transition-all duration-300 ${
                       service.popular
                         ? "bg-gradient-to-r from-amber-600 to-yellow-500 hover:from-amber-500 hover:to-yellow-400 text-black shadow-lg shadow-amber-500/20"
@@ -219,11 +229,56 @@ export default function Services() {
                   >
                     Get Started
                     <ArrowRight className="w-4 h-4" />
-                  </button>
+                  </Link>
                 </CardContent>
               </Card>
             </motion.div>
           ))}
+        </motion.div>
+
+        {/* New "Impress the Client" Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="mt-24 text-center max-w-4xl mx-auto p-1 relative"
+        >
+          {/* Background glow effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 via-red-500/20 to-amber-500/20 blur-3xl rounded-full opacity-50 pointer-events-none" />
+
+          <div className="relative p-10 rounded-3xl border border-white/10 bg-black/40 backdrop-blur-xl shadow-2xl overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-500 via-yellow-400 to-red-500" />
+
+            <div className="flex justify-center mb-6">
+              <div className="p-4 rounded-full bg-white/5 border border-white/10 text-amber-400 shadow-inner">
+                <Zap className="w-8 h-8" />
+              </div>
+            </div>
+
+            <h3 className="text-3xl md:text-4xl font-extrabold text-white mb-4 tracking-tight drop-shadow-md">
+              Need Something <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-red-500">Custom?</span>
+            </h3>
+
+            <p className="text-neutral-300 text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
+              Every brand is unique, and sometimes off-the-shelf packages don't cut it. I specialize in delivering pixel-perfect designs, immersive video content, and scalable web applications engineered to elevate your business above the competition. Let's build exactly what you envision.
+            </p>
+
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+              <Link
+                href="/projects" // Or whatever your portfolio route is
+                className="w-full sm:w-auto px-8 py-3.5 rounded-xl font-semibold text-white border border-white/20 hover:bg-white/10 transition-colors backdrop-blur-sm"
+              >
+                View My Work
+              </Link>
+              <Link
+                href="/contact"
+                className="w-full sm:w-auto px-8 py-3.5 rounded-xl font-semibold bg-white text-black hover:bg-neutral-200 transition-colors shadow-lg hover:shadow-xl"
+              >
+                Book a Free Consultation
+              </Link>
+            </div>
+          </div>
         </motion.div>
       </div>
     </>

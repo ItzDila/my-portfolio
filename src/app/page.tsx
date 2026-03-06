@@ -47,6 +47,49 @@ export default function Home() {
           to { opacity: 1; transform: translateY(0); }
         }
 
+        /* --- NEW PREMIUM TEXT ANIMATIONS --- */
+
+        /* 1. Gradient Flow (Shimmer) */
+        @keyframes gradient-flow {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .animate-gradient-flow {
+          background-size: 200% auto;
+          animation: gradient-flow 4s ease infinite;
+        }
+
+        /* 2. Neon Glow Pulse */
+        @keyframes neon-pulse {
+          0%, 100% { filter: drop-shadow(0 0 5px rgba(252, 211, 77, 0.3)); }
+          50% { filter: drop-shadow(0 0 20px rgba(0, 238, 255, 0.7)); }
+        }
+        .animate-neon-pulse {
+          animation: neon-pulse 5.5s ease-in-out infinite;
+          display: inline-block;
+        }
+
+        /* 3. Float (Hover effect) */
+        @keyframes float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-8px); }
+        }
+        .animate-float {
+          animation: float 4s ease-in-out infinite;
+          display: inline-block;
+        }
+
+        /* 4. Color Cycle (Hue Rotate) */
+        @keyframes hue-cycle {
+          0% { filter: hue-rotate(0deg); }
+          100% { filter: hue-rotate(360deg); }
+        }
+        .animate-hue-cycle {
+          animation: hue-cycle 6s linear infinite;
+        }
+        /* ----------------------------------- */
+
         /* Component Classes */
         .hero-content { animation: fadeInUp 0.8s ease-out; }
         .badge-animate { animation: fadeInUp 0.8s ease-out 0.1s both; }
@@ -101,22 +144,26 @@ export default function Home() {
         {/* Hero Section */}
         <section className="relative flex flex-col items-center justify-center text-center py-32 gap-8 overflow-hidden min-h-screen flex-center">
           <div className="hero-content flex flex-col items-center gap-6 px-4 relative z-10">
-            {/* Added a subtle dark gradient behind the hero text to ensure it's always readable */}
             <div className="absolute inset-0 bg-radial-gradient from-black/20 to-transparent -z-10 blur-3xl rounded-full" />
 
-            <Badge className="badge-animate glassmorphic text-neutral-100 px-5 py-2 rounded-full">
+            <Badge className="badge-animate animate-float glassmorphic text-neutral-100 px-5 py-2 rounded-full">
               ✦ Turning Ideas into Visual Reality
             </Badge>
 
             <div className="flex flex-col gap-4 max-w-4xl">
               <h1 className="title-animate text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight drop-shadow-2xl">
                 <span className="text-white">
-                  Hello👋🏻 <br></br>Welcome to the{" "}
+                  Hello👋🏻 <br />Welcome to the{" "}
                 </span>
-                <br></br>
-                <span className="alex-brush text-transparent bg-clip-text bg-linear-to-r from-amber-600 via-yellow-300 to-red-500 animate-pulse text-outline-white ">
-                  Timesh Dillon's
-                </span><br></br>
+                <br />
+
+                <span className="animate-neon-pulse">
+                  <span className="alex-brush text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-yellow-300 to-red-500 animate-gradient-flow animate-hue-cycle [-webkit-text-stroke:1px_rgba(255,255,255,0.2)]">
+                    Timesh Dillon&apos;s
+                  </span>
+                </span>
+                <br />
+
                 <span className="text-white">Workspace </span>
               </h1>
               <p className="description-animate text-lg md:text-xl text-neutral-200 max-w-2xl mx-auto leading-relaxed drop-shadow-md">
@@ -153,7 +200,9 @@ export default function Home() {
 
             {/* Stats */}
             <div
-              className={`stats-animate flex flex-wrap gap-8 justify-center mt-8 glassmorphic px-10 py-6 rounded-2xl ${isScrolled ? "bg-black/20 backdrop-blur-sm" : ""}`}
+              className={`stats-animate flex flex-wrap gap-8 justify-center mt-8 glassmorphic px-10 py-6 rounded-2xl ${
+                isScrolled ? "bg-black/20 backdrop-blur-sm" : ""
+              }`}
             >
               {[
                 { value: "7+", label: "Years Experience" },
@@ -175,7 +224,9 @@ export default function Home() {
 
         {/* About Section */}
         <section
-          className={`flex flex-col gap-10 py-24 px-4 transition-all duration-300 ${isScrolled ? "bg-black/20 backdrop-blur-sm" : ""}`}
+          className={`flex flex-col gap-10 py-24 px-4 transition-all duration-300 ${
+            isScrolled ? "bg-black/20 backdrop-blur-sm" : ""
+          }`}
           id="about"
         >
           <div className="section-animate flex flex-col gap-2 text-center">
@@ -232,7 +283,9 @@ export default function Home() {
 
         {/* Graphics Section */}
         <section
-          className={`w-full transition-all duration-300 ${isScrolled ? "bg-black/20 backdrop-blur-sm" : ""}`}
+          className={`w-full transition-all duration-300 ${
+            isScrolled ? "bg-black/20 backdrop-blur-sm" : ""
+          }`}
           id="graphics"
         >
           <div className="flex flex-col gap-10 py-24 px-4 max-w-6xl mx-auto w-full">
@@ -306,7 +359,9 @@ export default function Home() {
 
         {/* Services Section */}
         <section
-          className={`w-full transition-all duration-300 ${isScrolled ? "bg-black/20 backdrop-blur-sm" : ""}`}
+          className={`w-full transition-all duration-300 ${
+            isScrolled ? "bg-black/20 backdrop-blur-sm" : ""
+          }`}
           id="services"
         >
           <div className="flex flex-col gap-10 py-24 px-4 max-w-6xl mx-auto w-full">
@@ -371,15 +426,17 @@ export default function Home() {
 
         {/* CTA Section */}
         <section
-          className={`relative flex flex-col items-center justify-center text-center py-28 gap-6 overflow-hidden transition-all duration-300 ${isScrolled ? "bg-black/20 backdrop-blur-sm" : ""}`}
+          className={`relative flex flex-col items-center justify-center text-center py-28 gap-6 overflow-hidden transition-all duration-300 ${
+            isScrolled ? "bg-black/20 backdrop-blur-sm" : ""
+          }`}
         >
-          <div className="absolute inset-0 bg-linear-to-b from-neutral-900/0 via-black/20 to-black/50 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-neutral-900/0 via-black/20 to-black/50 pointer-events-none" />
           <div className="section-animate flex flex-col items-center gap-6 z-10 glassmorphic p-12 rounded-3xl mx-4 max-w-3xl">
             <h2 className="text-4xl font-bold text-white drop-shadow-md">
               Ready to work <span className="text-orange-600">together?</span>
             </h2>
             <p className="text-neutral-200 max-w-md text-sm">
-              Let's build something amazing. Reach out and let's discuss your
+              Let&apos;s build something amazing. Reach out and let&apos;s discuss your
               project.
             </p>
             <Button

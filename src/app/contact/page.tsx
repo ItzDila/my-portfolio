@@ -146,7 +146,7 @@ export default function Contact() {
                 </h2>
                 <p className="text-neutral-400 font-medium mb-6 flex items-center gap-2">
                   <Briefcase className="w-4 h-4" />
-                  Graphic • Video Designer & Developer
+                  Designer & Developer
                 </p>
 
                 <div className="w-full h-px bg-white/10 mb-6" />
@@ -162,7 +162,7 @@ export default function Contact() {
                     <div className="p-2 rounded-lg bg-white/10 text-white">
                       <MapPin className="w-5 h-5" />
                     </div>
-                    <span className="font-medium text-sm">Colombo, Sri Lanka</span>
+                    <span className="font-medium text-sm">Rajagiriya, Colombo, Sri Lanka</span>
                   </div>
                 </div>
               </CardContent>

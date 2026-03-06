@@ -101,8 +101,10 @@ export default function About() {
               </h1>
               <p className="description-animate text-lg md:text-xl text-neutral-200 max-w-2xl mx-auto leading-relaxed drop-shadow-md">
                 I'm{" "}
-                <span className="text-white font-semibold">Timesh Dillon</span>{" "}
-                — a creative professional who lives at the intersection of
+                <span className="text-white font-semibold">
+                  Graphic Designer, Video Editor & Web Developer
+                </span>{" "}
+                I am creative professional who lives at the intersection of
                 design, motion, and code. I believe every pixel has a purpose.
               </p>
             </div>
@@ -156,7 +158,7 @@ export default function About() {
             {[
               {
                 title: "Who I Am",
-                desc: "I'm a self-driven creative based in Sri Lanka. I started as a graphic designer fascinated by the power of visuals to communicate, and that curiosity never left me.",
+                desc: "I'm a self-driven creative based in Sri Lanka. I started as a graphic designer fascinated by the power of visuals to communicate, and that curiosity never left me. Outside of design and development, I'm also passionate about cars & I love automotive culture, performance machines, and the design engineering behind them.",
                 icon: <Star className="w-5 h-5 text-white" />,
               },
               {
