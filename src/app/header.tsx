@@ -11,13 +11,12 @@ import {
   NavigationMenuContent,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, FileText } from "lucide-react";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const lastScrollY = useRef(0);
-  const [isMounted, setIsMounted] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openSection, setOpenSection] = useState<string | null>(null);
 
@@ -25,7 +24,6 @@ export default function Header() {
     setOpenSection((prev) => (prev === label ? null : label));
 
   useEffect(() => {
-    setIsMounted(true);
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
@@ -45,18 +43,48 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [mobileOpen]);
 
-  if (!isMounted) return null;
-
   const springTransition: Transition = {
     type: "spring",
-    stiffness: 400,
-    damping: 35,
+    stiffness: 280,
+    damping: 30,
     mass: 1,
   };
 
   return (
     <>
       <style>{`
+        @keyframes headerGlowPulse {
+          0%, 100% {
+            opacity: 0.35;
+            box-shadow:
+              0 0 0 1px rgba(255, 255, 255, 0.12),
+              0 0 16px rgba(56, 189, 248, 0.16),
+              0 0 26px rgba(251, 191, 36, 0.1);
+          }
+          50% {
+            opacity: 0.82;
+            box-shadow:
+              0 0 0 1px rgba(255, 255, 255, 0.2),
+              0 0 22px rgba(56, 189, 248, 0.28),
+              0 0 34px rgba(251, 191, 36, 0.16);
+          }
+        }
+
+        .header-shell {
+          position: relative;
+          isolation: isolate;
+        }
+
+        .header-shell::after {
+          content: "";
+          position: absolute;
+          inset: -1px;
+          border-radius: inherit;
+          pointer-events: none;
+          animation: headerGlowPulse 4.8s ease-in-out infinite;
+          z-index: -1;
+        }
+
         /* Smooth glowing hover effect */
         .nav-link-glow {
           position: relative;
@@ -125,7 +153,7 @@ export default function Header() {
           border: "1px solid rgba(255, 255, 255, 0.15)",
         }}
         transition={springTransition}
-        className="fixed z-50 left-1/2 -translate-x-1/2 shadow-2xl max-md:overflow-hidden"
+        className="header-shell fixed z-50 left-1/2 -translate-x-1/2 shadow-2xl max-md:overflow-hidden"
       >
         <div
           className={cn(
@@ -161,7 +189,7 @@ export default function Header() {
                     About
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <div className="w-[280px] bg-black/80 backdrop-blur-2xl rounded-xl shadow-2xl border border-white/10 mt-2">
+                    <div className="w-70 bg-black/80 backdrop-blur-2xl rounded-xl shadow-2xl border border-white/10 mt-2">
                       <ul className="grid gap-3 p-5">
                         <li>
                           <NavigationMenuLink href="/about" className="dropdown-item block text-sm font-medium text-white">
@@ -189,7 +217,7 @@ export default function Header() {
                     View My Work
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <div className="w-[340px] bg-black/80 backdrop-blur-2xl rounded-xl shadow-2xl border border-white/10 mt-2">
+                    <div className="w-85 bg-black/80 backdrop-blur-2xl rounded-xl shadow-2xl border border-white/10 mt-2">
                       <ul className="grid gap-4 p-5">
                         <li>
                           <NavigationMenuLink href="/projects/university" className="dropdown-item block text-sm font-medium text-white">
@@ -198,13 +226,13 @@ export default function Header() {
                           </NavigationMenuLink>
                         </li>
                         <li>
-                          <NavigationMenuLink href="/projects/video" className="dropdown-item block text-sm font-medium text-white">
+                          <NavigationMenuLink href="/projects/videos" className="dropdown-item block text-sm font-medium text-white">
                             Video Edits
                             <p className="text-xs text-neutral-300 font-normal mt-1">Motion & video production</p>
                           </NavigationMenuLink>
                         </li>
                         <li>
-                          <NavigationMenuLink href="/projects/design" className="dropdown-item block text-sm font-medium text-white">
+                          <NavigationMenuLink href="/projects/posts" className="dropdown-item block text-sm font-medium text-white">
                             Post Designs
                             <p className="text-xs text-neutral-300 font-normal mt-1">Social media & graphics</p>
                           </NavigationMenuLink>
@@ -215,6 +243,15 @@ export default function Header() {
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
+
+            <a
+              href="/cv.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ml-4 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm font-medium text-white transition-all duration-300 hover:border-white/50 hover:bg-white/20"
+            >
+              <FileText className="h-4 w-4" /> Resume
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -250,6 +287,16 @@ export default function Header() {
                   onClick={() => setMobileOpen(false)}
                 >
                   Home
+                </a>
+
+                <a
+                  href="/cv.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 py-3 text-sm font-medium text-white hover:text-white/70 border-b border-white/10 transition-colors nav-link-glow"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  <FileText className="h-4 w-4" /> Resume
                 </a>
 
                 <div>

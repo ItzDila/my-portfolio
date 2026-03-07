@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -20,23 +21,41 @@ import {
   Star,
   Mail,
   Video,
+  Sparkles,
 } from "lucide-react";
 import LiveBackground from "@/components/LiveBackground";
+import tpslImage from "@/assets/tpsl.jpg";
+import trvlpediaImage from "@/assets/Ultimate-car-care-Updated.png";
+import axelaImage from "@/assets/Axela Post1.png";
+import hpImage from "@/assets/HP 470 G7 Notebook 2.png";
+import borderlineImage from "@/assets/New Year post.png";
+import brakePostImage from "@/assets/Post 1.png";
+
+const bestWorks = [
+  tpslImage,
+  trvlpediaImage,
+  axelaImage,
+  hpImage,
+  borderlineImage,
+  brakePostImage,
+];
 
 export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true);
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      const scrolled = window.scrollY > 50;
+      setIsScrolled((prev) => (prev === scrolled ? prev : scrolled));
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
-  if (!isMounted) return null;
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <>
@@ -47,9 +66,7 @@ export default function Home() {
           to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- NEW PREMIUM TEXT ANIMATIONS --- */
-
-        /* 1. Gradient Flow (Shimmer) */
+        /* --- PREMIUM TEXT ANIMATIONS --- */
         @keyframes gradient-flow {
           0% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
@@ -60,7 +77,6 @@ export default function Home() {
           animation: gradient-flow 4s ease infinite;
         }
 
-        /* 2. Neon Glow Pulse */
         @keyframes neon-pulse {
           0%, 100% { filter: drop-shadow(0 0 5px rgba(252, 211, 77, 0.3)); }
           50% { filter: drop-shadow(0 0 20px rgba(0, 238, 255, 0.7)); }
@@ -70,7 +86,6 @@ export default function Home() {
           display: inline-block;
         }
 
-        /* 3. Float (Hover effect) */
         @keyframes float {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-8px); }
@@ -80,7 +95,6 @@ export default function Home() {
           display: inline-block;
         }
 
-        /* 4. Color Cycle (Hue Rotate) */
         @keyframes hue-cycle {
           0% { filter: hue-rotate(0deg); }
           100% { filter: hue-rotate(360deg); }
@@ -88,7 +102,19 @@ export default function Home() {
         .animate-hue-cycle {
           animation: hue-cycle 6s linear infinite;
         }
-        /* ----------------------------------- */
+
+        /* Infinite Marquee Scroll */
+        @keyframes marquee-scroll {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+          animation: marquee-scroll 40s linear infinite;
+          width: max-content;
+        }
+        .animate-marquee:hover {
+          animation-play-state: paused;
+        }
 
         /* Component Classes */
         .hero-content { animation: fadeInUp 0.8s ease-out; }
@@ -158,7 +184,7 @@ export default function Home() {
                 <br />
 
                 <span className="animate-neon-pulse">
-                  <span className="alex-brush text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-yellow-300 to-red-500 animate-gradient-flow animate-hue-cycle [-webkit-text-stroke:1px_rgba(255,255,255,0.2)]">
+                  <span className="alex-brush text-transparent bg-clip-text bg-linear-to-r from-amber-600 via-yellow-300 to-red-500 animate-gradient-flow animate-hue-cycle [-webkit-text-stroke:1px_rgba(255,255,255,0.2)]">
                     Timesh Dillon&apos;s
                   </span>
                 </span>
@@ -355,6 +381,47 @@ export default function Home() {
           </div>
         </section>
 
+        {/* --- SELECTED WORKS SLIDER WITH NEXT/IMAGE --- */}
+        <section
+          className={`w-full py-16 overflow-hidden relative transition-all duration-300 ${
+            isScrolled ? "bg-black/20 backdrop-blur-sm" : ""
+          }`}
+        >
+          <div className="absolute inset-y-0 left-0 w-16 bg-linear-to-r from-black/15 to-transparent z-10 pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-16 bg-linear-to-l from-black/15 to-transparent z-10 pointer-events-none" />
+
+          <div className="flex flex-col gap-6 mb-10 px-4 max-w-6xl mx-auto w-full">
+             <div className="flex items-center gap-3 text-white">
+                <Sparkles className="w-5 h-5 text-amber-400" />
+                <h2 className="text-2xl font-bold tracking-tight">Selected Social Media Content Posts</h2>
+             </div>
+          </div>
+
+          <div className="flex animate-marquee gap-6 px-6">
+            {/* Double the array map to create a seamless infinite loop */}
+            {[...bestWorks, ...bestWorks].map((image, index) => (
+              <div
+                key={index}
+                className="relative shrink-0 w-64 sm:w-80 h-62.5 sm:h-75 rounded-2xl overflow-hidden glassmorphic group cursor-pointer bg-black/30"
+              >
+                <Image
+                  src={image}
+                  alt={`Selected Work ${index + 1}`}
+                  fill
+                  sizes="(max-width: 640px) 256px, 320px"
+                  className="object-contain transition-transform duration-700 ease-in-out group-hover:scale-105 opacity-90 group-hover:opacity-100"
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6 z-10">
+                  <p className="text-white font-medium text-lg translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                    View Project <ArrowRight className="inline w-4 h-4 ml-1" />
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+        {/* --- END SLIDER --- */}
+
         <Separator className="bg-white/10" />
 
         {/* Services Section */}
@@ -426,12 +493,10 @@ export default function Home() {
 
         {/* CTA Section */}
         <section
-          className={`relative flex flex-col items-center justify-center text-center py-28 gap-6 overflow-hidden transition-all duration-300 ${
-            isScrolled ? "bg-black/20 backdrop-blur-sm" : ""
-          }`}
+          className="relative flex flex-col items-center justify-center text-center py-28 gap-6 overflow-hidden"
         >
-          <div className="absolute inset-0 bg-gradient-to-b from-neutral-900/0 via-black/20 to-black/50 pointer-events-none" />
-          <div className="section-animate flex flex-col items-center gap-6 z-10 glassmorphic p-12 rounded-3xl mx-4 max-w-3xl">
+          <div className="absolute inset-0 bg-linear-to-b from-transparent via-amber-950/10 to-orange-950/20 pointer-events-none" />
+          <div className="section-animate flex flex-col items-center gap-6 z-10 glassmorphic p-12 rounded-3xl mx-4 max-w-3xl border-orange-500/20">
             <h2 className="text-4xl font-bold text-white drop-shadow-md">
               Ready to work <span className="text-orange-600">together?</span>
             </h2>

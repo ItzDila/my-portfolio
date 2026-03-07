@@ -8,15 +8,22 @@ export default function LiveBackground() {
   useEffect(() => {
     if (window.matchMedia("(pointer: coarse)").matches) return;
 
+    let rafId = 0;
+
     const handleMouseMove = (e: MouseEvent) => {
-      if (glowRef.current) {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        if (!glowRef.current) return;
         glowRef.current.style.setProperty("--x", `${e.clientX - 150}px`);
         glowRef.current.style.setProperty("--y", `${e.clientY - 150}px`);
-      }
+      });
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, []);
 
   return (

@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import LiveBackground from "@/components/LiveBackground";
 import {
   Card,
@@ -49,14 +48,6 @@ import {
 import { motion } from "framer-motion";
 
 export default function Experiences() {
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  if (!isMounted) return null;
-
   const experiences = [
     {
       title: "Freelance Graphic Designer",
@@ -217,7 +208,7 @@ export default function Experiences() {
             <span className="text-white">
               Works<span className="  text-7xl text-white-3">&</span><br></br>
             </span>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-yellow-300 to-red-500 animate-pulse text-4xl sm:text-6xl md:text-7xl lg:text-8xl">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-amber-600 via-yellow-300 to-red-500 animate-pulse text-4xl sm:text-6xl md:text-7xl lg:text-8xl">
               Experiences
             </span>
           </h1>
@@ -242,7 +233,7 @@ export default function Experiences() {
             >
               <Card className="h-full rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 backdrop-blur-xl bg-black/40 border-white/10 hover:border-white/30 hover:bg-black/50 overflow-hidden relative group">
                 {/* Subtle gradient hover effect inside the card */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                <div className="absolute inset-0 bg-linear-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
                 <CardHeader className="flex flex-row items-center gap-4 relative z-10">
                   <div className="p-3 rounded-xl bg-white/10 text-white border border-white/10 group-hover:bg-white/20 transition-colors shadow-inner">

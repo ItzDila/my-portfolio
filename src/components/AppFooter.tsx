@@ -79,7 +79,7 @@ export default function AppFooter() {
             <p className="text-xs text-neutral-300">
               Designer and developer building modern digital experiences.
             </p>
-            <p className="mt-1 text-xs text-neutral-400">All rights reserved @2026</p>
+            <p className="mt-1 text-xs text-neutral-400">Created by me & All rights reserved @2026 </p>
           </div>
 
           <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:justify-end">

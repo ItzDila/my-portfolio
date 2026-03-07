@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import LiveBackground from "@/components/LiveBackground";
 import {
   Card,
@@ -18,26 +17,19 @@ import {
   ArrowRight,
   Sparkles,
   Zap,
+  Music2,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
 export default function Services() {
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  if (!isMounted) return null;
-
   const services = [
     {
-      title: "Post & UI Design",
-      price: "$20",
-      type: "Starting per design",
+      title: "Social Media Posts ",
+      price: "Rs.1,500",
+      type: "Starting per design Price" ,
       description:
-        "High-conversion, modern social media creatives, posters, carousels, and UI/UX mockups tailored to your brand identity.",
+        "High-conversion, modern social media creatives, posters, carousels, product mockups tailored to your brand identity.",
       icon: <Palette className="w-6 h-6" />,
       popular: false,
       features: [
@@ -48,8 +40,8 @@ export default function Services() {
       ],
     },
     {
-      title: "Video Editing",
-      price: "$40",
+      title: "Video Editing  ",
+      price: "Rs.2,000",
       type: "Starting per video",
       description:
         "Engaging, high-retention video edits for Reels, TikToks, and YouTube, complete with smooth transitions and effects.",
@@ -63,8 +55,24 @@ export default function Services() {
       ],
     },
     {
+      title: "Audio Mixing & Cutting",
+      price: "Rs.1,200",
+      type: "Starting per track",
+      description:
+        "Professional audio post-production for podcasts, reels, ads, and music content — clean, balanced, and broadcast-ready.",
+      icon: <Music2 className="w-6 h-6" />,
+      popular: false,
+      features: [
+        "Multi-track audio mixing",
+        "Noise removal & cleanup",
+        "Beat & sync cutting for reels",
+        "Voiceover leveling & EQ",
+
+      ],
+    },
+    {
       title: "Monthly Retainer",
-      price: "$450",
+      price: "Rs.100,000",
       type: "Per month",
       description:
         "The ultimate all-in-one package for creators and brands needing consistent, high-quality monthly content.",
@@ -93,10 +101,6 @@ export default function Services() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-      },
     },
   };
 
@@ -117,17 +121,17 @@ export default function Services() {
               ✦ Let's Work Together
             </Badge>
 
-            <Badge className="bg-amber-500/20 text-amber-200 border border-amber-500/30 px-4 py-1.5 rounded-full shadow-lg">
+            <Badge className="bg-amber-500/20 text-amber-200 border  hover:bg-amber-500/30 border-amber-500/30 px-4 py-1.5 rounded-full shadow-lg">
               🚀 Priority Client Focus
             </Badge>
           </div>
 
           <h1 className="flex flex-col gap-y-0 title-animate text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight drop-shadow-2xl mb-6">
             <span className="text-white">
-              Services <span className="text-6xl text-white/50">&</span>
+              Services<br /><span className="text-6xl text-white/50">&</span>
               <br />
             </span>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-yellow-300 to-red-500 animate-pulse text-5xl sm:text-6xl md:text-7xl lg:text-8xl pb-2">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-amber-600 via-yellow-300 to-red-500 animate-pulse text-5xl sm:text-6xl md:text-7xl lg:text-8xl pb-2">
               Pricing
             </span>
           </h1>
@@ -144,7 +148,7 @@ export default function Services() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 items-stretch"
+          className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4 items-stretch"
         >
           {services.map((service, index) => (
             <motion.div
@@ -161,10 +165,10 @@ export default function Services() {
                     : "border-white/10 hover:border-white/30"
                 }`}
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                <div className="absolute inset-0 bg-linear-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
                 {service.popular && (
-                  <div className="absolute top-0 right-0 bg-gradient-to-r from-amber-600 to-yellow-500 text-white text-xs font-bold px-4 py-1.5 rounded-bl-xl z-20 flex items-center gap-1 shadow-lg">
+                  <div className="absolute top-0 right-0 bg-linear-to-r from-amber-600 to-yellow-500 text-amber-900 text-xs font-bold px-4 py-1.5 rounded-bl-xl z-20 flex items-center gap-1 shadow-lg">
                     <Sparkles className="w-3 h-3" /> Most Popular
                   </div>
                 )}
@@ -196,11 +200,14 @@ export default function Services() {
                     <CardDescription className="text-neutral-400 mt-1 font-medium">
                       {service.type}
                     </CardDescription>
+                    <p className="text-xs text-neutral-500 mt-1.5 italic">
+                       Price may differ or increase based on requirements
+                    </p>
                   </div>
                 </CardHeader>
 
-                <CardContent className="relative z-10 flex flex-col flex-grow pt-6">
-                  <p className="text-sm text-neutral-300 mb-6 leading-relaxed flex-grow">
+                <CardContent className="relative z-10 flex flex-col grow pt-6">
+                  <p className="text-sm text-neutral-300 mb-6 leading-relaxed grow">
                     {service.description}
                   </p>
 
@@ -223,7 +230,7 @@ export default function Services() {
                     href="/contact"
                     className={`mt-auto w-full py-3 px-4 rounded-xl flex items-center justify-center gap-2 font-semibold transition-all duration-300 ${
                       service.popular
-                        ? "bg-gradient-to-r from-amber-600 to-yellow-500 hover:from-amber-500 hover:to-yellow-400 text-black shadow-lg shadow-amber-500/20"
+                        ? "bg-linear-to-r from-amber-600 to-yellow-500 hover:from-amber-500 hover:to-yellow-400 text-black shadow-lg shadow-amber-500/20"
                         : "bg-white/10 hover:bg-white/20 text-white border border-white/10"
                     }`}
                   >
@@ -245,10 +252,10 @@ export default function Services() {
           className="mt-24 text-center max-w-4xl mx-auto p-1 relative"
         >
           {/* Background glow effect */}
-          <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 via-red-500/20 to-amber-500/20 blur-3xl rounded-full opacity-50 pointer-events-none" />
+          <div className="absolute inset-0 bg-linear-to-r from-amber-500/20 via-red-500/20 to-amber-500/20 blur-3xl rounded-full opacity-50 pointer-events-none" />
 
           <div className="relative p-10 rounded-3xl border border-white/10 bg-black/40 backdrop-blur-xl shadow-2xl overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-500 via-yellow-400 to-red-500" />
+            <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-amber-500 via-yellow-400 to-red-500" />
 
             <div className="flex justify-center mb-6">
               <div className="p-4 rounded-full bg-white/5 border border-white/10 text-amber-400 shadow-inner">
@@ -257,7 +264,7 @@ export default function Services() {
             </div>
 
             <h3 className="text-3xl md:text-4xl font-extrabold text-white mb-4 tracking-tight drop-shadow-md">
-              Need Something <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-red-500">Custom?</span>
+              Need Something <span className="text-transparent bg-clip-text bg-linear-to-r from-amber-400 to-red-500">Custom?</span>
             </h3>
 
             <p className="text-neutral-300 text-lg leading-relaxed mb-8 max-w-2xl mx-auto">

@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import LiveBackground from "@/components/LiveBackground";
 import {
   Card,
@@ -24,14 +23,6 @@ import { motion } from "framer-motion";
 import profilePhoto from "@/assets/pfp.jpg";
 
 export default function Contact() {
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  if (!isMounted) return null;
-
   const socialLinks = [
 
     {
@@ -90,7 +81,6 @@ export default function Contact() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
     },
   };
 
@@ -110,7 +100,7 @@ export default function Contact() {
           </Badge>
           <h1 className="flex flex-col gap-y-0 title-animate text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight drop-shadow-2xl mb-6">
             <span className="text-white">
-              Let's <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-yellow-300 to-red-500 animate-pulse pb-2">Connect</span>
+              Let's <span className="text-transparent bg-clip-text bg-linear-to-r from-amber-600 via-yellow-300 to-red-500 animate-pulse pb-2">Connect</span>
             </span>
           </h1>
           <p className="text-neutral-300 text-lg max-w-2xl mx-auto drop-shadow-sm">
@@ -127,10 +117,10 @@ export default function Contact() {
             className="lg:col-span-5"
           >
             <Card className="rounded-3xl shadow-xl backdrop-blur-xl bg-black/40 border-white/10 overflow-hidden relative group">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+              <div className="absolute inset-0 bg-linear-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
               <CardContent className="p-8 flex flex-col items-center text-center relative z-10">
-                <div className="relative w-40 h-40 mb-6 rounded-full p-1 bg-gradient-to-r from-amber-500 to-red-500">
+                <div className="relative w-40 h-40 mb-6 rounded-full p-1 bg-linear-to-r from-amber-500 to-red-500">
                   <div className="w-full h-full rounded-full overflow-hidden bg-black">
                     {/* REPLACE src WITH YOUR ACTUAL IMAGE PATH */}
                     <img

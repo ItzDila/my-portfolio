@@ -25,18 +25,18 @@ import LiveBackground from "@/components/LiveBackground";
 
 export default function About() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true);
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      const scrolled = window.scrollY > 50;
+      setIsScrolled((prev) => (prev === scrolled ? prev : scrolled));
     };
-    window.addEventListener("scroll", handleScroll);
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  if (!isMounted) return null;
 
   return (
     <>
@@ -95,7 +95,7 @@ export default function About() {
             <div className="flex flex-col gap-4 max-w-4xl">
               <h1 className="title-animate text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight drop-shadow-2xl">
                 <span className="text-white">About </span>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-yellow-300 to-red-500 animate-pulse">
+                <span className="text-transparent bg-clip-text bg-linear-to-r from-amber-600 via-yellow-300 to-red-500 animate-pulse">
                   Me
                 </span>
               </h1>
@@ -267,7 +267,7 @@ export default function About() {
             isScrolled ? "bg-black/20 backdrop-blur-sm" : ""
           }`}
         >
-          <div className="absolute inset-0 bg-gradient-to-b from-neutral-900/0 via-black/30 to-black/60 pointer-events-none" />
+          <div className="absolute inset-0 bg-linear-to-b from-neutral-900/0 via-black/30 to-black/60 pointer-events-none" />
 
           <div className="section-animate flex flex-col items-center gap-6 z-10 glassmorphic p-12 rounded-3xl mx-4 max-w-3xl">
             <Badge className="glassmorphic text-neutral-200 px-4 py-1.5 rounded-full">
