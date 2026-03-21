@@ -36,7 +36,7 @@ export default function Contact() {
     {
       name: "LinkedIn",
       username: "Timesh Dillon",
-      url: "www.linkedin.com/in/timesh-dillon",
+      url: "https://www.linkedin.com/in/timesh-dillon",
       icon: <Linkedin className="w-6 h-6" />,
       color: "group-hover:text-blue-400",
       border: "hover:border-blue-500/50",

@@ -493,10 +493,12 @@ export default function Home() {
 
         {/* CTA Section */}
         <section
-          className="relative flex flex-col items-center justify-center text-center py-28 gap-6 overflow-hidden"
+          className={`relative flex flex-col items-center justify-center text-center py-28 gap-6 overflow-hidden transition-all duration-300 ${
+            isScrolled ? "bg-black/20 backdrop-blur-sm" : ""
+          }`}
         >
-          <div className="absolute inset-0 bg-linear-to-b from-transparent via-amber-950/10 to-orange-950/20 pointer-events-none" />
-          <div className="section-animate flex flex-col items-center gap-6 z-10 glassmorphic p-12 rounded-3xl mx-4 max-w-3xl border-orange-500/20">
+          <div className="absolute inset-0 bg-linear-to-b from-neutral-900/0 via-black/20 to-black/50 pointer-events-none" />
+          <div className="section-animate flex flex-col items-center gap-6 z-10 glassmorphic p-12 rounded-3xl mx-4 max-w-3xl">
             <h2 className="text-4xl font-bold text-white drop-shadow-md">
               Ready to work <span className="text-orange-600">together?</span>
             </h2>

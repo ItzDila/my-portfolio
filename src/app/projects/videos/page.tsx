@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import LiveBackground from "@/components/LiveBackground";
 import {
   Card,
@@ -11,128 +11,120 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Star, Play, Film, MonitorPlay } from "lucide-react";
+import { Play, Film, X } from "lucide-react";
 import { motion } from "framer-motion";
+import { LikeButton } from "@/components/LikeButton";
 
-// Interactive Star Rating Component
-const StarRating = ({ id, userRating, onRate }) => {
-  const [hoverRating, setHoverRating] = useState(0);
+interface Video {
+  id: number;
+  title: string;
+  client: string;
+  description: string;
+  thumbnail: string;
+  tags: string[];
+  duration: string;
+  videoUrl: string;
+}
+
+const VideoModal = ({
+  video,
+  isOpen,
+  onClose,
+}: {
+  video: Video | null;
+  isOpen: boolean;
+  onClose: () => void;
+}) => {
+  if (!isOpen || !video) return null;
 
   return (
-    <div className="flex items-center gap-1">
-      {[1, 2, 3, 4, 5].map((star) => (
-        <motion.button
-          key={star}
-          whileHover={{ scale: 1.2 }}
-          whileTap={{ scale: 0.9 }}
-          onMouseEnter={() => setHoverRating(star)}
-          onMouseLeave={() => setHoverRating(0)}
-          onClick={() => onRate(id, star)}
-          className="focus:outline-none"
-        >
-          <Star
-            className={`w-5 h-5 transition-colors duration-300 ${
-              star <= (hoverRating || userRating)
-                ? "fill-cyan-400 text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.6)]"
-                : "text-neutral-600 hover:text-cyan-200"
-            }`}
-          />
-        </motion.button>
-      ))}
-    </div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ scale: 0.95, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        onClick={(e) => e.stopPropagation()}
+        className="w-full max-w-4xl"
+      >
+        <div className="relative bg-black rounded-lg overflow-hidden">
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-black/70 rounded-full text-white transition-colors"
+          >
+            <X className="w-6 h-6" />
+          </button>
+          <div className="aspect-video">
+            <iframe
+              src={video.videoUrl}
+              className="w-full h-full"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+          <div className="p-6 bg-neutral-900 border-t border-white/10">
+            <h2 className="text-2xl font-bold text-white mb-2">{video.title}</h2>
+            <p className="text-neutral-400 mb-4">{video.description}</p>
+            <p className="text-neutral-500 text-sm">Client: {video.client}</p>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
   );
 };
 
 export default function VideoWork() {
-  // State holds the simulated database of ratings
-  const [ratingStats, setRatingStats] = useState({
-    1: { average: 4.9, count: 342, userRating: 0 },
-    2: { average: 4.7, count: 218, userRating: 0 },
-    3: { average: 4.6, count: 189, userRating: 0 },
-    4: { average: 4.8, count: 405, userRating: 0 },
-  });
+  const [videoProjects, setVideoProjects] = useState<Video[]>([]);
+  const [likes, setLikes] = useState<Record<string, number>>({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Calculate new average and total when a user votes
-  const handleRate = (id, newRating) => {
-    setRatingStats((prev) => {
-      const current = prev[id];
-      const isUpdate = current.userRating > 0;
+  // Fetch videos and likes on mount
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [videosRes, likesRes] = await Promise.all([
+          fetch("/api/videos"),
+          fetch("/api/likes"),
+        ]);
 
-      const newCount = isUpdate ? current.count : current.count + 1;
+        if (videosRes.ok) {
+          const videosData = await videosRes.json();
+          setVideoProjects(videosData);
+        }
 
-      const oldTotalScore = current.average * current.count;
-      const newTotalScore = isUpdate
-        ? oldTotalScore - current.userRating + newRating
-        : oldTotalScore + newRating;
+        if (likesRes.ok) {
+          const likesData = await likesRes.json();
+          setLikes(likesData);
+        }
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-      const newAverage = newTotalScore / newCount;
+    fetchData();
+  }, []);
 
-      return {
-        ...prev,
-        [id]: {
-          average: newAverage,
-          count: newCount,
-          userRating: newRating,
-        },
-      };
-    });
+  const openVideo = (video: Video) => {
+    setSelectedVideo(video);
+    setIsModalOpen(true);
   };
-
-  const videoProjects = [
-    {
-      id: 1,
-      title: "European Summer Campaign",
-      client: "Travelpedia UK",
-      description:
-        "A fast-paced, cinematic promotional video showcasing top European destinations. Edited with seamless transitions, color grading, and dynamic sound design.",
-      thumbnail: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1000&auto=format&fit=crop",
-      tags: ["Premiere Pro", "Color Grading", "Travel"],
-      duration: "01:45",
-      views: "12.5k",
-    },
-    {
-      id: 2,
-      title: "Tech Conference Opener",
-      client: "Innovate Summit 2025",
-      description:
-        "An adrenaline-pumping intro video for a major tech conference. Built heavy motion graphics, 3D text tracking, and kinetic typography to set the mood.",
-      thumbnail: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=1000&auto=format&fit=crop",
-      tags: ["After Effects", "Motion Graphics", "Event"],
-      duration: "00:50",
-      views: "8.2k",
-    },
-    {
-      id: 3,
-      title: "Automotive Showcase",
-      client: "JT Car Rental",
-      description:
-        "A sleek, high-end showcase of luxury rental vehicles. Focused on speed-ramping techniques, aggressive cuts to the beat, and cinematic aspect ratios.",
-      thumbnail: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1000&auto=format&fit=crop",
-      tags: ["Premiere Pro", "Speed Ramping", "Automotive"],
-      duration: "02:15",
-      views: "5.4k",
-    },
-    {
-      id: 4,
-      title: "Apparel Brand Documentary",
-      client: "Urban Drift",
-      description:
-        "A mini-documentary style ad detailing the behind-the-scenes creation of a streetwear line. Utilized intimate b-roll, audio mixing, and subtle visual effects.",
-      thumbnail: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?q=80&w=1000&auto=format&fit=crop",
-      tags: ["Video Production", "Audio Mixing", "Fashion"],
-      duration: "03:30",
-      views: "15.1k",
-    },
-  ];
 
   const headerVariants = {
     hidden: { opacity: 0, y: -50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" as const } },
   };
 
   const cardVariants = {
     hidden: { opacity: 0, y: 50, scale: 0.95 },
-    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: "easeOut" } },
+    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: "easeOut" as const } },
   };
 
   return (
@@ -157,14 +149,12 @@ export default function VideoWork() {
             </span>
           </h1>
           <p className="text-neutral-300 text-lg md:text-xl max-w-2xl mx-auto drop-shadow-sm mt-4">
-            From seamless transitions to complex motion graphics. Click the stars to rate the edits!
+            From seamless transitions to complex motion graphics. Show some love with the heart!
           </p>
         </motion.div>
 
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
           {videoProjects.map((video) => {
-            const stats = ratingStats[video.id];
-
             return (
             <motion.div
               key={video.id}
@@ -176,7 +166,7 @@ export default function VideoWork() {
               className="h-full"
             >
               <Card className="h-full rounded-2xl shadow-2xl transition-all duration-300 backdrop-blur-xl bg-black/40 border-white/10 hover:border-white/30 overflow-hidden relative group flex flex-col">
-                <div className="relative overflow-hidden aspect-video cursor-pointer">
+                <div className="relative overflow-hidden aspect-video cursor-pointer" onClick={() => openVideo(video)}>
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-500 z-10" />
                   <img
                     src={video.thumbnail}
@@ -227,31 +217,29 @@ export default function VideoWork() {
                   </div>
                 </CardContent>
 
-                <CardFooter className="relative z-10 border-t border-white/10 pt-4 pb-6 flex flex-col sm:flex-row justify-between items-center gap-4 bg-black/20">
-                  <div className="flex flex-col items-center sm:items-start">
-                    <span className="text-xs text-neutral-400 uppercase tracking-wider mb-1">
-                      {stats.userRating > 0 ? "Thanks for rating!" : "Rate this edit"}
-                    </span>
-                    <StarRating
-                      id={video.id}
-                      userRating={stats.userRating}
-                      onRate={handleRate}
-                    />
-                    <span className="text-xs text-neutral-400 mt-1.5 font-medium">
-                      <span className="text-cyan-400">{stats.average.toFixed(1)} ★</span> ({stats.count} votes)
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-2 text-sm text-neutral-400">
-                    <MonitorPlay className="w-4 h-4 text-cyan-400" />
-                    <span>{video.views} Views</span>
-                  </div>
+                <CardFooter className="relative z-10 border-t border-white/10 pt-4 pb-6 flex justify-end pr-6">
+                  <LikeButton
+                    id={video.id}
+                    initialLikes={likes[String(video.id)] ?? 0}
+                    onLikeChange={(count) => {
+                      setLikes((prev) => ({
+                        ...prev,
+                        [String(video.id)]: count,
+                      }));
+                    }}
+                  />
                 </CardFooter>
               </Card>
             </motion.div>
           )})}
         </div>
       </div>
+
+      <VideoModal
+        video={selectedVideo}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </>
   );
 }

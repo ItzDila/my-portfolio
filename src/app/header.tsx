@@ -219,12 +219,7 @@ export default function Header() {
                   <NavigationMenuContent>
                     <div className="w-85 bg-black/80 backdrop-blur-2xl rounded-xl shadow-2xl border border-white/10 mt-2">
                       <ul className="grid gap-4 p-5">
-                        <li>
-                          <NavigationMenuLink href="/projects/university" className="dropdown-item block text-sm font-medium text-white">
-                            University Projects
-                            <p className="text-xs text-neutral-300 font-normal mt-1">Academic work & coursework</p>
-                          </NavigationMenuLink>
-                        </li>
+
                         <li>
                           <NavigationMenuLink href="/projects/videos" className="dropdown-item block text-sm font-medium text-white">
                             Video Edits
