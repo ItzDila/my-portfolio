@@ -36,6 +36,8 @@ export default function LiveBackground() {
           min-height: 100vh;
           cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M4 4L11 20L14 14L20 11L4 4Z" fill="%23000000" stroke="%23ffffff" stroke-width="1.5" stroke-linejoin="round"/></svg>') 4 4, auto !important;
           overflow-x: hidden;
+          width: 100%;
+          max-width: 100%;
         }
 
         a, button, input, [role="button"] {
@@ -71,12 +73,11 @@ export default function LiveBackground() {
         .live-bg-container {
           position: fixed; /* Locks it to the viewport */
           top: 0; left: 0; right: 0; bottom: 0;
-          width: 100vw;
-          height: 100vh;
-          height: 100dvh; /* Crucial for mobile browser address bars */
+          width: 100%;
+          max-width: 100%;
           z-index: -999; /* Pushes it to the absolute bottom layer */
           pointer-events: none; /* Ensures you can click links above it */
-          overflow: hidden;
+          overflow: clip;
           background: linear-gradient(
             135deg,
             rgba(15, 15, 20, 1) 0%,
@@ -107,6 +108,11 @@ export default function LiveBackground() {
 
         /* 5. Mobile Layout Tweaks */
         @media (max-width: 768px) {
+          .live-bg-container {
+            width: 100%;
+            max-width: 100%;
+          }
+
           .live-blob {
             filter: blur(40px);
             -webkit-filter: blur(40px);

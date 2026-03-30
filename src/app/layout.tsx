@@ -47,9 +47,9 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="scroll-smooth overflow-x-hidden" suppressHydrationWarning>
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body
-        className={`${geistMono.variable} ${geist.variable} ${inter.variable} ${sourceCodePro.variable} ${alexBrush.variable} font-mono antialiased bg-black text-white overflow-x-hidden`}
+        className={`${geistMono.variable} ${geist.variable} ${inter.variable} ${sourceCodePro.variable} ${alexBrush.variable} font-mono antialiased bg-black text-white`}
       >
         <ChunkErrorHandler />
         <Header />

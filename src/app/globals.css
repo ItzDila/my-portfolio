@@ -3,11 +3,6 @@
 @import "shadcn/tailwind.css";
 @config "../../tailwind.config.ts";
 
-html,
-body {
-  overflow-x: hidden;
-}
-
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -140,6 +135,22 @@ html {
   scroll-behavior: smooth;
 }
 
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+  overscroll-behavior-x: none;
+  overscroll-behavior-y: none;
+}
+
+@supports not (overflow: clip) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+}
+
 * {
   -webkit-tap-highlight-color: transparent;
 }
@@ -156,6 +167,10 @@ html {
 }
 
 @media (max-width: 640px) {
+  body {
+    scrollbar-gutter: auto;
+  }
+
   h1 {
     line-height: 1.1;
     letter-spacing: -0.02em;
