@@ -45,7 +45,7 @@ import {
   AppWindow,
   BookOpen,
 } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 
 export default function Experiences() {
   const experiences = [
@@ -129,7 +129,7 @@ export default function Experiences() {
     },
   ];
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: {},
     visible: {
       transition: {
@@ -138,7 +138,7 @@ export default function Experiences() {
     },
   };
 
-  const cardVariants = {
+  const cardVariants: Variants = {
     hidden: { opacity: 0, y: 40 },
     visible: {
       opacity: 1,

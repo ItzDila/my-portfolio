@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, type Transition } from "framer-motion";
 import {
   NavigationMenu,
@@ -14,6 +15,7 @@ import { cn } from "@/lib/utils";
 import { Menu, X, ChevronDown, FileText } from "lucide-react";
 
 export default function Header() {
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const lastScrollY = useRef(0);
@@ -49,6 +51,10 @@ export default function Header() {
     damping: 30,
     mass: 1,
   };
+
+  if (pathname.startsWith("/admin")) {
+    return null;
+  }
 
   return (
     <>
@@ -240,9 +246,7 @@ export default function Header() {
             </NavigationMenu>
 
             <a
-              href="/cv.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/cv"
               className="ml-4 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm font-medium text-white transition-all duration-300 hover:border-white/50 hover:bg-white/20"
             >
               <FileText className="h-4 w-4" /> Resume
@@ -285,9 +289,7 @@ export default function Header() {
                 </a>
 
                 <a
-                  href="/cv.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/cv"
                   className="flex items-center gap-2 py-3 text-sm font-medium text-white hover:text-white/70 border-b border-white/10 transition-colors nav-link-glow"
                   onClick={() => setMobileOpen(false)}
                 >

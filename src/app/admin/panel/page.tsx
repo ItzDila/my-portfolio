@@ -69,7 +69,7 @@ export default function AdminPanelPage() {
 
   const handleLogout = async () => {
     await fetch("/api/admin-auth", { method: "DELETE" });
-    router.push("/admin");
+    router.push("/");
   };
 
   const handleSavePost = async (post: Omit<Post, "id">) => {

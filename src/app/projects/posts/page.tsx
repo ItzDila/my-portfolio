@@ -106,12 +106,12 @@ export default function SocialMediaWork() {
               className="h-full"
             >
               <Card className="h-full rounded-2xl shadow-2xl transition-all duration-300 backdrop-blur-xl bg-black/40 border-white/10 hover:border-white/30 overflow-hidden relative group flex flex-col">
-                <div className="relative overflow-hidden aspect-video">
+                <div className="relative overflow-hidden aspect-square bg-black/20">
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10" />
                   <img
                     src={post.image}
                     alt={post.title}
-                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-in-out"
+                    className="w-full h-full object-contain p-2 transform group-hover:scale-110 transition-transform duration-700 ease-in-out"
                   />
                   <div className="absolute top-4 right-4 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform -translate-y-2.5 group-hover:translate-y-0">
                     <button className="p-2 rounded-full bg-black/50 text-white hover:bg-blue-500 backdrop-blur-md transition-colors">
