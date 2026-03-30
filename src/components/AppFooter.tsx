@@ -8,7 +8,6 @@ import {
   MessageCircle,
 } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 const pageRoutes = [
   { name: "Home", href: "/" },
@@ -53,8 +52,6 @@ const socialLinks = [
 ];
 
 export default function AppFooter() {
-  const router = useRouter();
-
   return (
     <footer className="relative z-20 px-4 pb-6 pt-2">
       <div className="mx-auto max-w-6xl rounded-3xl border border-white/15 bg-black/40 p-5 shadow-2xl backdrop-blur-xl sm:p-6">
@@ -78,13 +75,9 @@ export default function AppFooter() {
 
           <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <button
-              type="button"
-              onClick={() => router.push("/admin")}
-              className="text-sm font-semibold tracking-wide text-white transition-colors hover:text-cyan-300"
-            >
+            <p className="text-sm font-semibold tracking-wide text-white">
               Timesh Dillon
-            </button>
+            </p>
             <p className="text-xs text-neutral-300">
               Designer and developer building modern digital experiences.
             </p>

@@ -22,7 +22,6 @@ const skills = [
   "CSS",
   "PHP",
   "Java",
-  "MySQL",
   "REST API",
   "Git",
 ];
@@ -47,10 +46,10 @@ const experience = [
       "Developed responsive web applications and full-stack systems using modern frameworks.",
   },
   {
-    role: "Backend & Database Developer",
+    role: "Backend Developer",
     org: "Software Projects",
     detail:
-      "Built backend logic, authentication systems, and database-driven applications with APIs.",
+      "Built backend logic, authentication systems, and API-driven applications.",
   },
 ];
 

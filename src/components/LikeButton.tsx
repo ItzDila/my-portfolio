@@ -18,31 +18,13 @@ export const LikeButton: React.FC<LikeButtonProps> = ({
 
   const handleLike = async () => {
     setIsLiking(true);
-    try {
-      const response = await fetch("/api/likes", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: String(id),
-          action: "like",
-        }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        const newCount = data.newCount || likes + 1;
-        setLikes(newCount);
-        onLikeChange?.(newCount);
-      } else {
-        console.error("Failed to like:", await response.text());
-      }
-    } catch (error) {
-      console.error("Failed to like:", error);
-    } finally {
+    // Simulate like action with local state update
+    setTimeout(() => {
+      const newCount = likes + 1;
+      setLikes(newCount);
+      onLikeChange?.(newCount);
       setIsLiking(false);
-    }
+    }, 300);
   };
 
   return (

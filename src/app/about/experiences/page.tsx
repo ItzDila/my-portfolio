@@ -17,7 +17,6 @@ import {
   Code,
   Globe,
   Server,
-  Database,
   Palette,
   PenTool,
   Fingerprint,
@@ -34,7 +33,6 @@ import {
   Wind,
   GitBranch,
   Coffee,
-  Cable,
   Workflow,
   Monitor,
   Cpu,
@@ -94,12 +92,12 @@ export default function Experiences() {
       ],
     },
     {
-      title: "Backend & Database Development",
+      title: "Backend Development",
       company: "Software Projects",
       description:
-        "Built backend logic, handled database management, authentication systems, and REST APIs for academic and personal software projects.",
-      icon: <Database className="w-5 h-5" />,
-      skills: ["PHP", "Java", "MySQL", "JDBC", "REST API", "System Design"],
+        "Built backend logic, authentication systems, and REST APIs for academic and personal software projects.",
+      icon: <Server className="w-5 h-5" />,
+      skills: ["PHP", "Java", "Express.js", "REST API", "System Design"],
     },
     {
       title: "Computer & Laptop Repair Technician",
@@ -118,7 +116,7 @@ export default function Experiences() {
       title: "BSc (Hons) Computing Student",
       company: "NIBM",
       description:
-        "Currently studying software engineering, OOP, database systems, and full-stack development while building real-world applications.",
+        "Currently studying software engineering, OOP, and full-stack development while building real-world applications.",
       icon: <GraduationCap className="w-5 h-5" />,
       skills: [
         "Object-Oriented Programming",
@@ -174,8 +172,7 @@ export default function Experiences() {
 
     PHP: FileCode,
     Java: Coffee,
-    MySQL: Database,
-    JDBC: Cable,
+    "Express.js": Server,
     "REST API": Workflow,
     "System Design": Boxes,
 

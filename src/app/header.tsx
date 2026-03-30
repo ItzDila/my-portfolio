@@ -52,10 +52,6 @@ export default function Header() {
     mass: 1,
   };
 
-  if (pathname.startsWith("/admin")) {
-    return null;
-  }
-
   return (
     <>
       <style>{`

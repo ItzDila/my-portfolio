@@ -25,14 +25,7 @@ import profilePhoto from "@/assets/pfp.jpg";
 export default function Contact() {
   const socialLinks = [
 
-    {
-      name: "WhatsApp",
-      username: "+94 71 773 5051",
-      url: "https://wa.me/94717735051",
-      icon: <MessageCircle className="w-6 h-6" />,
-      color: "group-hover:text-green-400",
-      border: "hover:border-green-500/50",
-    },
+
     {
       name: "LinkedIn",
       username: "Timesh Dillon",

@@ -231,9 +231,9 @@ export default function Home() {
               }`}
             >
               {[
-                { value: "7+", label: "Years Experience" },
-                { value: "40+", label: "Projects Done" },
-                { value: "30+", label: "Happy Clients" },
+                { value: "4+", label: "Years Experience" },
+                { value: "20+", label: "Projects Done" },
+                { value: "10+", label: "Happy Clients" },
               ].map((stat) => (
                 <div key={stat.label} className="flex flex-col items-center">
                   <span className="text-3xl font-bold text-white drop-shadow-md">
@@ -456,13 +456,13 @@ export default function Home() {
                 },
                 {
                   title: "Web Development",
-                  desc: "Developing scalable, high-performance websites that combine seamless functionality with refined user experience.",
+                  desc: "Developing scalable, high performance websites that combine seamless functionality with refined user experience.",
                   icon: <Code className="w-5 h-5 text-white" />,
                   href: "/services/web",
                 },
                 {
                   title: "Video Editing",
-                  desc: "Transforming raw footage into engaging, high-impact video content that connects with audiences and strengthens brand identity.",
+                  desc: "Transforming raw footage into engaging, high mpact video content that connects with audiences and strengthens brand identity.",
                   icon: <Video className="w-5 h-5 text-white" />,
                   href: "/services/video",
                 },

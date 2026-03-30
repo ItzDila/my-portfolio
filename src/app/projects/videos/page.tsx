@@ -13,7 +13,6 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Play, Film, X } from "lucide-react";
 import { motion } from "framer-motion";
-import { LikeButton } from "@/components/LikeButton";
 
 interface Video {
   id: number;
@@ -77,39 +76,64 @@ const VideoModal = ({
   );
 };
 
+const VIDEOS_DATA: Video[] = [
+  {
+    id: 1,
+    title: "Amsterdam Light Festival Reel",
+    client: "Travelpedia UK",
+    description: "This is about an amsterdam lightfestival reel that is made for travel pedia uk",
+    thumbnail: "https://www.amsterdamsights.com/events/img/alf-00.jpg",
+    tags: [],
+    duration: "00:50",
+    videoUrl: "https://www.youtube.com/embed/nlwuiRGJ6nY",
+  },
+  {
+    id: 2,
+    title: "Tech Conference Opener",
+    client: "Innovate Summit 2025",
+    description: "An adrenaline-pumping intro video for a major tech conference. Built heavy motion graphics, 3D text tracking, and kinetic typography to set the mood.",
+    thumbnail: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=1000&auto=format&fit=crop",
+    tags: ["After Effects", "Motion Graphics", "Event"],
+    duration: "00:50",
+    videoUrl: "https://streamable.com/e/xs3f4l?",
+  },
+  {
+    id: 3,
+    title: "Automotive Showcase",
+    client: "JT Car Rental",
+    description: "A sleek, high-end showcase of luxury rental vehicles. Focused on speed-ramping techniques, aggressive cuts to the beat, and cinematic aspect ratios.",
+    thumbnail: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1000&auto=format&fit=crop",
+    tags: ["Premiere Pro", "Speed Ramping", "Automotive"],
+    duration: "02:15",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+  },
+  {
+    id: 4,
+    title: "Apparel Brand Documentary",
+    client: "Urban Drift",
+    description: "A mini-documentary style ad detailing the behind-the-scenes creation of a streetwear line. Utilized intimate b-roll, audio mixing, and subtle visual effects.",
+    thumbnail: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?q=80&w=1000&auto=format&fit=crop",
+    tags: ["Video Production", "Audio Mixing", "Fashion"],
+    duration: "03:30",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+  },
+];
+
+const LIKES_DATA: Record<string, number> = {
+  "1": 14,
+  "2": 49,
+  "3": 6,
+  "4": 4,
+};
+
 export default function VideoWork() {
-  const [videoProjects, setVideoProjects] = useState<Video[]>([]);
-  const [likes, setLikes] = useState<Record<string, number>>({});
-  const [isLoading, setIsLoading] = useState(true);
+  const [videoProjects, setVideoProjects] = useState<Video[]>(VIDEOS_DATA);
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Fetch videos and likes on mount
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [videosRes, likesRes] = await Promise.all([
-          fetch("/api/videos"),
-          fetch("/api/likes"),
-        ]);
-
-        if (videosRes.ok) {
-          const videosData = await videosRes.json();
-          setVideoProjects(videosData);
-        }
-
-        if (likesRes.ok) {
-          const likesData = await likesRes.json();
-          setLikes(likesData);
-        }
-      } catch (error) {
-        console.error("Failed to fetch data:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
+    // Data is now hardcoded, no need to fetch
   }, []);
 
   const openVideo = (video: Video) => {
@@ -217,18 +241,7 @@ export default function VideoWork() {
                   </div>
                 </CardContent>
 
-                <CardFooter className="relative z-10 border-t border-white/10 pt-4 pb-6 flex justify-end pr-6">
-                  <LikeButton
-                    id={video.id}
-                    initialLikes={likes[String(video.id)] ?? 0}
-                    onLikeChange={(count) => {
-                      setLikes((prev) => ({
-                        ...prev,
-                        [String(video.id)]: count,
-                      }));
-                    }}
-                  />
-                </CardFooter>
+
               </Card>
             </motion.div>
           )})}

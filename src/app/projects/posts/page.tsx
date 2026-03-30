@@ -13,7 +13,6 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Share2, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
-import { LikeButton } from "@/components/LikeButton";
 
 interface Post {
   id: number;
@@ -24,37 +23,54 @@ interface Post {
   tags: string[];
 }
 
+const POSTS_DATA: Post[] = [
+  {
+    id: 1,
+    title: "Sena Excellent Service Advertisment Flyer",
+    client: "Sena Excellent Service",
+    description: "Designed a high-conversion Instagram ad campaign featuring ",
+    image: "/uploads/posts/1774085333441-cut-and-polish-2.png",
+    tags: ["Photoshop", "Ad Design"],
+  },
+  {
+    id: 2,
+    title: "Ultimate Car Care Flyer",
+    client: "Sena Excellent Service",
+    description: "Designed a vibrant and attention-grabbing flyer for Ultimate Car Care, focusing on clarity, brand identity, and visual appeal. The layout highlights key services, promotions,  combining modern typography with dynamic imagery to attract car owners and enhance customer engagement.",
+    image: "/uploads/posts/1774085602351-ultimate-car-care.png",
+    tags: ["Illustrator", "Social Media", "Photoshop"],
+  },
+  {
+    id: 3,
+    title: "Artisan Coffee Branding",
+    client: "Brew Haven",
+    description: "Created a cozy, warm-toned mood board and social media launch assets for a local artisanal coffee shop.",
+    image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1000&auto=format&fit=crop",
+    tags: ["Brand Identity", "Photography", "Food & Beverage"],
+  },
+  {
+    id: 4,
+    title: "Minimalist Fashion Story",
+    client: "Aura Boutique",
+    description: "Sleek and minimalist animated Instagram stories focusing on the new autumn collection, emphasizing elegant whitespace.",
+    image: "https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=1000&auto=format&fit=crop",
+    tags: ["After Effects", "Motion Graphics", "Fashion"],
+  },
+];
+
+const LIKES_DATA: Record<string, number> = {
+  "1": 14,
+  "2": 49,
+  "3": 6,
+  "4": 4,
+};
+
 export default function SocialMediaWork() {
-  const [socialPosts, setSocialPosts] = useState<Post[]>([]);
-  const [likes, setLikes] = useState<Record<string, number>>({});
-  const [isLoading, setIsLoading] = useState(true);
+  const [socialPosts, setSocialPosts] = useState<Post[]>(POSTS_DATA);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Fetch posts and likes on mount
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [postsRes, likesRes] = await Promise.all([
-          fetch("/api/posts"),
-          fetch("/api/likes"),
-        ]);
-
-        if (postsRes.ok) {
-          const postsData = await postsRes.json();
-          setSocialPosts(postsData);
-        }
-
-        if (likesRes.ok) {
-          const likesData = await likesRes.json();
-          setLikes(likesData);
-        }
-      } catch (error) {
-        console.error("Failed to fetch data:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
+    // Data is now hardcoded, no need to fetch
   }, []);
 
   const headerVariants = {
@@ -150,18 +166,7 @@ export default function SocialMediaWork() {
                   </div>
                 </CardContent>
 
-                <CardFooter className="relative z-10 border-t border-white/10 pt-4 pb-6 flex justify-end pr-6">
-                  <LikeButton
-                    id={post.id}
-                    initialLikes={likes[String(post.id)] ?? 0}
-                    onLikeChange={(count) => {
-                      setLikes((prev) => ({
-                        ...prev,
-                        [String(post.id)]: count,
-                      }));
-                    }}
-                  />
-                </CardFooter>
+
               </Card>
             </motion.div>
           )})}
