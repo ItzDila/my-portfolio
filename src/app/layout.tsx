@@ -6,6 +6,7 @@ import {
   Inter,
   Source_Code_Pro,
   Alex_Brush,
+  Courgette,
 } from "next/font/google";
 import "./globals.css";
 import Header from "./header";
@@ -38,6 +39,12 @@ const alexBrush = Alex_Brush({
   weight: "400",
 });
 
+const courgette = Courgette({
+  variable: "--font-courgette",
+  subsets: ["latin"],
+  weight: "400",
+});
+
 export const metadata: Metadata = {
   title: "Timesh Dillon",
   description: "Creative developer and designer",
@@ -49,7 +56,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body
-        className={`${geistMono.variable} ${geist.variable} ${inter.variable} ${sourceCodePro.variable} ${alexBrush.variable} font-mono antialiased bg-black text-white`}
+        className={`${geistMono.variable} ${geist.variable} ${inter.variable} ${sourceCodePro.variable} ${alexBrush.variable} ${courgette.variable} font-mono antialiased bg-black text-white`}
       >
         <ChunkErrorHandler />
         <Header />

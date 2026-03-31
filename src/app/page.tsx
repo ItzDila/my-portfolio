@@ -24,6 +24,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import LiveBackground from "@/components/LiveBackground";
+import { ModernAnimatedHeroTitle } from "@/components/ui/modern-animated-hero-section";
 import tpslImage from "@/assets/tpsl.jpg";
 import trvlpediaImage from "@/assets/Ultimate-car-care-Updated.png";
 import axelaImage from "@/assets/Axela Post1.png";
@@ -162,6 +163,10 @@ export default function Home() {
         .alex-brush {
           font-family: var(--font-alex-brush), cursive;
         }
+
+        .courgette-font {
+          font-family: var(--font-courgette), cursive;
+        }
       `}</style>
 
       <LiveBackground />
@@ -177,20 +182,21 @@ export default function Home() {
             </Badge>
 
             <div className="flex flex-col gap-4 max-w-4xl">
-              <h1 className="title-animate text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight drop-shadow-2xl">
+              <h1 className="title-animate text-4xl sm:text-5xl md:text-7xl lg:text-8xl leading-[1.1] font-extrabold tracking-tight drop-shadow-2xl">
                 <span className="text-white">
-                  Hello👋🏻 <br />Welcome to the{" "}
+                  Hello👋🏻 <br />I'm Timesh Dillon {" "}
                 </span>
                 <br />
 
-                <span className="animate-neon-pulse">
-                  <span className="alex-brush text-transparent bg-clip-text bg-linear-to-r from-amber-600 via-yellow-300 to-red-500 animate-gradient-flow animate-hue-cycle [-webkit-text-stroke:1px_rgba(255,255,255,0.2)]">
-                    Timesh Dillon&apos;s
-                  </span>
+                <span className="animate-neon-pulse block px-2 sm:px-0">
+                  <ModernAnimatedHeroTitle
+                    phrases={["Creative Designer", "Video Editor ", "Web Developer", "Visual Storyteller", "UI/UX Enthusiast",]}
+                    className="courgette-font inline-block w-full max-w-[16ch] sm:max-w-none text-center wrap-break-word text-transparent bg-clip-text bg-linear-to-r from-amber-600 via-yellow-300 to-red-500 animate-gradient-flow animate-hue-cycle [-webkit-text-stroke:1px_rgba(255,255,255,0.2)]"
+                  />
                 </span>
                 <br />
 
-                <span className="text-white">Workspace </span>
+                <span className="text-white"></span>
               </h1>
               <p className="description-animate text-lg md:text-xl text-neutral-200 max-w-2xl mx-auto leading-relaxed drop-shadow-md">
                 A passionate{" "}
@@ -231,8 +237,8 @@ export default function Home() {
               }`}
             >
               {[
-                { value: "4+", label: "Years Experience" },
-                { value: "20+", label: "Projects Done" },
+                { value: "5+", label: "Years Experience" },
+                { value: "40+", label: "Projects Done" },
                 { value: "10+", label: "Happy Clients" },
               ].map((stat) => (
                 <div key={stat.label} className="flex flex-col items-center">
@@ -282,7 +288,7 @@ export default function Home() {
               },
               {
                 title: "Experience",
-                desc: "7+ years delivering branding, digital content, video production, and modern UI experiences for clients across industries.",
+                desc: "5+ years delivering branding, digital content, video production, and modern UI experiences for clients across industries.",
                 icon: <Code className="w-5 h-5 text-white" />,
               },
             ].map((item) => (
@@ -337,26 +343,23 @@ export default function Home() {
                   desc: "Explore a curated selection of my latest graphic design, video editing, and digital creative projects crafted for real brands and clients.",
                   tag: "Featured Projects",
                   icon: <Star className="w-5 h-5 text-white" />,
-                  href: "/graphics",
                 },
                 {
                   title: "Branding",
                   desc: "Strategic logo design, brand identity systems, and cohesive visual languages built to help businesses stand out and stay memorable.",
                   tag: "Brand Identity",
                   icon: <Palette className="w-5 h-5 text-white" />,
-                  href: "/graphics/branding",
                 },
                 {
                   title: "UI Design",
                   desc: "Modern interface design that balances aesthetics, usability, and seamless user experience across digital platforms.",
                   tag: "Interface & UX",
                   icon: <Layers className="w-5 h-5 text-white" />,
-                  href: "/graphics/ui-design",
                 },
               ].map((item) => (
-                <Link href={item.href} key={item.title}>
+                <div key={item.title}>
                   <div className="card-animate h-full">
-                    <Card className="glassmorphic group cursor-pointer h-full">
+                    <Card className="glassmorphic group h-full">
                       <CardHeader className="flex flex-row items-center gap-3">
                         <div className="p-2 rounded-lg bg-white/10 group-hover:bg-white/20 transition-colors border border-white/5">
                           {item.icon}
@@ -375,7 +378,7 @@ export default function Home() {
                       </CardContent>
                     </Card>
                   </div>
-                </Link>
+                </div>
               ))}
             </div>
           </div>
@@ -452,24 +455,21 @@ export default function Home() {
                   title: "Graphic Design",
                   desc: "Crafting compelling brand identities, marketing creatives, and digital visuals that capture attention and communicate with clarity.",
                   icon: <Palette className="w-5 h-5 text-white" />,
-                  href: "/services",
                 },
                 {
                   title: "Web Development",
                   desc: "Developing scalable, high performance websites that combine seamless functionality with refined user experience.",
                   icon: <Code className="w-5 h-5 text-white" />,
-                  href: "/services/web",
                 },
                 {
                   title: "Video Editing",
                   desc: "Transforming raw footage into engaging, high mpact video content that connects with audiences and strengthens brand identity.",
                   icon: <Video className="w-5 h-5 text-white" />,
-                  href: "/services/video",
                 },
               ].map((item) => (
-                <Link href={item.href} key={item.title}>
+                <div key={item.title}>
                   <div className="card-animate h-full">
-                    <Card className="glassmorphic group cursor-pointer h-full">
+                    <Card className="glassmorphic group h-full">
                       <CardHeader className="flex flex-row items-center gap-3">
                         <div className="p-2 rounded-lg bg-white/10 group-hover:bg-white/20 transition-colors border border-white/5">
                           {item.icon}
@@ -483,7 +483,7 @@ export default function Home() {
                       </CardContent>
                     </Card>
                   </div>
-                </Link>
+                </div>
               ))}
             </div>
           </div>

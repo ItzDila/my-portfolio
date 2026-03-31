@@ -19,6 +19,8 @@ import ams from "@/assets/ams.png";
 import ams_light from "@/assets/ams_light.png";
 import sena from "@/assets/sena.png";
 import rome from "@/assets/rome.png";
+import bfb from "@/assets/bfb.png";
+import mtnq from "@/assets/mtnq.png";
 
 
 
@@ -102,7 +104,7 @@ const VIDEOS_DATA: Video[] = [
     description: "A captivating travel reel showcasing the timeless beauty of Rome. From the iconic Colosseum to the romantic Trevi Fountain, this video captures the essence of the Eternal City in a visually stunning montage.",
     thumbnail: rome.src,
     tags: ["After Effects", "Motion Graphics", "Event"],
-    duration: "00:50",
+    duration: "00:35",
     videoUrl: "https://streamable.com/e/xs3f4l?autoplay=1",
   },
   {
@@ -112,7 +114,7 @@ const VIDEOS_DATA: Video[] = [
     description: "A sleek logo reveal animation for a local service company. Focused on clean design, smooth transitions, and subtle particle effects to create a memorable brand introduction.",
     thumbnail: sena.src,
     tags: ["After Effects", "Speed Ramping", "LOGO Animation"],
-    duration: "02:15",
+    duration: "00:10",
     videoUrl: "https://streamable.com/e/q5wnix?autoplay=1",
   },
   {
@@ -122,17 +124,31 @@ const VIDEOS_DATA: Video[] = [
     description: "did a speed ramp edit for a vehicle which is cure my boredom.",
     thumbnail: voxyImage.src,
     tags: ["Video Production", "Audio Mixing", "Fashion"],
-    duration: "03:30",
+    duration: "00:25",
     videoUrl: "https://streamable.com/e/5bi6r1?autoplay=1",
+  },
+  {
+    id: 5,
+    title: "Black Friday Travel Promo Video",
+    client: "Travelpedia UK",
+    description: "A dynamic promotional video highlighting exclusive deals for the Black Friday sale included subtitles also.",
+    thumbnail: bfb.src,
+    tags: ["Video Production", "Audio Mixing", "Travel"],
+    duration: "01:00",
+    videoUrl: "https://streamable.com/e/ikn1oe?autoplay=1",
+  },
+  {
+    id: 6,
+    title: "Martinique Travel Teaser Reel",
+    client: "Travelpedia UK",
+    description: "A captivating teaser reel showcasing the beauty of Martinique. From pristine beaches to vibrant culture, this video highlights the essence of this Caribbean gem.",
+    thumbnail: mtnq.src,
+    tags: ["Video Production", "Audio Mixing", "Travel"],
+    duration: "00:30",
+    videoUrl: "https://streamable.com/e/kzi5e6?autoplay=1",
   },
 ];
 
-const LIKES_DATA: Record<string, number> = {
-  "1": 14,
-  "2": 49,
-  "3": 6,
-  "4": 4,
-};
 
 export default function VideoWork() {
   const [videoProjects] = useState<Video[]>(VIDEOS_DATA);
@@ -175,12 +191,12 @@ export default function VideoWork() {
           className="text-center mb-20"
         >
           <Badge className="mb-4 bg-white/10 text-white border border-white/20 hover:bg-white/20 backdrop-blur-md px-5 py-2 rounded-full shadow-lg text-sm">
-            <Film className="w-4 h-4 mr-2 inline-block text-cyan-300" />
+            <Film className="w-4 h-4 mr-2 inline-block text-amber-300" />
             Cinematic Cuts
           </Badge>
           <h1 className="flex flex-col gap-y-2 title-animate text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight drop-shadow-2xl">
             <span className="text-white">Video</span>
-            <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 via-blue-500 to-emerald-400 animate-pulse pb-2">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 via-emerald-500 to-amber-400 animate-pulse pb-2">
               Production
             </span>
           </h1>
@@ -215,7 +231,7 @@ export default function VideoWork() {
                     <motion.div
                       whileHover={isLowEndAndroid ? undefined : { scale: 1.1 }}
                       whileTap={isLowEndAndroid ? undefined : { scale: 0.95 }}
-                      className="w-16 h-16 rounded-full bg-cyan-500/80 backdrop-blur-sm flex items-center justify-center text-white shadow-[0_0_30px_rgba(6,182,212,0.6)] group-hover:bg-cyan-400 transition-colors"
+                      className="w-16 h-16 rounded-full bg-amber-400/80 backdrop-blur-sm flex items-center justify-center text-white shadow-[0_0_30px_rgba(251,191,36,0.65)] group-hover:bg-amber-600 transition-colors"
                     >
                       <Play className="w-8 h-8 ml-1 fill-white" />
                     </motion.div>
@@ -228,7 +244,7 @@ export default function VideoWork() {
                 <CardHeader className="relative z-10 pt-6">
                   <div className="flex justify-between items-start gap-4">
                     <div>
-                      <CardTitle className="text-2xl text-white drop-shadow-sm group-hover:text-cyan-300 transition-colors">
+                      <CardTitle className="text-2xl text-white drop-shadow-sm group-hover:text-amber-300 transition-colors">
                         {video.title}
                       </CardTitle>
                       <CardDescription className="text-neutral-400 font-medium mt-1">

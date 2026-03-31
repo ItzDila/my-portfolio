@@ -14,6 +14,23 @@ import { Badge } from "@/components/ui/badge";
 import { Share2, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 import { isLowEndAndroidDevice } from "@/lib/device-performance";
+import axel1 from "@/assets/Axela Post1.png";
+import newyear from "@/assets/New Year post.png";
+import tpsl from "@/assets/tpsl.jpg";
+import tppg from "@/assets/trvlpedia.jpg";
+import js1 from "@/assets/1D Flyer.png";
+import js2 from "@/assets/2 in one View Copy.png";
+import lp1 from "@/assets/Dell latitude e 5580  1  copy.png";
+import lp2 from "@/assets/HP 470 G7 Notebook 2.png";
+import rvt1 from "@/assets/Service Record Front.png";
+import rvt2 from "@/assets/Diagram Board.png";
+import sen1 from "@/assets/sinhala aurudu flyer.png";
+import sen2 from "@/assets/Toyota oil copy.png";
+import sen3 from "@/assets/fs.png";
+
+
+
+
 
 interface Post {
   id: number;
@@ -43,28 +60,111 @@ const POSTS_DATA: Post[] = [
   },
   {
     id: 3,
-    title: "Artisan Coffee Branding",
-    client: "Brew Haven",
-    description: "Created a cozy, warm-toned mood board and social media launch assets for a local artisanal coffee shop.",
-    image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1000&auto=format&fit=crop",
-    tags: ["Brand Identity", "Photography", "Food & Beverage"],
+    title: "Multiple Auto Part brand Order flyers",
+    client: "JS Auto Parts",
+    description: "Created two distinct order flyers for JS Auto Parts, each tailored to a specific product line. The first flyer features a sleek design with bold typography and high-quality images to promote the latest car accessories, while the second flyer adopts a more technical layout with detailed product specifications and clear calls-to-action, effectively targeting both casual buyers and automotive enthusiasts.",
+    image: js2.src,
+    tags: ["Brand Identity", "Layout Design", "Photoshop"],
   },
   {
     id: 4,
-    title: "Minimalist Fashion Story",
-    client: "Aura Boutique",
-    description: "Sleek and minimalist animated Instagram stories focusing on the new autumn collection, emphasizing elegant whitespace.",
-    image: "https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=1000&auto=format&fit=crop",
-    tags: ["After Effects", "Motion Graphics", "Fashion"],
+    title: "1D Auto Parts Promotional Flyer",
+    client: "JS Auto Parts",
+    description: "Created a promotional flyer for 1D Auto Parts, highlighting their latest products and special offers.",
+    image: js1.src,
+    tags: ["Brand Identity", "Layout Design", "Photoshop"],
+  },
+    {
+    id: 5,
+    title: "Vehicle Rental Service Flyer",
+    client: "JT Car Rentals",
+    description: "Designed a compelling flyer for JT Car Rentals, showcasing their diverse fleet and competitive pricing. The flyer features a clean layout with vibrant imagery of the vehicles, clear pricing information, and strong calls-to-action to encourage bookings.",
+    image: axel1.src,
+    tags: ["Brand Identity", "Photoshop", "Ad Design"],
+  },
+    {
+    id: 6,
+    title: "New Year Wishes Post",
+    client: "JT Car Rentals",
+    description: "Created a festive New Year Wishes social media post for JT Car Rentals, incorporating celebratory graphics and a warm message to engage their audience and promote brand goodwill during the holiday season.",
+    image: newyear.src,
+    tags: ["Social Media", "Photoshop", "Ad Design"],
+  },
+    {
+    id: 7,
+    title: "Laptop Promotional Flyer",
+    client: "Laptronics Lanka",
+    description: "Designed a sleek promotional flyer for Laptronics Lanka, featuring their latest laptop models. The flyer emphasizes key features, competitive pricing, and includes high-quality images to attract tech-savvy customers and drive sales.",
+    image: lp1.src,
+    tags: ["Brand Identity", "Photoshop", "Ad Design"],
+  },
+  {
+    id: 8,
+    title: "Laptop Promotional Flyer-II",
+    client: "Laptronics Lanka",
+    description: "Created a second promotional flyer for Laptronics Lanka, highlighting different laptop models and special offers.",
+    image: lp2.src,
+    tags: ["Brand Identity", "Photoshop", "Ad Design"],
+  },
+    {
+    id: 9,
+    title: "Service Card Design for Vehicle Maintenance",
+    client: "RevTech PVT LTD",
+    description: "Designed a service card for RevTech PVT LTD, featuring a clean and professional layout that includes essential information about vehicle maintenance services, contact details, and branding elements to enhance customer engagement and promote the company's offerings effectively.",
+    image: rvt1.src,
+    tags: ["Photoshop", "Service Design", "Brand Identity"],
+  },
+    {
+    id: 10,
+    title: "Vehicle Maintenance Diagram Board",
+    client: "RevTech PVT LTD",
+    description: "Created an informative diagram board for RevTech PVT LTD, illustrating the vehicle maintenance process with clear visuals and step-by-step instructions.",
+    image: rvt2.src,
+    tags: ["Photoshop", "Service Design", "Brand Identity"],
+  },
+    {
+    id: 11,
+    title: " Unwind in Sri lanka travel flyer",
+    client: "Travelpedia UK",
+    description: "Designed a captivating travel flyer for Travelpedia UK, showcasing the serene beauty of Sri Lanka. The flyer features stunning visuals of iconic destinations, vibrant colors, and compelling copy to entice travelers to explore the rich culture and natural wonders of Sri Lanka.",
+    image: tpsl.src,
+    tags: ["Photoshop", "Travel Design", "Brand Identity"],
+  },
+
+    {
+    id: 12,
+    title: "Prague Travel Flyer",
+    client: "Travelpedia UK",
+    description: "Designed a vibrant travel flyer for Travelpedia UK, highlighting the charm and attractions of Prague. The flyer features captivating imagery, detailed information about accommodations and activities, and persuasive copy to inspire travelers to visit this enchanting city.",
+    image: tppg.src,
+    tags: ["Photoshop", "Travel Design", "Brand Identity"],
+  },
+      {
+    id: 13,
+    title: "Sinhala New Year Flyer",
+    client: "Sena Excellent Service",
+    description: "Designed a festive Sinhala New Year flyer for Sena Excellent Service, incorporating traditional elements and vibrant colors to celebrate the occasion and promote the company's services during the holiday season.",
+    image: sen1.src,
+    tags: ["Photoshop", "New Year", "Ad Design"],
+  },
+  {
+    id: 14,
+    title: "Toyota Oil Change Service Flyer",
+    client: "Sena Excellent Service",
+    description: "Designed a promotional flyer for Toyota Oil Change Service, highlighting the benefits of regular oil changes and the quality of service provided.",
+    image: sen2.src,
+    tags: ["Photoshop", "Service Design", "Brand Identity"],
+  },
+  {
+    id: 15,
+    title: "Full Service Car Wash Board",
+    client: "Sena Excellent Service",
+    description: "Designed a promotional board design for Full Service Car Wash, highlighting the range of services offered and the quality of cleaning provided.",
+    image: sen3.src,
+    tags: ["Photoshop", "Service Design", "Brand Identity"],
   },
 ];
 
-const LIKES_DATA: Record<string, number> = {
-  "1": 14,
-  "2": 49,
-  "3": 6,
-  "4": 4,
-};
 
 export default function SocialMediaWork() {
   const [socialPosts] = useState<Post[]>(POSTS_DATA);
@@ -106,7 +206,7 @@ export default function SocialMediaWork() {
           <h1 className="flex flex-col gap-y-2 title-animate text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight drop-shadow-2xl">
             <span className="text-white">Social Media</span>
             <span className="text-transparent bg-clip-text bg-linear-to-r from-pink-500 via-purple-400 to-indigo-500 animate-pulse pb-2">
-              Masterpieces
+              Posts & Designes
             </span>
           </h1>
           <p className="text-neutral-300 text-lg md:text-xl max-w-2xl mx-auto drop-shadow-sm mt-4">
@@ -114,7 +214,7 @@ export default function SocialMediaWork() {
           </p>
         </motion.div>
 
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
           {socialPosts.map((post) => {
             return (
             <motion.div
