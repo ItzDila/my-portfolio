@@ -337,9 +337,8 @@ export default function Header() {
                         className="overflow-hidden ml-3 flex flex-col border-l border-white/20 pl-3 mb-1"
                       >
                          <div className="py-2 flex flex-col gap-1">
-                          <a href="/projects/university" className="py-2 text-sm text-white/80 hover:text-white transition-colors">University Projects</a>
-                          <a href="/projects/video" className="py-2 text-sm text-white/80 hover:text-white transition-colors">Video Edits</a>
-                          <a href="/projects/design" className="py-2 text-sm text-white/80 hover:text-white transition-colors">Post Designs</a>
+                          <a href="/projects/videos" className="py-2 text-sm text-white/80 hover:text-white transition-colors">Video Edits</a>
+                          <a href="/projects/posts" className="py-2 text-sm text-white/80 hover:text-white transition-colors">Post Designs</a>
                         </div>
                       </motion.div>
                     )}

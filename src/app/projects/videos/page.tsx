@@ -13,6 +13,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Play, Film, X } from "lucide-react";
 import { motion } from "framer-motion";
+import { isLowEndAndroidDevice } from "@/lib/device-performance";
 
 interface Video {
   id: number;
@@ -85,7 +86,7 @@ const VIDEOS_DATA: Video[] = [
     thumbnail: "https://www.amsterdamsights.com/events/img/alf-00.jpg",
     tags: [],
     duration: "00:50",
-    videoUrl: "https://www.youtube.com/embed/nlwuiRGJ6nY",
+    videoUrl: "https://streamable.com/x8x7sx",
   },
   {
     id: 2,
@@ -109,9 +110,9 @@ const VIDEOS_DATA: Video[] = [
   },
   {
     id: 4,
-    title: "Apparel Brand Documentary",
-    client: "Urban Drift",
-    description: "A mini-documentary style ad detailing the behind-the-scenes creation of a streetwear line. Utilized intimate b-roll, audio mixing, and subtle visual effects.",
+    title: "Speed Ramp Edit for Vehicle",
+    client: "Jayan Gamage",
+    description: "did a speed ramp edit for a vehicle which is .",
     thumbnail: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?q=80&w=1000&auto=format&fit=crop",
     tags: ["Video Production", "Audio Mixing", "Fashion"],
     duration: "03:30",
@@ -127,13 +128,13 @@ const LIKES_DATA: Record<string, number> = {
 };
 
 export default function VideoWork() {
-  const [videoProjects, setVideoProjects] = useState<Video[]>(VIDEOS_DATA);
-  const [isLoading, setIsLoading] = useState(false);
+  const [videoProjects] = useState<Video[]>(VIDEOS_DATA);
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLowEndAndroid, setIsLowEndAndroid] = useState(false);
 
   useEffect(() => {
-    // Data is now hardcoded, no need to fetch
+    setIsLowEndAndroid(isLowEndAndroidDevice());
   }, []);
 
   const openVideo = (video: Video) => {
@@ -142,24 +143,28 @@ export default function VideoWork() {
   };
 
   const headerVariants = {
-    hidden: { opacity: 0, y: -50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" as const } },
+    hidden: isLowEndAndroid ? { opacity: 0 } : { opacity: 0, y: -50 },
+    visible: isLowEndAndroid
+      ? { opacity: 1, transition: { duration: 0.25, ease: "linear" as const } }
+      : { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" as const } },
   };
 
   const cardVariants = {
-    hidden: { opacity: 0, y: 50, scale: 0.95 },
-    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: "easeOut" as const } },
+    hidden: isLowEndAndroid ? { opacity: 0 } : { opacity: 0, y: 50, scale: 0.95 },
+    visible: isLowEndAndroid
+      ? { opacity: 1, transition: { duration: 0.2, ease: "linear" as const } }
+      : { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: "easeOut" as const } },
   };
 
   return (
     <>
-      <LiveBackground />
+      {!isLowEndAndroid && <LiveBackground />}
       <div className="relative z-10 min-h-screen px-6 py-32 max-w-7xl mx-auto">
         <motion.div
           variants={headerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.8 }}
+          viewport={{ once: true, amount: isLowEndAndroid ? 0.1 : 0.8 }}
           className="text-center mb-20"
         >
           <Badge className="mb-4 bg-white/10 text-white border border-white/20 hover:bg-white/20 backdrop-blur-md px-5 py-2 rounded-full shadow-lg text-sm">
@@ -185,8 +190,8 @@ export default function VideoWork() {
               variants={cardVariants}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-              whileHover={{ y: -10 }}
+              viewport={{ once: true, amount: isLowEndAndroid ? 0.05 : 0.2 }}
+              whileHover={isLowEndAndroid ? undefined : { y: -10 }}
               className="h-full"
             >
               <Card className="h-full rounded-2xl shadow-2xl transition-all duration-300 backdrop-blur-xl bg-black/40 border-white/10 hover:border-white/30 overflow-hidden relative group flex flex-col">
@@ -195,12 +200,14 @@ export default function VideoWork() {
                   <img
                     src={video.thumbnail}
                     alt={video.title}
-                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-in-out"
+                    className={`w-full h-full object-cover transform transition-transform duration-700 ease-in-out ${
+                      isLowEndAndroid ? "" : "group-hover:scale-105"
+                    }`}
                   />
                   <div className="absolute inset-0 z-20 flex items-center justify-center">
                     <motion.div
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.95 }}
+                      whileHover={isLowEndAndroid ? undefined : { scale: 1.1 }}
+                      whileTap={isLowEndAndroid ? undefined : { scale: 0.95 }}
                       className="w-16 h-16 rounded-full bg-cyan-500/80 backdrop-blur-sm flex items-center justify-center text-white shadow-[0_0_30px_rgba(6,182,212,0.6)] group-hover:bg-cyan-400 transition-colors"
                     >
                       <Play className="w-8 h-8 ml-1 fill-white" />

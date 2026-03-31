@@ -140,8 +140,10 @@ body {
   width: 100%;
   max-width: 100%;
   overflow-x: clip;
+  overflow-y: auto;
   overscroll-behavior-x: none;
-  overscroll-behavior-y: none;
+  overscroll-behavior-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 @supports not (overflow: clip) {
@@ -169,6 +171,7 @@ body {
 @media (max-width: 640px) {
   body {
     scrollbar-gutter: auto;
+    touch-action: pan-y;
   }
 
   h1 {
@@ -178,6 +181,12 @@ body {
 
   p {
     line-height: 1.6;
+  }
+}
+
+@media (pointer: coarse) {
+  html {
+    scroll-behavior: auto;
   }
 }
 

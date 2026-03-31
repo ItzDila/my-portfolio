@@ -13,6 +13,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Share2, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
+import { isLowEndAndroidDevice } from "@/lib/device-performance";
 
 interface Post {
   id: number;
@@ -66,32 +67,36 @@ const LIKES_DATA: Record<string, number> = {
 };
 
 export default function SocialMediaWork() {
-  const [socialPosts, setSocialPosts] = useState<Post[]>(POSTS_DATA);
-  const [isLoading, setIsLoading] = useState(false);
+  const [socialPosts] = useState<Post[]>(POSTS_DATA);
+  const [isLowEndAndroid, setIsLowEndAndroid] = useState(false);
 
   useEffect(() => {
-    // Data is now hardcoded, no need to fetch
+    setIsLowEndAndroid(isLowEndAndroidDevice());
   }, []);
 
   const headerVariants = {
-    hidden: { opacity: 0, y: -50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" as const } },
+    hidden: isLowEndAndroid ? { opacity: 0 } : { opacity: 0, y: -50 },
+    visible: isLowEndAndroid
+      ? { opacity: 1, transition: { duration: 0.25, ease: "linear" as const } }
+      : { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" as const } },
   };
 
   const cardVariants = {
-    hidden: { opacity: 0, y: 50, scale: 0.95 },
-    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: "easeOut" as const } },
+    hidden: isLowEndAndroid ? { opacity: 0 } : { opacity: 0, y: 50, scale: 0.95 },
+    visible: isLowEndAndroid
+      ? { opacity: 1, transition: { duration: 0.2, ease: "linear" as const } }
+      : { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: "easeOut" as const } },
   };
 
   return (
     <>
-      <LiveBackground />
+      {!isLowEndAndroid && <LiveBackground />}
       <div className="relative z-10 min-h-screen px-6 py-32 max-w-7xl mx-auto">
         <motion.div
           variants={headerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.8 }}
+          viewport={{ once: true, amount: isLowEndAndroid ? 0.1 : 0.8 }}
           className="text-center mb-20"
         >
           <Badge className="mb-4 bg-white/10 text-white border border-white/20 hover:bg-white/20 backdrop-blur-md px-5 py-2 rounded-full shadow-lg text-sm">
@@ -117,8 +122,8 @@ export default function SocialMediaWork() {
               variants={cardVariants}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-              whileHover={{ y: -10 }}
+              viewport={{ once: true, amount: isLowEndAndroid ? 0.05 : 0.2 }}
+              whileHover={isLowEndAndroid ? undefined : { y: -10 }}
               className="h-full"
             >
               <Card className="h-full rounded-2xl shadow-2xl transition-all duration-300 backdrop-blur-xl bg-black/40 border-white/10 hover:border-white/30 overflow-hidden relative group flex flex-col">
@@ -127,7 +132,9 @@ export default function SocialMediaWork() {
                   <img
                     src={post.image}
                     alt={post.title}
-                    className="w-full h-full object-contain p-2 transform group-hover:scale-110 transition-transform duration-700 ease-in-out"
+                    className={`w-full h-full object-contain p-2 transform transition-transform duration-700 ease-in-out ${
+                      isLowEndAndroid ? "" : "group-hover:scale-110"
+                    }`}
                   />
                   <div className="absolute top-4 right-4 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform -translate-y-2.5 group-hover:translate-y-0">
                     <button className="p-2 rounded-full bg-black/50 text-white hover:bg-blue-500 backdrop-blur-md transition-colors">
