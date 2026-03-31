@@ -94,9 +94,8 @@ export default function CVPage() {
 
       const languages = [
         { name: "Sinhala", level: "Native" },
-        { name: "English", level: "Fluent" },
-        { name: "Tamil", level: "Basic" },
-      ];
+        { name: "English", level: "Upper-Intermediate" },
+            ];
 
       const competencies = [
         { name: "Visual Design & Branding", value: 92 },
@@ -280,7 +279,7 @@ export default function CVPage() {
       const groupedSkills = [
         { group: "Design", items: ["Photoshop", "Illustrator", "Premiere Pro", "After Effects", "Branding"] },
         { group: "Frontend", items: ["React", "Next.js", "Tailwind", "JavaScript", "HTML/CSS"] },
-        { group: "Backend", items: ["Node.js", "PHP", "Java", "REST API", "Git"] },
+        { group: "Backend", items: ["Node.js", "PHP", "Java", "Git"] },
       ];
 
       groupedSkills.forEach((entry) => {
