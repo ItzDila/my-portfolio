@@ -14,6 +14,13 @@ import { Badge } from "@/components/ui/badge";
 import { Play, Film, X } from "lucide-react";
 import { motion } from "framer-motion";
 import { isLowEndAndroidDevice } from "@/lib/device-performance";
+import voxyImage from "@/assets/voxy.png";
+import ams from "@/assets/ams.png";
+import ams_light from "@/assets/ams_light.png";
+import sena from "@/assets/sena.png";
+import rome from "@/assets/rome.png";
+
+
 
 interface Video {
   id: number;
@@ -83,40 +90,40 @@ const VIDEOS_DATA: Video[] = [
     title: "Amsterdam Light Festival Reel",
     client: "Travelpedia UK",
     description: "This is about an amsterdam lightfestival reel that is made for travel pedia uk",
-    thumbnail: "https://www.amsterdamsights.com/events/img/alf-00.jpg",
+    thumbnail: ams_light.src,
     tags: [],
     duration: "00:50",
-    videoUrl: "https://streamable.com/x8x7sx",
+    videoUrl: "https://streamable.com/e/x8x7sx?autoplay=1",
   },
   {
     id: 2,
-    title: "Tech Conference Opener",
-    client: "Innovate Summit 2025",
-    description: "An adrenaline-pumping intro video for a major tech conference. Built heavy motion graphics, 3D text tracking, and kinetic typography to set the mood.",
-    thumbnail: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=1000&auto=format&fit=crop",
+    title: "Rome Travel Reel ",
+    client: "Travelpedia UK",
+    description: "A captivating travel reel showcasing the timeless beauty of Rome. From the iconic Colosseum to the romantic Trevi Fountain, this video captures the essence of the Eternal City in a visually stunning montage.",
+    thumbnail: rome.src,
     tags: ["After Effects", "Motion Graphics", "Event"],
     duration: "00:50",
-    videoUrl: "https://streamable.com/e/xs3f4l?",
+    videoUrl: "https://streamable.com/e/xs3f4l?autoplay=1",
   },
   {
     id: 3,
-    title: "Automotive Showcase",
-    client: "JT Car Rental",
-    description: "A sleek, high-end showcase of luxury rental vehicles. Focused on speed-ramping techniques, aggressive cuts to the beat, and cinematic aspect ratios.",
-    thumbnail: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1000&auto=format&fit=crop",
-    tags: ["Premiere Pro", "Speed Ramping", "Automotive"],
+    title: "Simple Motion Graphics logo reveal",
+    client: "Sena Excellent Service",
+    description: "A sleek logo reveal animation for a local service company. Focused on clean design, smooth transitions, and subtle particle effects to create a memorable brand introduction.",
+    thumbnail: sena.src,
+    tags: ["After Effects", "Speed Ramping", "LOGO Animation"],
     duration: "02:15",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    videoUrl: "https://streamable.com/e/q5wnix?autoplay=1",
   },
   {
     id: 4,
     title: "Speed Ramp Edit for Vehicle",
     client: "Jayan Gamage",
-    description: "did a speed ramp edit for a vehicle which is .",
-    thumbnail: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?q=80&w=1000&auto=format&fit=crop",
+    description: "did a speed ramp edit for a vehicle which is cure my boredom.",
+    thumbnail: voxyImage.src,
     tags: ["Video Production", "Audio Mixing", "Fashion"],
     duration: "03:30",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    videoUrl: "https://streamable.com/e/5bi6r1?autoplay=1",
   },
 ];
 
