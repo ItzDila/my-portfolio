@@ -56,6 +56,7 @@ export default function RootLayout({
         <Header />
         <main className="min-h-screen">{children}</main>
         <AppFooter />
+        <SpeedInsights />
       </body>
     </html>
   );
