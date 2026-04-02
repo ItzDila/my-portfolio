@@ -66,7 +66,7 @@ class TextScramble {
         complete++;
         output += to;
       } else if (this.frame >= start) {
-        if (!char || Math.random() < 0.28) {
+        if (!char || Math.random() < 0.14) {
           char = this.chars[Math.floor(Math.random() * this.chars.length)];
           this.queue[i].char = char;
         }
@@ -100,6 +100,10 @@ export const ModernAnimatedHeroTitle: React.FC<{
 }) => {
   const elementRef = useRef<HTMLSpanElement>(null);
   const scramblerRef = useRef<TextScramble | null>(null);
+  const longestPhraseLength = phrases.reduce(
+    (max, phrase) => Math.max(max, phrase.length),
+    0,
+  );
 
   useEffect(() => {
     if (!elementRef.current || scramblerRef.current) return;
@@ -114,13 +118,13 @@ export const ModernAnimatedHeroTitle: React.FC<{
 
     const next = () => {
       if (!scramblerRef.current) return;
-      scramblerRef.current.setText(phrases[counter]).then(() => {
-        timeoutId = setTimeout(next, 1800);
-      });
       counter = (counter + 1) % phrases.length;
+      scramblerRef.current.setText(phrases[counter]).then(() => {
+        timeoutId = setTimeout(next, 2200);
+      });
     };
 
-    next();
+    timeoutId = setTimeout(next, 2200);
 
     return () => {
       if (timeoutId) clearTimeout(timeoutId);
@@ -131,7 +135,10 @@ export const ModernAnimatedHeroTitle: React.FC<{
     <>
       <span
         ref={elementRef}
-        className={`inline-block max-w-full wrap-break-word text-center leading-tight align-middle ${className}`}
+        className={`hero-scramble-title inline-block max-w-full text-center leading-tight align-middle ${className}`}
+        style={{
+          ["--title-min-width" as string]: `${longestPhraseLength + 1}ch`,
+        }}
       >
         {phrases[0]}
       </span>
@@ -139,6 +146,18 @@ export const ModernAnimatedHeroTitle: React.FC<{
         .dud {
           color: #fcd34d;
           opacity: 0.75;
+        }
+
+        .hero-scramble-title {
+          min-height: 1.2em;
+          word-break: break-word;
+        }
+
+        @media (min-width: 1024px) {
+          .hero-scramble-title {
+            min-width: var(--title-min-width, 0ch);
+            white-space: nowrap;
+          }
         }
       `}</style>
     </>

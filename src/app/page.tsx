@@ -84,7 +84,9 @@ export default function Home() {
         }
         .animate-neon-pulse {
           animation: neon-pulse 5.5s ease-in-out infinite;
-          display: inline-block;
+          display: flex;
+          justify-content: center;
+          width: 100%;
         }
 
         @keyframes float {
@@ -188,17 +190,14 @@ export default function Home() {
                 </span>
                 <br />
 
-                <span className="animate-neon-pulse block px-2 sm:px-0">
+                <span className="animate-neon-pulse flex justify-center w-full px-4 sm:px-0">
                   <ModernAnimatedHeroTitle
                     phrases={["Creative Designer", "Video Editor ", "Web Developer", "Visual Storyteller", "UI/UX Enthusiast",]}
-                    className="courgette-font inline-block w-full max-w-[16ch] sm:max-w-none text-center wrap-break-word text-transparent bg-clip-text bg-linear-to-r from-amber-600 via-yellow-300 to-red-500 animate-gradient-flow animate-hue-cycle [-webkit-text-stroke:1px_rgba(255,255,255,0.2)]"
+                    className="courgette-font inline-block mx-auto text-center text-transparent bg-clip-text bg-linear-to-r from-amber-600 via-yellow-300 to-red-500 animate-gradient-flow animate-hue-cycle [-webkit-text-stroke:1px_rgba(255,255,255,0.2)]"
                   />
                 </span>
-                <br />
-
-                <span className="text-white"></span>
               </h1>
-              <p className="description-animate text-lg md:text-xl text-neutral-200 max-w-2xl mx-auto leading-relaxed drop-shadow-md">
+              <p className="description-animate -mt-2 text-lg md:text-xl text-neutral-200 max-w-2xl mx-auto leading-relaxed drop-shadow-md">
                 A passionate{" "}
                 <span className="text-white font-semibold">
                   Designer, Video Editor & Developer
