@@ -62,12 +62,12 @@ export default function LiveBackground() {
         }
 
         /* 3. Original Blob Keyframes */
-        @keyframes moveBlob1 { 0%, 100% { transform: translate(0, 0) scale(1); } 33% { transform: translate(30vw, 20vh) scale(1.3); } 66% { transform: translate(-10vw, 40vh) scale(0.8); } }
-        @keyframes moveBlob2 { 0%, 100% { transform: translate(0, 0) scale(1); } 33% { transform: translate(-25vw, -30vh) scale(1.2); } 66% { transform: translate(20vw, -20vh) scale(0.9); } }
-        @keyframes moveBlob3 { 0%, 100% { transform: translate(0, 0) scale(1); } 33% { transform: translate(25vw, -20vh) scale(0.9); } 66% { transform: translate(-30vw, 15vh) scale(1.3); } }
-        @keyframes moveBlob4 { 0%, 100% { transform: translate(0, 0) scale(0.8); } 33% { transform: translate(-30vw, 30vh) scale(1.2); } 66% { transform: translate(30vw, -10vh) scale(1); } }
-        @keyframes moveBlob5 { 0%, 100% { transform: translate(0, 0) scale(1.1); } 33% { transform: translate(20vw, 35vh) scale(0.8); } 66% { transform: translate(-25vw, -25vh) scale(1.3); } }
-        @keyframes moveBlob6 { 0%, 100% { transform: translate(0, 0) scale(1.2); } 33% { transform: translate(20vw, 45vh) scale(0.8); } 66% { transform: translate(-25vw, -25vh) scale(1.3); } }
+        @keyframes moveBlob1 { 0%, 100% { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); } 33% { transform: translate3d(30vw, 20vh, 0) scale3d(1.3, 1.3, 1); } 66% { transform: translate3d(-10vw, 40vh, 0) scale3d(0.8, 0.8, 1); } }
+        @keyframes moveBlob2 { 0%, 100% { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); } 33% { transform: translate3d(-25vw, -30vh, 0) scale3d(1.2, 1.2, 1); } 66% { transform: translate3d(20vw, -20vh, 0) scale3d(0.9, 0.9, 1); } }
+        @keyframes moveBlob3 { 0%, 100% { transform: translate3d(0, 0, 0) scale3d(1, 1, 1); } 33% { transform: translate3d(25vw, -20vh, 0) scale3d(0.9, 0.9, 1); } 66% { transform: translate3d(-30vw, 15vh, 0) scale3d(1.3, 1.3, 1); } }
+        @keyframes moveBlob4 { 0%, 100% { transform: translate3d(0, 0, 0) scale3d(0.8, 0.8, 1); } 33% { transform: translate3d(-30vw, 30vh, 0) scale3d(1.2, 1.2, 1); } 66% { transform: translate3d(30vw, -10vh, 0) scale3d(1, 1, 1); } }
+        @keyframes moveBlob5 { 0%, 100% { transform: translate3d(0, 0, 0) scale3d(1.1, 1.1, 1); } 33% { transform: translate3d(20vw, 35vh, 0) scale3d(0.8, 0.8, 1); } 66% { transform: translate3d(-25vw, -25vh, 0) scale3d(1.3, 1.3, 1); } }
+        @keyframes moveBlob6 { 0%, 100% { transform: translate3d(0, 0, 0) scale3d(1.2, 1.2, 1); } 33% { transform: translate3d(20vw, 45vh, 0) scale3d(0.8, 0.8, 1); } 66% { transform: translate3d(-25vw, -25vh, 0) scale3d(1.3, 1.3, 1); } }
 
         /* 4. Full Page Background Container */
         .live-bg-container {
@@ -78,6 +78,15 @@ export default function LiveBackground() {
           z-index: -999; /* Pushes it to the absolute bottom layer */
           pointer-events: none; /* Ensures you can click links above it */
           overflow: clip;
+          transform: translate3d(0, 0, 0);
+          -webkit-transform: translate3d(0, 0, 0);
+          transform-style: preserve-3d;
+          -webkit-transform-style: preserve-3d;
+          will-change: transform;
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
+          contain: paint;
+          isolation: isolate;
           background: linear-gradient(
             135deg,
             rgba(15, 15, 20, 1) 0%,
@@ -94,9 +103,14 @@ export default function LiveBackground() {
           filter: blur(60px);
           -webkit-filter: blur(60px);
           opacity: 0.95;
-          will-change: transform;
-          transform: translateZ(0);
-          -webkit-transform: translateZ(0);
+          will-change: transform, filter, opacity;
+          transform: translate3d(0, 0, 0);
+          -webkit-transform: translate3d(0, 0, 0);
+          transform-style: preserve-3d;
+          -webkit-transform-style: preserve-3d;
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
+          contain: paint;
         }
 
         .blob-1 { top: -15%; left: -15%; width: max(50vw, 300px); height: max(50vw, 300px); background: radial-gradient(circle, rgba(190, 81, 3, 0.8), transparent 70%); animation: moveBlob1 12s infinite ease-in-out; }
