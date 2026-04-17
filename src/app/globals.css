@@ -127,6 +127,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    background-image: radial-gradient(circle at 10% -10%, rgba(72, 101, 255, 0.18), transparent 40%), radial-gradient(circle at 90% 10%, rgba(126, 86, 255, 0.14), transparent 35%);
     scrollbar-gutter: stable both-edges;
   }
 }
@@ -240,3 +241,5 @@ html {
 *::-webkit-scrollbar-corner {
   background: transparent;
 }
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
