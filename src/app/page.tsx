@@ -186,7 +186,7 @@ export default function Home() {
             <div className="flex flex-col gap-4 max-w-4xl">
               <h1 className="title-animate text-4xl sm:text-5xl md:text-7xl lg:text-8xl leading-[1.1] font-extrabold tracking-tight drop-shadow-2xl">
                 <span className="text-white">
-                  Hello👋🏻 <br />I'm Timesh Dillon {" "}
+                  Hello👋🏻 <br />I&apos;m Timesh Dillon {" "}
                 </span>
                 <br />
 
