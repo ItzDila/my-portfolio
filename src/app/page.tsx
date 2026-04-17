@@ -22,6 +22,9 @@ import {
   Mail,
   Video,
   Sparkles,
+  Rocket,
+  Gauge,
+  WandSparkles,
 } from "lucide-react";
 import LiveBackground from "@/components/LiveBackground";
 import { ModernAnimatedHeroTitle } from "@/components/ui/modern-animated-hero-section";
@@ -41,447 +44,229 @@ const bestWorks = [
   brakePostImage,
 ];
 
+const serviceCards = [
+  {
+    title: "Graphic Design",
+    desc: "Compelling brand identities, campaigns, and digital assets that make brands instantly recognizable.",
+    icon: Palette,
+  },
+  {
+    title: "Web Development",
+    desc: "Fast, modern, conversion-focused websites with premium interactions and clean architecture.",
+    icon: Code,
+  },
+  {
+    title: "Video Editing",
+    desc: "High-retention short and long form video edits tailored for storytelling and social growth.",
+    icon: Video,
+  },
+];
+
 export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrolled = window.scrollY > 50;
+      const scrolled = window.scrollY > 40;
       setIsScrolled((prev) => (prev === scrolled ? prev : scrolled));
     };
 
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <>
       <style>{`
-        /* UI Animations */
         @keyframes fadeInUp {
           from { opacity: 0; transform: translateY(30px); }
           to { opacity: 1; transform: translateY(0); }
         }
-
-        /* --- PREMIUM TEXT ANIMATIONS --- */
         @keyframes gradient-flow {
           0% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
           100% { background-position: 0% 50%; }
         }
-        .animate-gradient-flow {
-          background-size: 200% auto;
-          animation: gradient-flow 4s ease infinite;
-        }
-
-        @keyframes neon-pulse {
-          0%, 100% { filter: drop-shadow(0 0 5px rgba(252, 211, 77, 0.3)); }
-          50% { filter: drop-shadow(0 0 20px rgba(0, 238, 255, 0.7)); }
-        }
-        .animate-neon-pulse {
-          animation: neon-pulse 5.5s ease-in-out infinite;
-          display: flex;
-          justify-content: center;
-          width: 100%;
-        }
-
-        @keyframes float {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-8px); }
-        }
-        .animate-float {
-          animation: float 4s ease-in-out infinite;
-          display: inline-block;
-        }
-
-        @keyframes hue-cycle {
-          0% { filter: hue-rotate(0deg); }
-          100% { filter: hue-rotate(360deg); }
-        }
-        .animate-hue-cycle {
-          animation: hue-cycle 6s linear infinite;
-        }
-
-        /* Infinite Marquee Scroll */
         @keyframes marquee-scroll {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
         }
+
+        .hero-content { animation: fadeInUp 0.7s ease-out; }
+        .section-animate { animation: fadeInUp 0.8s ease-out; }
+        .animate-gradient-flow {
+          background-size: 220% auto;
+          animation: gradient-flow 4s ease infinite;
+        }
         .animate-marquee {
-          animation: marquee-scroll 40s linear infinite;
+          animation: marquee-scroll 45s linear infinite;
           width: max-content;
         }
-        .animate-marquee:hover {
-          animation-play-state: paused;
-        }
+        .animate-marquee:hover { animation-play-state: paused; }
 
-        /* Component Classes */
-        .hero-content { animation: fadeInUp 0.8s ease-out; }
-        .badge-animate { animation: fadeInUp 0.8s ease-out 0.1s both; }
-        .title-animate { animation: fadeInUp 0.8s ease-out 0.2s both; }
-        .description-animate { animation: fadeInUp 0.8s ease-out 0.3s both; }
-        .buttons-animate { animation: fadeInUp 0.8s ease-out 0.4s both; }
-        .stats-animate { animation: fadeInUp 0.8s ease-out 0.5s both; }
-        .section-animate { animation: fadeInUp 0.8s ease-out; }
-
-        .card-animate { animation: fadeInUp 0.6s ease-out; }
-        .card-animate:nth-child(1) { animation-delay: 0.1s; }
-        .card-animate:nth-child(2) { animation-delay: 0.2s; }
-        .card-animate:nth-child(3) { animation-delay: 0.3s; }
-
-        /* Enhanced Glassmorphism */
         .glassmorphic {
           background: rgba(255, 255, 255, 0.08) !important;
           backdrop-filter: blur(16px) !important;
           -webkit-backdrop-filter: blur(16px) !important;
-          border: 1px solid rgba(255, 255, 255, 0.15) !important;
-          box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3) !important;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          border: 1px solid rgba(255, 255, 255, 0.16) !important;
+          box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3) !important;
+          transition: all 300ms ease;
         }
-
         .glassmorphic:hover {
-          background: rgba(255, 255, 255, 0.12) !important;
-          border-color: rgba(255, 255, 255, 0.3) !important;
-          box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5) !important;
+          background: rgba(255, 255, 255, 0.13) !important;
+          border-color: rgba(255, 255, 255, 0.24) !important;
           transform: translateY(-2px);
-        }
-
-        @font-face {
-          font-family: "Momo Signature";
-          src: url("/fonts/MomoSignature.ttf") format("truetype");
-          font-weight: 400;
-          font-style: normal;
-          font-display: swap;
-        }
-
-        .momo-signature {
-          font-family: "Momo Signature", cursive;
-        }
-
-        .alex-brush {
-          font-family: var(--font-alex-brush), cursive;
-        }
-
-        .courgette-font {
-          font-family: var(--font-courgette), cursive;
         }
       `}</style>
 
       <LiveBackground />
 
-      <div className="flex flex-col gap-0 relative z-10">
-        {/* Hero Section */}
-        <section className="relative flex flex-col items-center justify-center text-center py-32 gap-8 overflow-hidden min-h-screen flex-center">
-          <div className="hero-content flex flex-col items-center gap-6 px-4 relative z-10">
-            <div className="absolute inset-0 bg-radial-gradient from-black/20 to-transparent -z-10 blur-3xl rounded-full" />
-
-            <Badge className="badge-animate animate-float glassmorphic text-neutral-100 px-5 py-2 rounded-full">
-              ✦ Turning Ideas into Visual Reality
+      <div className="relative z-10 flex flex-col">
+        <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 py-24 text-center sm:py-32">
+          <div className="hero-content flex w-full max-w-6xl flex-col items-center gap-8">
+            <Badge className="mx-auto">
+              <WandSparkles className="size-3.5" />
+              Portfolio Direction: Bold × Editorial × Immersive
             </Badge>
 
-            <div className="flex flex-col gap-4 max-w-4xl">
-              <h1 className="title-animate text-4xl sm:text-5xl md:text-7xl lg:text-8xl leading-[1.1] font-extrabold tracking-tight drop-shadow-2xl">
-                <span className="text-white">
-                  Hello👋🏻 <br />I'm Timesh Dillon {" "}
-                </span>
-                <br />
+            <h1 className="text-4xl font-black leading-[1.04] tracking-tight text-white drop-shadow-2xl sm:text-5xl md:text-7xl lg:text-8xl">
+              Hello 👋🏻 I&apos;m Timesh Dillon
+              <span className="mt-3 flex justify-center px-2 sm:px-0">
+                <ModernAnimatedHeroTitle
+                  phrases={[
+                    "Creative Director",
+                    "Visual Engineer",
+                    "Design Storyteller",
+                    "Brand Experience Builder",
+                  ]}
+                  className="inline-block bg-linear-to-r from-amber-500 via-orange-300 to-rose-400 bg-clip-text text-center text-transparent animate-gradient-flow"
+                />
+              </span>
+            </h1>
 
-                <span className="animate-neon-pulse flex justify-center w-full px-4 sm:px-0">
-                  <ModernAnimatedHeroTitle
-                    phrases={["Creative Designer", "Video Editor ", "Web Developer", "Visual Storyteller", "UI/UX Enthusiast",]}
-                    className="courgette-font inline-block mx-auto text-center text-transparent bg-clip-text bg-linear-to-r from-amber-600 via-yellow-300 to-red-500 animate-gradient-flow animate-hue-cycle [-webkit-text-stroke:1px_rgba(255,255,255,0.2)]"
-                  />
-                </span>
-              </h1>
-              <p className="description-animate -mt-2 text-lg md:text-xl text-neutral-200 max-w-2xl mx-auto leading-relaxed drop-shadow-md">
-                A passionate{" "}
-                <span className="text-white font-semibold">
-                  Designer, Video Editor & Developer
-                </span>{" "}
-                crafting beautiful digital experiences that leave a lasting
-                impression.
-              </p>
-            </div>
+            <p className="max-w-3xl text-base leading-relaxed text-neutral-200 sm:text-lg md:text-xl">
+              I build high-impact visuals, conversion-focused websites, and social-first
+              video content designed to feel premium, perform fast, and adapt beautifully
+              on every screen.
+            </p>
 
-            <div className="buttons-animate flex flex-wrap gap-4 justify-center">
-              <Button
-                asChild
-                size="lg"
-                className="glassmorphic text-white gap-2 border-white/20 hover:bg-white/20"
-              >
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+              <Button asChild size="lg" className="glassmorphic text-white">
                 <Link href="/services">
-                  View Services <ArrowRight className="w-4 h-4" />
+                  View Services <ArrowRight className="ml-1 size-4" />
                 </Link>
               </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="glassmorphic text-neutral-200 hover:text-white hover:bg-white/10 border-white/10"
-              >
+              <Button asChild size="lg" variant="outline" className="glassmorphic text-white">
                 <Link href="/contact">
-                  <Mail className="w-4 h-4 mr-2" /> Contact Me
+                  <Mail className="mr-2 size-4" /> Contact Me
                 </Link>
               </Button>
             </div>
 
-            {/* Stats */}
             <div
-              className={`stats-animate flex flex-wrap gap-8 justify-center mt-8 glassmorphic px-10 py-6 rounded-2xl ${
-                isScrolled ? "bg-black/20 backdrop-blur-sm" : ""
+              className={`grid w-full max-w-4xl grid-cols-1 gap-4 rounded-2xl p-3 sm:grid-cols-3 sm:p-4 ${
+                isScrolled ? "glassmorphic" : "bg-transparent"
               }`}
             >
               {[
-                { value: "5+", label: "Years Experience" },
-                { value: "40+", label: "Projects Done" },
-                { value: "10+", label: "Happy Clients" },
-              ].map((stat) => (
-                <div key={stat.label} className="flex flex-col items-center">
-                  <span className="text-3xl font-bold text-white drop-shadow-md">
-                    {stat.value}
-                  </span>
-                  <span className="text-sm text-neutral-300">{stat.label}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <Separator className="bg-white/10" />
-
-        {/* About Section */}
-        <section
-          className={`flex flex-col gap-10 py-24 px-4 transition-all duration-300 ${
-            isScrolled ? "bg-black/20 backdrop-blur-sm" : ""
-          }`}
-          id="about"
-        >
-          <div className="section-animate flex flex-col gap-2 text-center">
-            <Badge
-              className={`mx-auto glassmorphic text-neutral-200 px-3 py-1 rounded-full`}
-            >
-              Background
-            </Badge>
-            <h2 className="text-4xl font-bold text-white drop-shadow-md">
-              About Me
-            </h2>
-            <p className="text-neutral-300 max-w-xl mx-auto text-sm drop-shadow-sm">
-              Where creativity meets purpose — explore the story behind my work.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto w-full">
-            {[
-              {
-                title: "Who I Am",
-                desc: "A visual storyteller specializing in graphic design and video editing, with a growing expertise in building smart digital solutions.",
-                icon: <Star className="w-5 h-5 text-white" />,
-              },
-              {
-                title: "My Story",
-                desc: "I began my journey in graphic design and video editing, working with brands to create impactful visuals, and later expanded into web development to bring my ideas to life through code.",
-                icon: <Layers className="w-5 h-5 text-white" />,
-              },
-              {
-                title: "Experience",
-                desc: "5+ years delivering branding, digital content, video production, and modern UI experiences for clients across industries.",
-                icon: <Code className="w-5 h-5 text-white" />,
-              },
-            ].map((item) => (
-              <div key={item.title} className="card-animate">
-                <Card className="glassmorphic group h-full">
-                  <CardHeader className="flex flex-row items-center gap-3">
-                    <div className="p-2 rounded-lg bg-white/10 group-hover:bg-white/20 transition-colors border border-white/5">
-                      {item.icon}
+                { value: "5+", label: "Years Experience", icon: Rocket },
+                { value: "40+", label: "Projects Delivered", icon: Sparkles },
+                { value: "95%", label: "Client Satisfaction", icon: Gauge },
+              ].map((stat) => {
+                const Icon = stat.icon;
+                return (
+                  <div
+                    key={stat.label}
+                    className="group flex items-center gap-3 rounded-xl border border-white/10 bg-black/20 p-4 text-left"
+                  >
+                    <div className="rounded-lg border border-white/20 bg-white/10 p-2">
+                      <Icon className="size-4 text-white" />
                     </div>
-                    <CardTitle className="text-white text-lg">
-                      {item.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="text-neutral-300 text-sm leading-relaxed">
-                    {item.desc}
-                  </CardContent>
-                </Card>
-              </div>
-            ))}
+                    <div>
+                      <p className="text-xl font-bold text-white sm:text-2xl">{stat.value}</p>
+                      <p className="text-xs text-neutral-300 sm:text-sm">{stat.label}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </section>
 
         <Separator className="bg-white/10" />
 
-        {/* Graphics Section */}
-        <section
-          className={`w-full transition-all duration-300 ${
-            isScrolled ? "bg-black/20 backdrop-blur-sm" : ""
-          }`}
-          id="graphics"
-        >
-          <div className="flex flex-col gap-10 py-24 px-4 max-w-6xl mx-auto w-full">
-            <div className="section-animate flex flex-col gap-2 text-center">
-              <Badge
-                className={`mx-auto glassmorphic text-neutral-200 px-3 py-1 rounded-full`}
-              >
-                Graphics
-              </Badge>
-              <h2 className="text-4xl font-bold text-white drop-shadow-md">
-                Creative Works
-              </h2>
-              <p className="text-neutral-300 max-w-xl mx-auto text-sm drop-shadow-sm">
-                A curated collection of my creative work in branding, visual
-                design, and user interface projects that crafted with strategy
-                and precision...
+        <section className={`px-4 py-20 ${isScrolled ? "bg-black/20 backdrop-blur-sm" : ""}`}>
+          <div className="mx-auto flex w-full max-w-6xl flex-col gap-10">
+            <div className="section-animate text-center">
+              <Badge className="mx-auto">Creative DNA</Badge>
+              <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">About Me</h2>
+              <p className="mx-auto mt-2 max-w-2xl text-sm text-neutral-300 sm:text-base">
+                A multidisciplinary creative focused on meaningful visuals, performance-driven UI,
+                and unforgettable brand moments.
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
               {[
                 {
-                  title: "Portfolio",
-                  desc: "Explore a curated selection of my latest graphic design, video editing, and digital creative projects crafted for real brands and clients.",
-                  tag: "Featured Projects",
-                  icon: <Star className="w-5 h-5 text-white" />,
+                  title: "Who I Am",
+                  desc: "A design-first creator blending motion, static visuals, and product thinking.",
+                  icon: Star,
                 },
                 {
-                  title: "Branding",
-                  desc: "Strategic logo design, brand identity systems, and cohesive visual languages built to help businesses stand out and stay memorable.",
-                  tag: "Brand Identity",
-                  icon: <Palette className="w-5 h-5 text-white" />,
+                  title: "My Story",
+                  desc: "Started in graphic design and video, then expanded to code to ship complete digital experiences.",
+                  icon: Layers,
                 },
                 {
-                  title: "UI Design",
-                  desc: "Modern interface design that balances aesthetics, usability, and seamless user experience across digital platforms.",
-                  tag: "Interface & UX",
-                  icon: <Layers className="w-5 h-5 text-white" />,
+                  title: "Approach",
+                  desc: "Fast, responsive, and intentional execution with a premium visual language.",
+                  icon: Code,
                 },
-              ].map((item) => (
-                <div key={item.title}>
-                  <div className="card-animate h-full">
-                    <Card className="glassmorphic group h-full">
-                      <CardHeader className="flex flex-row items-center gap-3">
-                        <div className="p-2 rounded-lg bg-white/10 group-hover:bg-white/20 transition-colors border border-white/5">
-                          {item.icon}
-                        </div>
-                        <div>
-                          <CardTitle className="text-white text-lg">
-                            {item.title}
-                          </CardTitle>
-                          <CardDescription className="text-neutral-400 text-xs">
-                            {item.tag}
-                          </CardDescription>
-                        </div>
-                      </CardHeader>
-                      <CardContent className="text-neutral-300 text-sm leading-relaxed">
-                        {item.desc}
-                      </CardContent>
-                    </Card>
-                  </div>
-                </div>
-              ))}
+              ].map((item) => {
+                const Icon = item.icon;
+                return (
+                  <Card key={item.title} className="glassmorphic h-full">
+                    <CardHeader className="flex flex-row items-center gap-3">
+                      <span className="rounded-lg border border-white/10 bg-white/10 p-2">
+                        <Icon className="size-5 text-white" />
+                      </span>
+                      <CardTitle className="text-white">{item.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent className="text-sm leading-relaxed text-neutral-300">{item.desc}</CardContent>
+                  </Card>
+                );
+              })}
             </div>
           </div>
         </section>
-
-        {/* --- SELECTED WORKS SLIDER WITH NEXT/IMAGE --- */}
-        <section
-          className={`w-full py-16 overflow-hidden relative transition-all duration-300 ${
-            isScrolled ? "bg-black/20 backdrop-blur-sm" : ""
-          }`}
-        >
-          <div className="absolute inset-y-0 left-0 w-16 bg-linear-to-r from-black/15 to-transparent z-10 pointer-events-none" />
-          <div className="absolute inset-y-0 right-0 w-16 bg-linear-to-l from-black/15 to-transparent z-10 pointer-events-none" />
-
-          <div className="flex flex-col gap-6 mb-10 px-4 max-w-6xl mx-auto w-full">
-             <div className="flex items-center gap-3 text-white">
-                <Sparkles className="w-5 h-5 text-amber-400" />
-                <h2 className="text-2xl font-bold tracking-tight">Selected Social Media Content Posts</h2>
-             </div>
-          </div>
-
-          <div className="flex animate-marquee gap-6 px-6">
-            {/* Double the array map to create a seamless infinite loop */}
-            {[...bestWorks, ...bestWorks].map((image, index) => (
-              <div
-                key={index}
-                className="relative shrink-0 w-64 sm:w-80 aspect-square rounded-2xl overflow-hidden glassmorphic group cursor-pointer bg-black/30"
-              >
-                <Image
-                  src={image}
-                  alt={`Selected Work ${index + 1}`}
-                  fill
-                  unoptimized
-                  priority={index < bestWorks.length}
-                  sizes="(max-width: 640px) 256px, 320px"
-                  className="object-contain p-2 transition-transform duration-700 ease-in-out group-hover:scale-105 opacity-90 group-hover:opacity-100"
-                />
-                <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6 z-10">
-
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-        {/* --- END SLIDER --- */}
 
         <Separator className="bg-white/10" />
 
-        {/* Services Section */}
-        <section
-          className={`w-full transition-all duration-300 ${
-            isScrolled ? "bg-black/20 backdrop-blur-sm" : ""
-          }`}
-          id="services"
-        >
-          <div className="flex flex-col gap-10 py-24 px-4 max-w-6xl mx-auto w-full">
-            <div className="section-animate flex flex-col gap-2 text-center">
-              <Badge
-                className={`mx-auto glassmorphic text-neutral-200 px-3 py-1 rounded-full`}
-              >
-                Creative & Digital Services
-              </Badge>
-              <h2 className="text-4xl font-bold text-white drop-shadow-md">
-                What I Offer
-              </h2>
-              <p className="text-neutral-300 max-w-xl mx-auto text-sm drop-shadow-sm">
-                Blending creativity and technology to deliver impactful digital
-                solutions.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[
-                {
-                  title: "Graphic Design",
-                  desc: "Crafting compelling brand identities, marketing creatives, and digital visuals that capture attention and communicate with clarity.",
-                  icon: <Palette className="w-5 h-5 text-white" />,
-                },
-                {
-                  title: "Web Development",
-                  desc: "Developing scalable, high performance websites that combine seamless functionality with refined user experience.",
-                  icon: <Code className="w-5 h-5 text-white" />,
-                },
-                {
-                  title: "Video Editing",
-                  desc: "Transforming raw footage into engaging, high mpact video content that connects with audiences and strengthens brand identity.",
-                  icon: <Video className="w-5 h-5 text-white" />,
-                },
-              ].map((item) => (
-                <div key={item.title}>
-                  <div className="card-animate h-full">
-                    <Card className="glassmorphic group h-full">
-                      <CardHeader className="flex flex-row items-center gap-3">
-                        <div className="p-2 rounded-lg bg-white/10 group-hover:bg-white/20 transition-colors border border-white/5">
-                          {item.icon}
-                        </div>
-                        <CardTitle className="text-white text-lg">
-                          {item.title}
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent className="text-neutral-300 text-sm leading-relaxed">
-                        {item.desc}
-                      </CardContent>
-                    </Card>
-                  </div>
+        <section className={`w-full py-16 ${isScrolled ? "bg-black/20 backdrop-blur-sm" : ""}`}>
+          <div className="mx-auto mb-8 flex w-full max-w-6xl items-center gap-3 px-4 text-white">
+            <Sparkles className="size-5 text-amber-400" />
+            <h2 className="text-xl font-bold sm:text-2xl">Selected Social Media Content</h2>
+          </div>
+
+          <div className="relative overflow-hidden">
+            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-linear-to-r from-black/45 to-transparent" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-linear-to-l from-black/45 to-transparent" />
+            <div className="animate-marquee flex gap-5 px-4 sm:gap-6 sm:px-6">
+              {[...bestWorks, ...bestWorks].map((image, index) => (
+                <div
+                  key={`${image.src}-${index}`}
+                  className="glassmorphic relative aspect-square w-60 shrink-0 overflow-hidden rounded-2xl bg-black/30 sm:w-72 lg:w-80"
+                >
+                  <Image
+                    src={image}
+                    alt={`Portfolio work ${index + 1}`}
+                    fill
+                    loading={index < 3 ? "eager" : "lazy"}
+                    sizes="(max-width: 640px) 240px, (max-width: 1024px) 288px, 320px"
+                    className="object-contain p-2 opacity-90 transition-transform duration-700 hover:scale-105 hover:opacity-100"
+                  />
                 </div>
               ))}
             </div>
@@ -490,28 +275,52 @@ export default function Home() {
 
         <Separator className="bg-white/10" />
 
-        {/* CTA Section */}
-        <section
-          className={`relative flex flex-col items-center justify-center text-center py-28 gap-6 overflow-hidden transition-all duration-300 ${
-            isScrolled ? "bg-black/20 backdrop-blur-sm" : ""
-          }`}
-        >
-          <div className="absolute inset-0 bg-linear-to-b from-neutral-900/0 via-black/20 to-black/50 pointer-events-none" />
-          <div className="section-animate flex flex-col items-center gap-6 z-10 glassmorphic p-12 rounded-3xl mx-4 max-w-3xl">
-            <h2 className="text-4xl font-bold text-white drop-shadow-md">
-              Ready to work <span className="text-orange-600">together?</span>
+        <section className={`px-4 py-20 ${isScrolled ? "bg-black/20 backdrop-blur-sm" : ""}`} id="services">
+          <div className="mx-auto flex w-full max-w-6xl flex-col gap-10">
+            <div className="section-animate text-center">
+              <Badge className="mx-auto">Creative & Digital Services</Badge>
+              <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">What I Offer</h2>
+              <p className="mx-auto mt-2 max-w-2xl text-sm text-neutral-300 sm:text-base">
+                Premium creative systems crafted for visibility, trust, and growth.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+              {serviceCards.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <Card key={item.title} className="glassmorphic h-full">
+                    <CardHeader className="flex flex-row items-center gap-3">
+                      <span className="rounded-lg border border-white/15 bg-white/10 p-2">
+                        <Icon className="size-5 text-white" />
+                      </span>
+                      <div>
+                        <CardTitle className="text-white">{item.title}</CardTitle>
+                        <CardDescription className="text-neutral-400">Premium delivery</CardDescription>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="text-sm leading-relaxed text-neutral-300">{item.desc}</CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        <Separator className="bg-white/10" />
+
+        <section className={`px-4 py-20 ${isScrolled ? "bg-black/20 backdrop-blur-sm" : ""}`}>
+          <div className="glassmorphic mx-auto flex w-full max-w-4xl flex-col items-center gap-5 rounded-3xl px-6 py-12 text-center sm:px-10">
+            <h2 className="text-3xl font-bold text-white sm:text-4xl">
+              Ready to build your next <span className="text-orange-500">iconic</span> project?
             </h2>
-            <p className="text-neutral-200 max-w-md text-sm">
-              Let&apos;s build something amazing. Reach out and let&apos;s discuss your
-              project.
+            <p className="max-w-xl text-sm text-neutral-200 sm:text-base">
+              Let&apos;s create a portfolio-grade brand presence for your business with speed,
+              clarity, and high-end execution.
             </p>
-            <Button
-              asChild
-              size="lg"
-              className="bg-white text-black hover:bg-neutral-200 gap-2 shadow-xl mt-4"
-            >
+            <Button asChild size="lg" className="bg-white text-black hover:bg-neutral-200">
               <Link href="/contact">
-                Get In Touch <ArrowRight className="w-4 h-4" />
+                Start a Project <ArrowRight className="ml-1 size-4" />
               </Link>
             </Button>
           </div>
