@@ -5,16 +5,16 @@ import { Slot } from "radix-ui"
 import { cn } from "@/lib/utils"
 
 const badgeVariants = cva(
-  "inline-flex w-fit shrink-0 items-center justify-center gap-1.5 overflow-hidden rounded-full border px-4 py-1.5 text-[11px] font-semibold tracking-[0.12em] uppercase whitespace-nowrap transition-all duration-300 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none [&>svg]:size-3.5",
+  "inline-flex w-fit shrink-0 items-center justify-center gap-1.5 overflow-hidden rounded-xl border px-3 py-1.5 text-[11px] font-semibold tracking-[0.08em] uppercase whitespace-nowrap transition-all duration-300 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [clip-path:polygon(0_0,calc(100%-9px)_0,100%_50%,calc(100%-9px)_100%,0_100%,9px_50%)] [&>svg]:pointer-events-none [&>svg]:size-3.5",
   {
     variants: {
       variant: {
         default:
-          "border-blue-200/35 bg-linear-to-r from-blue-500/30 via-indigo-500/25 to-blue-300/20 text-blue-50 shadow-[0_8px_30px_rgba(20,58,200,0.35)] [a&]:hover:brightness-110",
+          "border-white/30 bg-linear-to-r from-white/14 via-white/10 to-white/4 text-white shadow-[0_10px_30px_rgba(0,0,0,0.25)] [a&]:hover:from-white/20 [a&]:hover:to-white/10",
         secondary:
-          "border-cyan-200/45 bg-linear-to-r from-cyan-500/28 to-sky-400/20 text-cyan-50 [a&]:hover:brightness-110",
+          "border-sky-300/40 bg-linear-to-r from-sky-500/20 to-cyan-300/12 text-sky-100 [a&]:hover:from-sky-500/30 [a&]:hover:to-cyan-300/20",
         destructive:
-          "border-red-300/45 bg-linear-to-r from-rose-500/35 to-red-500/24 text-red-100 [a&]:hover:brightness-110",
+          "border-red-400/45 bg-linear-to-r from-red-500/24 to-rose-500/18 text-red-100 [a&]:hover:from-red-500/36 [a&]:hover:to-rose-500/28",
         outline:
           "border-border bg-background/60 text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
         ghost: "border-transparent bg-transparent text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
