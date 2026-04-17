@@ -240,3 +240,5 @@ html {
 *::-webkit-scrollbar-corner {
   background: transparent;
 }
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
