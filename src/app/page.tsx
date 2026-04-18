@@ -12,7 +12,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Badge } from "@/components/ui/badge";
+import BlurText from "@/components/ui/BlurText";
 import {
   ArrowRight,
   Palette,
@@ -23,8 +23,6 @@ import {
   Video,
   Sparkles,
 } from "lucide-react";
-import LiveBackground from "@/components/LiveBackground";
-import { ModernAnimatedHeroTitle } from "@/components/ui/modern-animated-hero-section";
 import tpslImage from "@/assets/tpsl.jpg";
 import trvlpediaImage from "@/assets/Ultimate-car-care-Updated.png";
 import axelaImage from "@/assets/Axela Post1.png";
@@ -171,43 +169,54 @@ export default function Home() {
         }
       `}</style>
 
-      <LiveBackground />
-
       <div className="flex flex-col gap-0 relative z-10">
         {/* Hero Section */}
-        <section className="relative flex flex-col items-center justify-center text-center py-32 gap-8 overflow-hidden min-h-screen flex-center">
-          <div className="hero-content flex flex-col items-center gap-6 px-4 relative z-10">
-            <div className="absolute inset-0 bg-radial-gradient from-black/20 to-transparent -z-10 blur-3xl rounded-full" />
+        <section className="relative flex min-h-screen items-center justify-start overflow-hidden py-24">
+          <div className="hero-content relative z-10 ml-0 flex w-full max-w-6xl flex-col items-start gap-8 px-5 md:ml-8 md:px-10 lg:ml-16">
+            <div className="pointer-events-none absolute inset-0 -z-10 rounded-full bg-radial-gradient from-white/5 to-transparent blur-3xl" />
 
-            <Badge className="badge-animate animate-float glassmorphic text-neutral-100 px-5 py-2 rounded-full">
-              ✦ Turning Ideas into Visual Reality
-            </Badge>
-
-            <div className="flex flex-col gap-4 max-w-4xl">
-              <h1 className="title-animate text-4xl sm:text-5xl md:text-7xl lg:text-8xl leading-[1.1] font-extrabold tracking-tight drop-shadow-2xl">
-                <span className="text-white">
-                  Hello👋🏻 <br />I'm Timesh Dillon {" "}
-                </span>
-                <br />
-
-                <span className="animate-neon-pulse flex justify-center w-full px-4 sm:px-0">
-                  <ModernAnimatedHeroTitle
-                    phrases={["Creative Designer", "Video Editor ", "Web Developer", "Visual Storyteller", "UI/UX Enthusiast",]}
-                    className="courgette-font inline-block mx-auto text-center text-transparent bg-clip-text bg-linear-to-r from-amber-600 via-yellow-300 to-red-500 animate-gradient-flow animate-hue-cycle [-webkit-text-stroke:1px_rgba(255,255,255,0.2)]"
-                  />
-                </span>
-              </h1>
-              <p className="description-animate -mt-2 text-lg md:text-xl text-neutral-200 max-w-2xl mx-auto leading-relaxed drop-shadow-md">
-                A passionate{" "}
-                <span className="text-white font-semibold">
-                  Designer, Video Editor & Developer
-                </span>{" "}
-                crafting beautiful digital experiences that leave a lasting
-                impression.
-              </p>
+            <div className="badge-animate">
+              <div className="inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-neutral-200/65">
+                <span className="h-px w-10 bg-white/25" />
+                <span>Turning Ideas into Visual Reality</span>
+              </div>
             </div>
 
-            <div className="buttons-animate flex flex-wrap gap-4 justify-center">
+            <div className="flex w-full max-w-5xl flex-col gap-5">
+              <h1 className="title-animate text-left font-extrabold leading-[0.95] tracking-tight text-white drop-shadow-2xl text-6xl sm:text-7xl md:text-8xl lg:text-[8.8rem]">
+                <span className="flex flex-col items-start gap-1 text-white">
+                  <BlurText
+                    text="Hello👋🏻"
+                    delay={80}
+                    animateBy="words"
+                    direction="top"
+                    stepDuration={0.2}
+                    className="justify-start whitespace-nowrap"
+                  />
+                  <span className="whitespace-nowrap">
+                    <span>I'm Timesh </span>
+                    <span className="text-transparent bg-clip-text bg-linear-to-r from-amber-600 via-yellow-300 to-red-500">
+                      Dillon
+                    </span>
+                  </span>
+                </span>
+              </h1>
+
+              <p className="text-left text-base uppercase tracking-[0.24em] text-neutral-300/70 md:text-lg">
+                Designer  •  Video Editor  •  Developer
+              </p>
+
+              <BlurText
+                text="A passionate Designer, Video Editor & Developer crafting beautiful digital experiences that leave a lasting impression."
+                delay={34}
+                animateBy="words"
+                direction="bottom"
+                stepDuration={0.24}
+                className="description-animate -mt-1 max-w-3xl justify-start text-left text-xl leading-relaxed text-neutral-200/90 drop-shadow-md md:text-2xl"
+              />
+            </div>
+
+            <div className="buttons-animate flex flex-wrap items-center gap-4 justify-start">
               <Button
                 asChild
                 size="lg"
@@ -228,26 +237,6 @@ export default function Home() {
                 </Link>
               </Button>
             </div>
-
-            {/* Stats */}
-            <div
-              className={`stats-animate flex flex-wrap gap-8 justify-center mt-8 glassmorphic px-10 py-6 rounded-2xl ${
-                isScrolled ? "bg-black/20 backdrop-blur-sm" : ""
-              }`}
-            >
-              {[
-                { value: "5+", label: "Years Experience" },
-                { value: "40+", label: "Projects Done" },
-                { value: "10+", label: "Happy Clients" },
-              ].map((stat) => (
-                <div key={stat.label} className="flex flex-col items-center">
-                  <span className="text-3xl font-bold text-white drop-shadow-md">
-                    {stat.value}
-                  </span>
-                  <span className="text-sm text-neutral-300">{stat.label}</span>
-                </div>
-              ))}
-            </div>
           </div>
         </section>
 
@@ -261,14 +250,21 @@ export default function Home() {
           id="about"
         >
           <div className="section-animate flex flex-col gap-2 text-center">
-            <Badge
-              className={`mx-auto glassmorphic text-neutral-200 px-3 py-1 rounded-full`}
-            >
-              Background
-            </Badge>
-            <h2 className="text-4xl font-bold text-white drop-shadow-md">
-              About Me
-            </h2>
+            <div>
+              <div className="mx-auto inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-neutral-200/65">
+                <span className="h-px w-8 bg-white/25" />
+                <span>Background</span>
+                <span className="h-px w-8 bg-white/25" />
+              </div>
+            </div>
+            <BlurText
+              text="About Me"
+              delay={95}
+              animateBy="letters"
+              direction="top"
+              stepDuration={0.2}
+              className="justify-center text-4xl font-bold text-white drop-shadow-md"
+            />
             <p className="text-neutral-300 max-w-xl mx-auto text-sm drop-shadow-sm">
               Where creativity meets purpose — explore the story behind my work.
             </p>
@@ -321,14 +317,21 @@ export default function Home() {
         >
           <div className="flex flex-col gap-10 py-24 px-4 max-w-6xl mx-auto w-full">
             <div className="section-animate flex flex-col gap-2 text-center">
-              <Badge
-                className={`mx-auto glassmorphic text-neutral-200 px-3 py-1 rounded-full`}
-              >
-                Graphics
-              </Badge>
-              <h2 className="text-4xl font-bold text-white drop-shadow-md">
-                Creative Works
-              </h2>
+              <div>
+                <div className="mx-auto inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-neutral-200/65">
+                  <span className="h-px w-8 bg-white/25" />
+                  <span>Graphics</span>
+                  <span className="h-px w-8 bg-white/25" />
+                </div>
+              </div>
+              <BlurText
+                text="Creative Works"
+                delay={95}
+                animateBy="letters"
+                direction="top"
+                stepDuration={0.15}
+                className="justify-center text-4xl font-bold text-white drop-shadow-md"
+              />
               <p className="text-neutral-300 max-w-xl mx-auto text-sm drop-shadow-sm">
                 A curated collection of my creative work in branding, visual
                 design, and user interface projects that crafted with strategy
@@ -435,14 +438,21 @@ export default function Home() {
         >
           <div className="flex flex-col gap-10 py-24 px-4 max-w-6xl mx-auto w-full">
             <div className="section-animate flex flex-col gap-2 text-center">
-              <Badge
-                className={`mx-auto glassmorphic text-neutral-200 px-3 py-1 rounded-full`}
-              >
-                Creative & Digital Services
-              </Badge>
-              <h2 className="text-4xl font-bold text-white drop-shadow-md">
-                What I Offer
-              </h2>
+              <div>
+                <div className="mx-auto inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-neutral-200/65">
+                  <span className="h-px w-8 bg-white/25" />
+                  <span>Creative & Digital Services</span>
+                  <span className="h-px w-8 bg-white/25" />
+                </div>
+              </div>
+              <BlurText
+                text="What I Offer"
+                delay={95}
+                animateBy="letters"
+                direction="top"
+                stepDuration={0.15}
+                className="justify-center text-4xl font-bold text-white drop-shadow-md"
+              />
               <p className="text-neutral-300 max-w-xl mx-auto text-sm drop-shadow-sm">
                 Blending creativity and technology to deliver impactful digital
                 solutions.

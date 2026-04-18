@@ -13,6 +13,7 @@ import "./globals.css";
 import Header from "./header";
 import ChunkErrorHandler from "@/components/ChunkErrorHandler";
 import AppFooter from "@/components/AppFooter";
+import LiveBackground from "@/components/LiveBackground";
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -60,6 +61,7 @@ export default function RootLayout({
         className={`${geistMono.variable} ${geist.variable} ${inter.variable} ${sourceCodePro.variable} ${alexBrush.variable} ${courgette.variable} font-mono antialiased bg-black text-white`}
       >
         <ChunkErrorHandler />
+        <LiveBackground />
         <Header />
         <main className="min-h-screen">{children}</main>
         <AppFooter />

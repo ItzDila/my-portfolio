@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import jsPDF from "jspdf";
-import LiveBackground from "@/components/LiveBackground";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Mail, MapPin, Phone, Globe, Github } from "lucide-react";
@@ -433,7 +432,6 @@ export default function CVPage() {
 
   return (
     <>
-      <LiveBackground />
       <style>{`
         @media print {
           html, body { background: white !important; }

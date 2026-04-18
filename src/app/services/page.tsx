@@ -1,6 +1,5 @@
 "use client";
 
-import LiveBackground from "@/components/LiveBackground";
 import {
   Card,
   CardContent,
@@ -106,8 +105,6 @@ export default function Services() {
 
   return (
     <>
-      <LiveBackground />
-
       <div className="relative z-10 min-h-screen px-6 py-32 max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: -30 }}

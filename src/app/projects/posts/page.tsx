@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import LiveBackground from "@/components/LiveBackground";
 import {
   Card,
   CardContent,
@@ -190,7 +189,6 @@ export default function SocialMediaWork() {
 
   return (
     <>
-      {!isLowEndAndroid && <LiveBackground />}
       <div className="relative z-10 min-h-screen px-6 py-32 max-w-7xl mx-auto">
         <motion.div
           variants={headerVariants}
@@ -199,10 +197,14 @@ export default function SocialMediaWork() {
           viewport={{ once: true, amount: isLowEndAndroid ? 0.1 : 0.8 }}
           className="text-center mb-20"
         >
-          <Badge className="mb-4 bg-white/10 text-white border border-white/20 hover:bg-white/20 backdrop-blur-md px-5 py-2 rounded-full shadow-lg text-sm">
-            <Sparkles className="w-4 h-4 mr-2 inline-block text-yellow-300" />
-            Visual Storytelling
-          </Badge>
+          <div className="mb-4">
+            <div className="mx-auto inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-neutral-200/65">
+              <span className="h-px w-8 bg-white/25" />
+              <Sparkles className="w-3.5 h-3.5 text-yellow-300" />
+              <span>Visual Storytelling</span>
+              <span className="h-px w-8 bg-white/25" />
+            </div>
+          </div>
           <h1 className="flex flex-col gap-y-2 title-animate text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight drop-shadow-2xl">
             <span className="text-white">Social Media</span>
             <span className="text-transparent bg-clip-text bg-linear-to-r from-pink-500 via-purple-400 to-indigo-500 animate-pulse pb-2">

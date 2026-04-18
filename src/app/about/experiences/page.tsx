@@ -1,6 +1,5 @@
 "use client";
 
-import LiveBackground from "@/components/LiveBackground";
 import {
   Card,
   CardContent,
@@ -189,8 +188,6 @@ export default function Experiences() {
 
   return (
     <>
-      <LiveBackground />
-
       <div className="relative z-10 min-h-screen px-6 py-32 max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: -30 }}
@@ -198,9 +195,13 @@ export default function Experiences() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <Badge className="mb-1 bg-white/10 text-white border border-white/20 hover:bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full shadow-lg">
-            ✦ My Journey
-          </Badge>
+          <div className="mb-2">
+            <div className="mx-auto inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-neutral-200/65">
+              <span className="h-px w-8 bg-white/25" />
+              <span>My Journey</span>
+              <span className="h-px w-8 bg-white/25" />
+            </div>
+          </div>
           <h1 className=" flex flex-col gap-y-0 title-animate text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight drop-shadow-2xl">
             <span className="text-white">
               Works<span className="  text-7xl text-white-3">&</span><br></br>
@@ -258,7 +259,7 @@ export default function Experiences() {
                         <Badge
                           key={i}
                           variant="outline"
-                          className="rounded-full bg-white/5 border-white/10 text-neutral-200 hover:bg-white/10 hover:text-white transition-colors inline-flex items-center gap-1.5"
+                          className="rounded-md bg-white/[0.04] border-white/15 text-neutral-200 hover:bg-white/12 hover:text-white transition-colors inline-flex items-center gap-1.5 px-2.5 py-1"
                         >
                           <SkillIcon className="w-3.5 h-3.5" />
                           {skill}

@@ -1,6 +1,5 @@
 "use client";
 
-import LiveBackground from "@/components/LiveBackground";
 import {
   Card,
   CardContent,
@@ -79,8 +78,6 @@ export default function Contact() {
 
   return (
     <>
-      <LiveBackground />
-
       <div className="relative z-10 min-h-screen px-6 py-32 max-w-6xl mx-auto flex flex-col justify-center">
         <motion.div
           initial={{ opacity: 0, y: -30 }}
@@ -88,9 +85,13 @@ export default function Contact() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <Badge className="mb-4 bg-white/10 text-white border border-white/20 hover:bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full shadow-lg">
-            ✦ Get In Touch
-          </Badge>
+          <div className="mb-4">
+            <div className="mx-auto inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-neutral-200/65">
+              <span className="h-px w-8 bg-white/25" />
+              <span>Get In Touch</span>
+              <span className="h-px w-8 bg-white/25" />
+            </div>
+          </div>
           <h1 className="flex flex-col gap-y-0 title-animate text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight drop-shadow-2xl mb-6">
             <span className="text-white">
               Let's <span className="text-transparent bg-clip-text bg-linear-to-r from-amber-600 via-yellow-300 to-red-500 animate-pulse pb-2">Connect</span>

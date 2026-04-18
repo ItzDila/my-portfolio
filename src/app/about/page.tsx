@@ -21,7 +21,6 @@ import {
   Mail,
   Video,
 } from "lucide-react";
-import LiveBackground from "@/components/LiveBackground";
 
 export default function About() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -79,8 +78,6 @@ export default function About() {
         }
       `}</style>
 
-      <LiveBackground />
-
       <div className="flex flex-col gap-0 relative z-10">
         {/* Hero Section */}
         <section className="relative flex flex-col items-center justify-center text-center py-32 gap-8 overflow-hidden min-h-screen flex-center">
@@ -88,9 +85,13 @@ export default function About() {
             {/* Added a subtle dark gradient behind the hero text to ensure it's always readable */}
             <div className="absolute inset-0 bg-radial-gradient from-black/20 to-transparent -z-10 blur-3xl rounded-full" />
 
-            <Badge className="badge-animate glassmorphic text-neutral-100 px-4 py-1.5 rounded-full">
-              ✦ The Person Behind the Work
-            </Badge>
+            <div className="badge-animate">
+              <div className="mx-auto inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-neutral-200/65">
+                <span className="h-px w-8 bg-white/25" />
+                <span>The Person Behind the Work</span>
+                <span className="h-px w-8 bg-white/25" />
+              </div>
+            </div>
 
             <div className="flex flex-col gap-4 max-w-4xl">
               <h1 className="title-animate text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight drop-shadow-2xl">
@@ -141,11 +142,13 @@ export default function About() {
           id="story"
         >
           <div className="section-animate flex flex-col gap-2 text-center">
-            <Badge
-              className={`mx-auto glassmorphic text-neutral-200 px-3 py-1 rounded-full`}
-            >
-              Background
-            </Badge>
+            <div>
+              <div className="mx-auto inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-neutral-200/65">
+                <span className="h-px w-8 bg-white/25" />
+                <span>Background</span>
+                <span className="h-px w-8 bg-white/25" />
+              </div>
+            </div>
             <h2 className="text-4xl font-bold text-white drop-shadow-md">
               My Story
             </h2>
@@ -200,11 +203,13 @@ export default function About() {
         >
           <div className="flex flex-col gap-10 py-24 px-4 max-w-6xl mx-auto w-full">
             <div className="section-animate flex flex-col gap-2 text-center">
-              <Badge
-                className={`mx-auto glassmorphic text-neutral-200 px-3 py-1 rounded-full`}
-              >
-                Toolkit
-              </Badge>
+              <div>
+                <div className="mx-auto inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-neutral-200/65">
+                  <span className="h-px w-8 bg-white/25" />
+                  <span>Toolkit</span>
+                  <span className="h-px w-8 bg-white/25" />
+                </div>
+              </div>
               <h2 className="text-4xl font-bold text-white drop-shadow-md">
                 What I Do Best
               </h2>
@@ -270,9 +275,13 @@ export default function About() {
           <div className="absolute inset-0 bg-linear-to-b from-neutral-900/0 via-black/30 to-black/60 pointer-events-none" />
 
           <div className="section-animate flex flex-col items-center gap-6 z-10 glassmorphic p-12 rounded-3xl mx-4 max-w-3xl">
-            <Badge className="glassmorphic text-neutral-200 px-4 py-1.5 rounded-full">
-              🚀 My Vision
-            </Badge>
+            <div>
+              <div className="mx-auto inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-neutral-200/65">
+                <span className="h-px w-8 bg-white/25" />
+                <span>My Vision</span>
+                <span className="h-px w-8 bg-white/25" />
+              </div>
+            </div>
 
             <h2 className="text-4xl font-bold text-white drop-shadow-md">
               Building the Future Through{" "}
