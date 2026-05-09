@@ -1,55 +1,37 @@
-import type { Metadata } from "next";
-import React from "react";
-import { SpeedInsights } from "@vercel/speed-insights/next"
-import {
-  Geist_Mono,
-  Geist,
-  Inter,
-  Source_Code_Pro,
-  Alex_Brush,
-  Courgette,
-} from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import React, { Suspense } from "react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Geist_Mono, Geist } from "next/font/google";
 import "./globals.css";
 import Header from "./header";
 import ChunkErrorHandler from "@/components/ChunkErrorHandler";
 import AppFooter from "@/components/AppFooter";
 import LiveBackground from "@/components/LiveBackground";
+import LoadingScreen from "@/components/LoadingScreen";
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
+  preload: true,
 });
 
 const geist = Geist({
   variable: "--font-geist",
   subsets: ["latin"],
-});
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
-
-const sourceCodePro = Source_Code_Pro({
-  variable: "--font-source-code-pro",
-  subsets: ["latin"],
-});
-
-const alexBrush = Alex_Brush({
-  variable: "--font-alex-brush",
-  subsets: ["latin"],
-  weight: "400",
-});
-
-const courgette = Courgette({
-  variable: "--font-courgette",
-  subsets: ["latin"],
-  weight: "400",
+  display: "swap",
+  preload: true,
 });
 
 export const metadata: Metadata = {
   title: "Timesh Dillon",
   description: "Creative developer and designer",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover", // enables env(safe-area-inset-*) on iOS
 };
 
 export default function RootLayout({
@@ -58,13 +40,17 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body
-        className={`${geistMono.variable} ${geist.variable} ${inter.variable} ${sourceCodePro.variable} ${alexBrush.variable} ${courgette.variable} font-mono antialiased bg-black text-white`}
+        className={`${geistMono.variable} ${geist.variable} font-mono antialiased bg-black text-white`}
       >
+        <LoadingScreen />
         <ChunkErrorHandler />
         <LiveBackground />
         <Header />
         <main className="min-h-screen">{children}</main>
         <AppFooter />
+        <Suspense fallback={null}>
+          <SpeedInsights />
+        </Suspense>
       </body>
     </html>
   );

@@ -1,289 +1,309 @@
 "use client";
 
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import {
   Palette,
   Film,
   CalendarDays,
   CheckCircle2,
   ArrowRight,
   Sparkles,
-  Zap,
   Music2,
+  Mail,
 } from "lucide-react";
-import { motion } from "framer-motion";
 import Link from "next/link";
 
+const services = [
+  {
+    title: "Social Media Posts",
+    price: "Rs. 1,500",
+    unit: "Starting price per design",
+    description:
+      "High-impact social media creatives, posters, carousels, and product mockups tailored to your brand identity.",
+    icon: Palette,
+    iconColor: "text-amber-400",
+    iconBg: "bg-amber-500/15 border-amber-500/25",
+    popular: false,
+    features: [
+      "Custom high-res graphics",
+      "Brand color & typography matching",
+      "2 rounds of revisions",
+      "Source files included",
+    ],
+  },
+  {
+    title: "Video Editing",
+    price: "Rs. 2,000",
+    unit: "Starting price per video",
+    description:
+      "High-retention video edits for Reels, TikToks, and YouTube — with smooth transitions, captions, and effects.",
+    icon: Film,
+    iconColor: "text-violet-400",
+    iconBg: "bg-violet-500/15 border-violet-500/25",
+    popular: false,
+    features: [
+      "Dynamic motion graphics",
+      "Color grading & correction",
+      "Subtitles & captions",
+      "Audio mixing & sound design",
+    ],
+  },
+  {
+    title: "Audio Mixing",
+    price: "Rs. 1,200",
+    unit: "Starting price per track",
+    description:
+      "Professional audio post-production for podcasts, reels, and ads — clean, balanced, and broadcast-ready.",
+    icon: Music2,
+    iconColor: "text-sky-400",
+    iconBg: "bg-sky-500/15 border-sky-500/25",
+    popular: false,
+    features: [
+      "Multi-track audio mixing",
+      "Noise removal & cleanup",
+      "Beat & sync cutting",
+      "Voiceover leveling & EQ",
+    ],
+  },
+  {
+    title: "Monthly Retainer",
+    price: "Rs. 100,000",
+    unit: "Per month — all-inclusive",
+    description:
+      "The complete package for brands needing consistent, high-quality content every month with priority support.",
+    icon: CalendarDays,
+    iconColor: "text-amber-400",
+    iconBg: "bg-amber-500/15 border-amber-500/25",
+    popular: true,
+    features: [
+      "15 Social Media Posts",
+      "8 Short-form Videos (Reels/TikTok)",
+      "Priority 24/7 Support",
+      "Monthly Strategy Consultation",
+    ],
+  },
+];
+
 export default function Services() {
-  const services = [
-    {
-      title: "Social Media Posts ",
-      price: "Rs.1,500",
-      type: "Starting per design Price" ,
-      description:
-        "High-conversion, modern social media creatives, posters, carousels, product mockups tailored to your brand identity.",
-      icon: <Palette className="w-6 h-6" />,
-      popular: false,
-      features: [
-        "Custom high-res graphics",
-        "Brand color & typography matching",
-        "2 Rounds of revisions",
-        "Source files included",
-      ],
-    },
-    {
-      title: "Video Editing  ",
-      price: "Rs.2,000",
-      type: "Starting per video",
-      description:
-        "Engaging, high-retention video edits for Reels, TikToks, and YouTube, complete with smooth transitions and effects.",
-      icon: <Film className="w-6 h-6" />,
-      popular: false,
-      features: [
-        "Dynamic motion graphics",
-        "Color grading & correction",
-        "Engaging subtitles & captions",
-        "Audio mixing & sound design",
-      ],
-    },
-    {
-      title: "Audio Mixing & Cutting",
-      price: "Rs.1,200",
-      type: "Starting per track",
-      description:
-        "Professional audio post-production for podcasts, reels, ads, and music content — clean, balanced, and broadcast-ready.",
-      icon: <Music2 className="w-6 h-6" />,
-      popular: false,
-      features: [
-        "Multi-track audio mixing",
-        "Noise removal & cleanup",
-        "Beat & sync cutting for reels",
-        "Voiceover leveling & EQ",
-
-      ],
-    },
-    {
-      title: "Monthly Retainer",
-      price: "Rs.100,000",
-      type: "Per month",
-      description:
-        "The ultimate all-in-one package for creators and brands needing consistent, high-quality monthly content.",
-      icon: <CalendarDays className="w-6 h-6" />,
-      popular: true,
-      features: [
-        "15 Social Media Posts",
-        "8 Short-form Videos (Reels/TikTok)",
-        "Priority 24/7 Support",
-        "Monthly Strategy Consultation",
-      ],
-    },
-  ];
-
-  const containerVariants = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.15,
-      },
-    },
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: {
-      opacity: 1,
-      y: 0,
-    },
-  };
-
   return (
     <>
-      <div className="relative z-10 min-h-screen px-6 py-32 max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: -30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          {/* Grouped badges for better spacing and alignment */}
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-3 mb-8">
-            <Badge className="bg-white/10 text-white border border-white/20 hover:bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full shadow-lg">
-              ✦ Let's Work Together
-            </Badge>
+      <style>{`
+        @keyframes fadeUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes gradientShift {
+          0%   { background-position: 0% 50%; }
+          50%  { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .s-f1 { animation: fadeUp 0.6s ease-out 0.05s both; }
+        .s-f2 { animation: fadeUp 0.6s ease-out 0.1s  both; }
+        .s-f3 { animation: fadeUp 0.6s ease-out 0.2s  both; }
+        .s-card { animation: fadeUp 0.6s ease-out both; }
+        .s-card:nth-child(1) { animation-delay: 0.1s; }
+        .s-card:nth-child(2) { animation-delay: 0.18s; }
+        .s-card:nth-child(3) { animation-delay: 0.26s; }
+        .s-card:nth-child(4) { animation-delay: 0.34s; }
 
-            <Badge className="bg-amber-500/20 text-amber-200 border  hover:bg-amber-500/30 border-amber-500/30 px-4 py-1.5 rounded-full shadow-lg">
-              🚀 Priority Client Focus
-            </Badge>
-          </div>
+        .gold-text {
+          background: linear-gradient(120deg, #f59e0b, #fcd34d, #d97706);
+          background-size: 200% auto;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          animation: gradientShift 4s ease infinite;
+        }
+        .section-label {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          font-size: 11px;
+          font-weight: 600;
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
+          color: rgba(212,212,212,0.55);
+        }
+        .section-label .ln {
+          display: block; width: 26px; height: 1px;
+          background: rgba(255,255,255,0.22);
+        }
+        .svc-card {
+          background: rgba(255,255,255,0.04);
+          border: 1px solid rgba(255,255,255,0.09);
+          border-radius: 20px;
+          overflow: hidden;
+          transition: background 0.25s, border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+        }
+        .svc-card:hover {
+          background: rgba(255,255,255,0.07);
+          border-color: rgba(255,255,255,0.20);
+          transform: translateY(-5px);
+          box-shadow: 0 24px 48px rgba(0,0,0,0.45);
+        }
+        .svc-card.popular {
+          border-color: rgba(251,191,36,0.40);
+          background: rgba(251,191,36,0.04);
+        }
+        .svc-card.popular:hover {
+          border-color: rgba(251,191,36,0.65);
+          background: rgba(251,191,36,0.08);
+          box-shadow: 0 24px 48px rgba(251,191,36,0.12);
+        }
+        .glass {
+          background: rgba(255,255,255,0.05);
+          backdrop-filter: blur(14px);
+          -webkit-backdrop-filter: blur(14px);
+          border: 1px solid rgba(255,255,255,0.11);
+        }
+      `}</style>
 
-          <h1 className="flex flex-col gap-y-0 title-animate text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight drop-shadow-2xl mb-6">
-            <span className="text-white">
-              Services<br /><span className="text-6xl text-white/50">&</span>
-              <br />
-            </span>
-            <span className="text-transparent bg-clip-text bg-linear-to-r from-amber-600 via-yellow-300 to-red-500 animate-pulse text-5xl sm:text-6xl md:text-7xl lg:text-8xl pb-2">
-              Pricing
-            </span>
-          </h1>
-
-          <p className="text-neutral-300 text-lg max-w-2xl mx-auto drop-shadow-sm">
-            Professional design, editing, and development services to elevate
-            your digital presence. Choose a package that fits your needs. I
-            prioritize your project and focus on creating visually appealing,
-            client-centered solutions that make your brand stand out and look its best.
-          </p>
-        </motion.div>
-
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4 items-stretch"
-        >
-          {services.map((service, index) => (
-            <motion.div
-              key={index}
-              variants={cardVariants}
-              whileHover={{ y: -8 }}
-              transition={{ type: "spring", stiffness: 200 }}
-              className="h-full"
-            >
-              <Card
-                className={`flex flex-col h-full rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 backdrop-blur-xl bg-black/40 overflow-hidden relative group ${
-                  service.popular
-                    ? "border-amber-500/50 hover:border-amber-400/80"
-                    : "border-white/10 hover:border-white/30"
-                }`}
-              >
-                <div className="absolute inset-0 bg-linear-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
-                {service.popular && (
-                  <div className="absolute top-0 right-0 bg-linear-to-r from-amber-600 to-yellow-500 text-amber-900 text-xs font-bold px-4 py-1.5 rounded-bl-xl z-20 flex items-center gap-1 shadow-lg">
-                    <Sparkles className="w-3 h-3" /> Most Popular
-                  </div>
-                )}
-
-                <CardHeader className="relative z-10 pb-4 border-b border-white/5">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div
-                      className={`p-3 rounded-xl shadow-inner transition-colors ${
-                        service.popular
-                          ? "bg-amber-500/20 text-amber-400 border border-amber-500/30 group-hover:bg-amber-500/30"
-                          : "bg-white/10 text-white border border-white/10 group-hover:bg-white/20"
-                      }`}
-                    >
-                      {service.icon}
-                    </div>
-                    <div>
-                      <CardTitle className="text-xl text-white drop-shadow-sm">
-                        {service.title}
-                      </CardTitle>
-                    </div>
-                  </div>
-
-                  <div>
-                    <div className="flex items-baseline gap-1">
-                      <span className="text-4xl font-extrabold text-white">
-                        {service.price}
-                      </span>
-                    </div>
-                    <CardDescription className="text-neutral-400 mt-1 font-medium">
-                      {service.type}
-                    </CardDescription>
-                    <p className="text-xs text-neutral-500 mt-1.5 italic">
-                       Price may differ or increase based on requirements
-                    </p>
-                  </div>
-                </CardHeader>
-
-                <CardContent className="relative z-10 flex flex-col grow pt-6">
-                  <p className="text-sm text-neutral-300 mb-6 leading-relaxed grow">
-                    {service.description}
-                  </p>
-
-                  <div className="space-y-3 mb-8">
-                    {service.features.map((feature, i) => (
-                      <div key={i} className="flex items-start gap-3">
-                        <CheckCircle2
-                          className={`w-5 h-5 shrink-0 ${
-                            service.popular ? "text-amber-400" : "text-neutral-400"
-                          }`}
-                        />
-                        <span className="text-sm text-neutral-200">
-                          {feature}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <Link
-                    href="/contact"
-                    className={`mt-auto w-full py-3 px-4 rounded-xl flex items-center justify-center gap-2 font-semibold transition-all duration-300 ${
-                      service.popular
-                        ? "bg-linear-to-r from-amber-600 to-yellow-500 hover:from-amber-500 hover:to-yellow-400 text-black shadow-lg shadow-amber-500/20"
-                        : "bg-white/10 hover:bg-white/20 text-white border border-white/10"
-                    }`}
-                  >
-                    Get Started
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* New "Impress the Client" Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-24 text-center max-w-4xl mx-auto p-1 relative"
-        >
-          {/* Background glow effect */}
-          <div className="absolute inset-0 bg-linear-to-r from-amber-500/20 via-red-500/20 to-amber-500/20 blur-3xl rounded-full opacity-50 pointer-events-none" />
-
-          <div className="relative p-10 rounded-3xl border border-white/10 bg-black/40 backdrop-blur-xl shadow-2xl overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-amber-500 via-yellow-400 to-red-500" />
-
-            <div className="flex justify-center mb-6">
-              <div className="p-4 rounded-full bg-white/5 border border-white/10 text-amber-400 shadow-inner">
-                <Zap className="w-8 h-8" />
-              </div>
+      <div className="relative z-10 min-h-screen py-28 px-5 md:px-10">
+        <div className="max-w-6xl mx-auto flex flex-col gap-16">
+          {/* ── Page Header ── */}
+          <div className="s-f1 flex flex-col gap-4 text-center">
+            <div className="flex justify-center">
+              <span className="section-label">
+                <span className="ln" /> What I Offer <span className="ln" />
+              </span>
             </div>
-
-            <h3 className="text-3xl md:text-4xl font-extrabold text-white mb-4 tracking-tight drop-shadow-md">
-              Need Something <span className="text-transparent bg-clip-text bg-linear-to-r from-amber-400 to-red-500">Custom?</span>
-            </h3>
-
-            <p className="text-neutral-300 text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
-              Every brand is unique, and sometimes off-the-shelf packages don't cut it. I specialize in delivering pixel-perfect designs, immersive video content, and scalable web applications engineered to elevate your business above the competition. Let's build exactly what you envision.
-            </p>
-
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-              <Link
-                href="/projects" // Or whatever your portfolio route is
-                className="w-full sm:w-auto px-8 py-3.5 rounded-xl font-semibold text-white border border-white/20 hover:bg-white/10 transition-colors backdrop-blur-sm"
-              >
-                View My Work
-              </Link>
+            <h1 className="text-5xl md:text-6xl font-extrabold text-white tracking-tight">
+              Services &amp; <span className="gold-text">Pricing</span>
+            </h1>
+            <p className="text-neutral-400 text-base max-w-xl mx-auto leading-relaxed">
+              Professional design, video, and development services tailored to
+              your brand. All prices are starting rates —{" "}
               <Link
                 href="/contact"
-                className="w-full sm:w-auto px-8 py-3.5 rounded-xl font-semibold bg-white text-black hover:bg-neutral-200 transition-colors shadow-lg hover:shadow-xl"
+                className="text-amber-400 hover:text-amber-300 underline underline-offset-2 transition-colors"
               >
-                Book a Free Consultation
+                contact me
+              </Link>{" "}
+              for a custom quote.
+            </p>
+          </div>
+
+          {/* ── Pricing Cards ── */}
+          <div className="s-f2 grid sm:grid-cols-2 lg:grid-cols-4 gap-5 items-stretch">
+            {services.map((svc) => {
+              const Icon = svc.icon;
+              return (
+                <div
+                  key={svc.title}
+                  className={`s-card svc-card${svc.popular ? " popular" : ""} relative`}
+                >
+                  {/* Popular top accent bar */}
+                  {svc.popular && (
+                    <div className="h-[3px] w-full bg-linear-to-r from-amber-500 via-yellow-400 to-amber-600" />
+                  )}
+
+                  {/* Popular pill badge */}
+                  {svc.popular && (
+                    <div className="absolute top-5 right-4 flex items-center gap-1 bg-amber-500/20 border border-amber-500/30 text-amber-300 text-[10px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-full">
+                      <Sparkles className="w-3 h-3" /> Popular
+                    </div>
+                  )}
+
+                  <div className="p-6 flex flex-col gap-5 grow">
+                    {/* Icon + Title */}
+                    <div className="flex flex-col gap-3">
+                      <div
+                        className={`w-fit p-3 rounded-xl border ${svc.iconBg}`}
+                      >
+                        <Icon className={`w-5 h-5 ${svc.iconColor}`} />
+                      </div>
+                      <div>
+                        <h3 className="text-white font-semibold text-base leading-tight">
+                          {svc.title}
+                        </h3>
+                        <p className="text-neutral-500 text-xs mt-0.5">
+                          {svc.unit}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Price */}
+                    <div className="border-t border-white/6 pt-4">
+                      <span className="text-3xl font-extrabold text-white tracking-tight">
+                        {svc.price}
+                      </span>
+                      <p className="text-neutral-600 text-[11px] mt-1 italic">
+                        Price may vary based on requirements
+                      </p>
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-neutral-400 text-sm leading-relaxed">
+                      {svc.description}
+                    </p>
+
+                    {/* Features */}
+                    <ul className="flex flex-col gap-2.5 grow">
+                      {svc.features.map((f) => (
+                        <li key={f} className="flex items-start gap-2.5">
+                          <CheckCircle2
+                            className={`w-4 h-4 shrink-0 mt-0.5 ${
+                              svc.popular
+                                ? "text-amber-400"
+                                : "text-neutral-500"
+                            }`}
+                          />
+                          <span className="text-sm text-neutral-300">{f}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    {/* CTA button */}
+                    <Link
+                      href="/contact"
+                      className={`mt-4 w-full py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 text-sm font-semibold transition-all duration-200 ${
+                        svc.popular
+                          ? "bg-amber-500 hover:bg-amber-400 text-black shadow-lg shadow-amber-500/20"
+                          : "bg-white/8 hover:bg-white/15 text-white border border-white/10 hover:border-white/25"
+                      }`}
+                    >
+                      Get Started <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* ── Custom Quote CTA ── */}
+          <div className="s-f3 glass rounded-3xl p-10 md:p-14 text-center flex flex-col items-center gap-6 relative overflow-hidden">
+            {/* top accent line */}
+            <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-amber-500/60 to-transparent" />
+
+            <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20">
+              <Sparkles className="w-6 h-6 text-amber-400" />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <h2 className="text-3xl md:text-4xl font-bold text-white">
+                Need something <span className="gold-text">custom?</span>
+              </h2>
+              <p className="text-neutral-400 text-sm max-w-md mx-auto leading-relaxed">
+                Every brand is unique. Let&apos;s discuss your project and build
+                exactly what you need — no cookie-cutter packages.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-3 justify-center">
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-black font-semibold px-6 py-3 rounded-xl transition-all duration-200 shadow-lg shadow-amber-500/20 text-sm"
+              >
+                <Mail className="w-4 h-4" /> Get a Custom Quote
+              </Link>
+              <Link
+                href="/projects/posts"
+                className="inline-flex items-center gap-2 bg-white/8 hover:bg-white/14 text-white border border-white/12 hover:border-white/25 font-medium px-6 py-3 rounded-xl transition-all duration-200 text-sm"
+              >
+                View My Work <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </>
   );

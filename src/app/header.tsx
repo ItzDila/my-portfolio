@@ -2,354 +2,329 @@
 
 import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence, type Transition } from "framer-motion";
-import {
-  NavigationMenu,
-  NavigationMenuList,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuTrigger,
-  NavigationMenuContent,
-} from "@/components/ui/navigation-menu";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { Menu, X, ChevronDown, FileText } from "lucide-react";
+import { Menu, X, FileText } from "lucide-react";
+
+interface NavItem {
+  label: string;
+  href: string;
+}
+
+const navItems: NavItem[] = [
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "Contact", href: "/contact" },
+];
 
 export default function Header() {
   const pathname = usePathname();
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isHidden, setIsHidden] = useState(false);
-  const lastScrollY = useRef(0);
+  const lastY = useRef(0);
+  const lockY = useRef(0);
+
+  const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [openSection, setOpenSection] = useState<string | null>(null);
 
-  const toggleSection = (label: string) =>
-    setOpenSection((prev) => (prev === label ? null : label));
-
+  /* ── Scroll handler — clamp to ≥0 so iOS rubber-band can't flicker the header ── */
   useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      setIsScrolled(currentScrollY > 20);
-
-      // Move, don't lock logic
-      if (currentScrollY > lastScrollY.current && currentScrollY > 100 && !mobileOpen) {
-        setIsHidden(true);
-      } else {
-        setIsHidden(false);
+    const onScroll = () => {
+      const y = Math.max(0, window.scrollY); // clamp negative iOS rubber-band values
+      setScrolled(y > 20);
+      if (!mobileOpen) {
+        setHidden(y > lastY.current && y > 110);
       }
-
-      lastScrollY.current = currentScrollY;
+      lastY.current = y;
     };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, [mobileOpen]);
 
-  const springTransition: Transition = {
-    type: "spring",
-    stiffness: 280,
-    damping: 30,
-    mass: 1,
-  };
+  /* ── iOS-safe body scroll lock — prevents background scrolling when menu is open ── */
+  useEffect(() => {
+    if (mobileOpen) {
+      lockY.current = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${lockY.current}px`;
+      document.body.style.width = "100%";
+      document.body.style.overflowY = "scroll"; // prevents layout-shift from scrollbar disappearing
+    } else {
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      document.body.style.overflowY = "";
+      // Restore scroll position that was saved before locking
+      window.scrollTo({ top: lockY.current, behavior: "instant" });
+    }
+    return () => {
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      document.body.style.overflowY = "";
+    };
+  }, [mobileOpen]);
+
+  /* ── Close mobile menu on route change ── */
+  useEffect(() => {
+    const t = setTimeout(() => setMobileOpen(false), 0);
+    return () => clearTimeout(t);
+  }, [pathname]);
+
+  const isActive = (href: string) =>
+    pathname === href || pathname.startsWith(href + "/");
 
   return (
     <>
       <style>{`
-        @keyframes headerGlowPulse {
-          0%, 100% {
-            opacity: 0.35;
-            box-shadow:
-              0 0 0 1px rgba(255, 255, 255, 0.12),
-              0 0 16px rgba(56, 189, 248, 0.16),
-              0 0 26px rgba(251, 191, 36, 0.1);
-          }
-          50% {
-            opacity: 0.82;
-            box-shadow:
-              0 0 0 1px rgba(255, 255, 255, 0.2),
-              0 0 22px rgba(56, 189, 248, 0.28),
-              0 0 34px rgba(251, 191, 36, 0.16);
-          }
+        /* ── Floating root ── */
+        .hdr-root {
+          position: fixed;
+          left: 50%;
+          /* Respect iOS notch / Dynamic Island */
+          top: max(14px, calc(env(safe-area-inset-top) + 10px));
+          z-index: 50;
+          will-change: transform;          /* GPU layer for silky transitions */
+          -webkit-transform: translateZ(0);
+          transition:
+            transform 0.3s  cubic-bezier(0.4, 0, 0.2, 1),
+            opacity   0.3s  ease,
+            width     0.28s ease;
         }
 
-        .header-shell {
-          position: relative;
-          isolation: isolate;
+        /* ── Shell — border-radius + bg, no overflow:hidden (would clip dropdowns) ── */
+        .hdr-bg {
+          border: 1px solid rgba(255,255,255,0.13);
+          -webkit-backdrop-filter: blur(20px) saturate(160%);
+          transition:
+            background    0.3s ease,
+            border-color  0.3s ease,
+            /* border-radius intentionally excluded — snapped via inline style
+               to prevent the 'circle flash' glitch when opening the mobile menu */
+            box-shadow    0.3s ease;
         }
 
-        .header-shell::after {
-          content: "";
+        /* ── Desktop dropdown ── */
+        .hdr-dd { position: relative; }
+
+        .hdr-dd-panel {
           position: absolute;
-          inset: -1px;
-          border-radius: inherit;
+          top: 100%;
+          left: 50%;
+          padding-top: 10px;               /* transparent bridge keeps hover alive */
+          transform: translateX(-50%) translateY(-6px);
+          min-width: 210px;
+          opacity: 0;
           pointer-events: none;
-          animation: headerGlowPulse 4.8s ease-in-out infinite;
-          z-index: -1;
+          transition: opacity 0.18s ease, transform 0.18s ease;
+          z-index: 200;
+        }
+        .hdr-dd-panel > div {
+          transition: transform 0.18s cubic-bezier(0.4,0,0.2,1), opacity 0.18s ease;
+          transform: translateY(-4px);
+          opacity: 0;
+        }
+        .hdr-dd:hover .hdr-dd-panel,
+        .hdr-dd:focus-within .hdr-dd-panel {
+          opacity: 1;
+          pointer-events: auto;
+          transform: translateX(-50%) translateY(0);
+        }
+        .hdr-dd:hover .hdr-dd-panel > div,
+        .hdr-dd:focus-within .hdr-dd-panel > div {
+          transform: translateY(0);
+          opacity: 1;
         }
 
-        /* Smooth glowing hover effect */
-        .nav-link-glow {
+        /* ── Mobile slide panel ── */
+        .mob-panel {
+          overflow: hidden;
+          /* Use max-height for the accordion — GPU-friendly on iOS */
+          transition: max-height 0.32s cubic-bezier(0.4,0,0.2,1), opacity 0.28s ease;
+          max-height: 0;
+          opacity: 0;
+        }
+        .mob-panel.is-open {
+          /* Limit to 70vh so panel never extends off-screen on short phones */
+          max-height: min(70svh, 580px);
+          opacity: 1;
+        }
+
+        /* ── Sub-accordion (dropdown items) ── */
+        .mob-sub {
+          overflow: hidden;
+          transition: max-height 0.25s cubic-bezier(0.4,0,0.2,1), opacity 0.22s ease;
+          max-height: 0;
+          opacity: 0;
+        }
+        .mob-sub.is-open {
+          max-height: 180px;
+          opacity: 1;
+        }
+
+        /* ── All interactive header elements ── */
+        .hdr-root a,
+        .hdr-root button {
+          -webkit-tap-highlight-color: transparent;
+          touch-action: manipulation;
+          user-select: none;
+          -webkit-user-select: none;
+        }
+
+        /* ── Active link indicator ── */
+        .nav-active {
           position: relative;
-          transition: all 0.3s ease;
         }
-        .nav-link-glow:hover {
-          text-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
-          color: white !important;
-        }
-
-        /* Dropdown animations */
-        [data-radix-navigation-menu-content] {
-          animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        @keyframes slideDown {
-          from { opacity: 0; transform: translateY(-4px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-
-        .dropdown-item {
-          position: relative;
-          transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-          color: white !important;
-        }
-
-        .dropdown-item::before {
+        .nav-active::after {
           content: '';
           position: absolute;
-          left: -12px;
-          top: 50%;
-          transform: translateY(-50%);
-          width: 3px;
-          height: 0;
-          background: white;
-          transition: height 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-          border-radius: 2px;
-          box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
-        }
-
-        .dropdown-item:hover {
-          padding-left: 8px;
-          text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
-        }
-
-        .dropdown-item:hover::before {
-          height: 18px;
+          bottom: 4px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 4px;
+          height: 4px;
+          border-radius: 50%;
+          background: rgba(251,191,36,0.8);
         }
       `}</style>
 
-      {/* Main Header Container - Locked into a static island shape */}
-      <motion.header
-        initial={false}
-        animate={{
-          y: isHidden ? "-150%" : "0%",
-          width: mobileOpen ? "92%" : "90%",
-          maxWidth: "980px",
-          top: "24px",
-          borderRadius: mobileOpen ? "24px" : "100px",
-          backgroundColor: mobileOpen
-            ? "rgba(0, 0, 0, 0.85)"
-            : isScrolled
-              ? "rgba(0, 0, 0, 0.65)"
-              : "rgba(0, 0, 0, 0.25)",
-          backdropFilter: "blur(20px) saturate(160%)",
-          border: "1px solid rgba(255, 255, 255, 0.15)",
+      {/* ════════ Floating wrapper ════════ */}
+      <div
+        className="hdr-root"
+        style={{
+          transform: `translateX(-50%) translateY(${hidden ? "-200%" : "0"})`,
+          opacity: hidden ? 0 : 1,
+          pointerEvents: hidden ? "none" : "auto",
+          /* On mobile keep a consistent 8px margin from each side */
+          width: mobileOpen ? "calc(100% - 16px)" : "min(90vw, 960px)",
+          maxWidth: mobileOpen ? "640px" : "960px",
         }}
-        transition={springTransition}
-        className="header-shell fixed z-50 left-1/2 -translate-x-1/2 shadow-2xl max-md:overflow-hidden"
       >
+        {/* ════════ Shell ════════ */}
         <div
           className={cn(
-            "mx-auto flex items-center justify-between w-full",
-            "px-6 py-3 md:px-8" // Consistent padding prevents jumping
+            "hdr-bg",
+            scrolled || mobileOpen
+              ? "bg-black/85 backdrop-blur-2xl shadow-2xl shadow-black/50"
+              : "bg-black/28 backdrop-blur-md shadow-lg",
           )}
+          style={{
+            /* Snap border-radius immediately — no transition so there's
+               no intermediate 'circle' state when the mobile menu opens */
+            borderRadius: mobileOpen ? "20px" : "9999px",
+          }}
         >
-          {/* Logo */}
-          <a
-            href="/"
-            className="font-bold tracking-tighter text-white drop-shadow-md whitespace-nowrap transition-colors duration-300 text-lg md:text-xl"
-          >
-            Timesh Dillon
-          </a>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex">
-            <NavigationMenu>
-              <NavigationMenuList className="gap-1">
-
-                <NavigationMenuItem className="nav-item">
-                  <NavigationMenuLink
-                    href="/"
-                    className="nav-link-glow block px-4 py-2 text-sm font-medium drop-shadow-sm text-white"
-                  >
-                    Home
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-
-                {/* About Dropdown */}
-                <NavigationMenuItem className="nav-item">
-                  <NavigationMenuTrigger className="nav-link-glow px-4 py-2 text-sm font-medium cursor-pointer drop-shadow-sm bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent text-white data-[state=open]:text-white">
-                    About
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <div className="w-70 bg-black/80 backdrop-blur-2xl rounded-xl shadow-2xl border border-white/10 mt-2">
-                      <ul className="grid gap-3 p-5">
-                        <li>
-                          <NavigationMenuLink href="/about" className="dropdown-item block text-sm font-medium text-white">
-                            About Me
-                          </NavigationMenuLink>
-                        </li>
-                        <li>
-                          <NavigationMenuLink href="/about/experiences" className="dropdown-item block text-sm font-medium text-white">
-                            Experiences
-                          </NavigationMenuLink>
-                        </li>
-                        <li>
-                          <NavigationMenuLink href="/contact" className="dropdown-item block text-sm font-medium text-white">
-                            Contact
-                          </NavigationMenuLink>
-                        </li>
-                      </ul>
-                    </div>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-
-                {/* Projects Dropdown */}
-                <NavigationMenuItem className="nav-item">
-                  <NavigationMenuTrigger className="nav-link-glow px-4 py-2 text-sm font-medium cursor-pointer drop-shadow-sm bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent text-white data-[state=open]:text-white">
-                    View My Work
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <div className="w-85 bg-black/80 backdrop-blur-2xl rounded-xl shadow-2xl border border-white/10 mt-2">
-                      <ul className="grid gap-4 p-5">
-
-                        <li>
-                          <NavigationMenuLink href="/projects/videos" className="dropdown-item block text-sm font-medium text-white">
-                            Video Edits
-                            <p className="text-xs text-neutral-300 font-normal mt-1">Motion & video production</p>
-                          </NavigationMenuLink>
-                        </li>
-                        <li>
-                          <NavigationMenuLink href="/projects/posts" className="dropdown-item block text-sm font-medium text-white">
-                            Post Designs
-                            <p className="text-xs text-neutral-300 font-normal mt-1">Social media & graphics</p>
-                          </NavigationMenuLink>
-                        </li>
-                      </ul>
-                    </div>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
-
-            <a
-              href="/cv"
-              className="ml-4 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm font-medium text-white transition-all duration-300 hover:border-white/50 hover:bg-white/20"
+          {/* ── Top bar ── */}
+          <div className="flex items-center justify-between px-4 py-2.5 md:px-7 md:py-3">
+            {/* Logo */}
+            <Link
+              href="/"
+              className="text-white font-bold text-sm md:text-lg tracking-tight shrink-0 hover:opacity-75 transition-opacity duration-200"
             >
-              <FileText className="h-4 w-4" /> Resume
-            </a>
+              Timesh Dillon
+            </Link>
+
+            {/* Desktop nav — flat direct links, no dropdowns */}
+            <nav
+              className="hidden md:flex items-center gap-0.5"
+              aria-label="Main navigation"
+            >
+              {navItems.map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className={cn(
+                    "px-3.5 py-2 text-sm font-medium rounded-full transition-colors duration-200",
+                    isActive(item.href)
+                      ? "text-white bg-white/12 nav-active"
+                      : "text-neutral-300 hover:text-white hover:bg-white/8",
+                  )}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+
+            {/* Right: Resume button + hamburger */}
+            <div className="flex items-center gap-2">
+              <Link
+                href="/cv"
+                className="hidden md:inline-flex items-center gap-1.5 text-sm font-medium text-white bg-white/10 hover:bg-white/18 border border-white/14 px-4 py-1.5 rounded-full transition-colors duration-200"
+              >
+                <FileText className="w-3.5 h-3.5" />
+                Resume
+              </Link>
+
+              {/* ── Hamburger — 44×44 px touch target (Apple HIG minimum) ── */}
+              <button
+                onClick={() => setMobileOpen((p) => !p)}
+                className="md:hidden w-11 h-11 flex items-center justify-center rounded-full text-white hover:bg-white/10 active:bg-white/18 transition-colors duration-200"
+                aria-label={
+                  mobileOpen ? "Close navigation menu" : "Open navigation menu"
+                }
+                aria-expanded={mobileOpen}
+              >
+                <span
+                  style={{
+                    display: "inline-flex",
+                    transform: mobileOpen ? "rotate(90deg)" : "rotate(0deg)",
+                    transition: "transform 0.22s ease",
+                  }}
+                >
+                  {mobileOpen ? (
+                    <X className="w-5 h-5" />
+                  ) : (
+                    <Menu className="w-5 h-5" />
+                  )}
+                </span>
+              </button>
+            </div>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-1.5 -mr-1.5 rounded-full hover:bg-white/10 active:bg-white/20 transition-colors duration-200"
-            aria-label="Toggle menu"
-            onClick={() => setMobileOpen((prev) => !prev)}
+          {/* ── Mobile slide-down menu ── */}
+          <div
+            className={cn("mob-panel md:hidden", mobileOpen && "is-open")}
+            /* Allow the panel itself to scroll on very short phones */
+            style={{ overflowY: "auto", WebkitOverflowScrolling: "touch" }}
           >
-            <motion.span
-              animate={{ rotate: mobileOpen ? 90 : 0, scale: mobileOpen ? 1.1 : 1 }}
-              transition={springTransition}
-              className="block"
+            <div
+              className="px-3 pb-4 border-t border-white/8"
+              /* Push content down from the border */
+              style={{ paddingTop: "6px" }}
             >
-              {mobileOpen ? <X className="w-5 h-5 text-white" /> : <Menu className="w-5 h-5 text-white" />}
-            </motion.span>
-          </button>
-        </div>
+              <div className="flex flex-col gap-0.5 pt-1">
+                {/* Flat mobile links — no accordion */}
+                {navItems.map((item) => (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    className={cn(
+                      "flex items-center px-4 py-3.5 text-[15px] font-medium rounded-2xl transition-colors duration-150",
+                      isActive(item.href)
+                        ? "text-white bg-white/10"
+                        : "text-neutral-300 hover:text-white active:bg-white/10 hover:bg-white/7",
+                    )}
+                  >
+                    {item.label}
+                    {isActive(item.href) && (
+                      <span className="ml-auto w-1.5 h-1.5 rounded-full bg-amber-400/80" />
+                    )}
+                  </Link>
+                ))}
 
-        {/* Mobile Menu Expansion */}
-        <AnimatePresence>
-          {mobileOpen && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={springTransition}
-              className="md:hidden w-full px-5"
-            >
-              <div className="flex flex-col pb-4 border-t border-white/10 mt-1">
-                <a
-                  href="/"
-                  className="block py-3 text-sm font-medium text-white hover:text-white/70 border-b border-white/10 transition-colors nav-link-glow"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  Home
-                </a>
-
-                <a
+                {/* Resume row */}
+                <Link
                   href="/cv"
-                  className="flex items-center gap-2 py-3 text-sm font-medium text-white hover:text-white/70 border-b border-white/10 transition-colors nav-link-glow"
-                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-2.5 mt-1.5 px-4 py-3.5 text-[15px] font-medium text-white bg-white/7 hover:bg-white/12 active:bg-white/16 rounded-2xl transition-colors duration-150 border border-white/8"
                 >
-                  <FileText className="h-4 w-4" /> Resume
-                </a>
-
-                <div>
-                  <button
-                    className="flex w-full items-center justify-between py-3 text-sm font-medium text-white hover:text-white/70 border-b border-white/10 transition-colors nav-link-glow"
-                    onClick={() => toggleSection("About")}
-                  >
-                    About
-                    <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${openSection === "About" ? "rotate-180" : ""}`} />
-                  </button>
-                  <AnimatePresence>
-                    {openSection === "About" && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={springTransition}
-                        className="overflow-hidden ml-3 flex flex-col border-l border-white/20 pl-3"
-                      >
-                        <div className="py-2 flex flex-col gap-1">
-                          <a href="/about" className="py-2 text-sm text-white/80 hover:text-white transition-colors">About Me</a>
-                          <a href="/about/experiences" className="py-2 text-sm text-white/80 hover:text-white transition-colors">Experience</a>
-                          <a href="/contact" className="py-2 text-sm text-white/80 hover:text-white transition-colors">Contact</a>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-
-                <div>
-                  <button
-                    className="flex w-full items-center justify-between py-3 text-sm font-medium text-white hover:text-white/70 transition-colors nav-link-glow"
-                    onClick={() => toggleSection("Projects")}
-                  >
-                    Projects
-                    <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${openSection === "Projects" ? "rotate-180" : ""}`} />
-                  </button>
-                  <AnimatePresence>
-                    {openSection === "Projects" && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={springTransition}
-                        className="overflow-hidden ml-3 flex flex-col border-l border-white/20 pl-3 mb-1"
-                      >
-                         <div className="py-2 flex flex-col gap-1">
-                          <a href="/projects/videos" className="py-2 text-sm text-white/80 hover:text-white transition-colors">Video Edits</a>
-                          <a href="/projects/posts" className="py-2 text-sm text-white/80 hover:text-white transition-colors">Post Designs</a>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-
+                  <FileText className="w-4 h-4 shrink-0 text-amber-400/80" />
+                  Resume / CV
+                </Link>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.header>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

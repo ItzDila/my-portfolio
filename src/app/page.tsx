@@ -1,6 +1,4 @@
 "use client";
-
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -12,17 +10,22 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import BlurText from "@/components/ui/BlurText";
+// Note: Card components kept for the Services section
 import {
   ArrowRight,
   Palette,
   Code,
-  Layers,
-  Star,
   Mail,
   Video,
   Sparkles,
+  MapPin,
+  Tag,
 } from "lucide-react";
+
+// Profile picture
+import pfpImage from "@/assets/pfp.jpg";
+
+// Work showcase images
 import tpslImage from "@/assets/tpsl.jpg";
 import trvlpediaImage from "@/assets/Ultimate-car-care-Updated.png";
 import axelaImage from "@/assets/Axela Post1.png";
@@ -39,491 +42,411 @@ const bestWorks = [
   brakePostImage,
 ];
 
+const stats = [
+  { value: "4+", label: "Years Exp." },
+  { value: "40+", label: "Projects" },
+  { value: "20+", label: "Clients" },
+];
+
 export default function Home() {
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrolled = window.scrollY > 50;
-      setIsScrolled((prev) => (prev === scrolled ? prev : scrolled));
-    };
-
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
     <>
       <style>{`
-        /* UI Animations */
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(30px); }
-          to { opacity: 1; transform: translateY(0); }
+        @keyframes fadeUp {
+          from { opacity: 0; transform: translateY(24px); }
+          to   { opacity: 1; transform: translateY(0); }
         }
-
-        /* --- PREMIUM TEXT ANIMATIONS --- */
-        @keyframes gradient-flow {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to   { opacity: 1; }
         }
-        .animate-gradient-flow {
-          background-size: 200% auto;
-          animation: gradient-flow 4s ease infinite;
+        @keyframes floatY {
+          0%, 100% { transform: translateY(0px); }
+          50%       { transform: translateY(-10px); }
         }
-
-        @keyframes neon-pulse {
-          0%, 100% { filter: drop-shadow(0 0 5px rgba(252, 211, 77, 0.3)); }
-          50% { filter: drop-shadow(0 0 20px rgba(0, 238, 255, 0.7)); }
-        }
-        .animate-neon-pulse {
-          animation: neon-pulse 5.5s ease-in-out infinite;
-          display: flex;
-          justify-content: center;
-          width: 100%;
-        }
-
-        @keyframes float {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-8px); }
-        }
-        .animate-float {
-          animation: float 4s ease-in-out infinite;
-          display: inline-block;
-        }
-
-        @keyframes hue-cycle {
-          0% { filter: hue-rotate(0deg); }
-          100% { filter: hue-rotate(360deg); }
-        }
-        .animate-hue-cycle {
-          animation: hue-cycle 6s linear infinite;
-        }
-
-        /* Infinite Marquee Scroll */
         @keyframes marquee-scroll {
-          0% { transform: translateX(0); }
+          0%   { transform: translateX(0); }
           100% { transform: translateX(-50%); }
         }
+        @keyframes gradientShift {
+          0%   { background-position: 0% 50%; }
+          50%  { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        @keyframes ringPulse {
+          0%, 100% { box-shadow: 0 0 0 0px rgba(251,191,36,0.35), 0 0 32px rgba(251,191,36,0.15); }
+          50%       { box-shadow: 0 0 0 6px rgba(251,191,36,0.12), 0 0 56px rgba(251,191,36,0.25); }
+        }
+
+        .anim-fade-up-1  { animation: fadeUp 0.7s ease-out 0.05s both; }
+        .anim-fade-up-2  { animation: fadeUp 0.7s ease-out 0.15s both; }
+        .anim-fade-up-3  { animation: fadeUp 0.7s ease-out 0.25s both; }
+        .anim-fade-up-4  { animation: fadeUp 0.7s ease-out 0.35s both; }
+        .anim-fade-up-5  { animation: fadeUp 0.7s ease-out 0.45s both; }
+        .anim-fade-up-6  { animation: fadeUp 0.7s ease-out 0.55s both; }
+        .anim-float      { animation: floatY 5s ease-in-out infinite; }
+        .anim-ring-pulse { animation: ringPulse 3s ease-in-out infinite; }
         .animate-marquee {
-          animation: marquee-scroll 40s linear infinite;
+          animation: marquee-scroll 38s linear infinite;
           width: max-content;
         }
-        .animate-marquee:hover {
-          animation-play-state: paused;
+        .animate-marquee:hover { animation-play-state: paused; }
+
+        .glass {
+          background: rgba(255,255,255,0.06);
+          backdrop-filter: blur(14px);
+          -webkit-backdrop-filter: blur(14px);
+          border: 1px solid rgba(255,255,255,0.12);
+        }
+        .glass-hover {
+          transition: background 0.25s, border-color 0.25s, transform 0.25s;
+        }
+        .glass-hover:hover {
+          background: rgba(255,255,255,0.10);
+          border-color: rgba(255,255,255,0.22);
+          transform: translateY(-3px);
         }
 
-        /* Component Classes */
-        .hero-content { animation: fadeInUp 0.8s ease-out; }
-        .badge-animate { animation: fadeInUp 0.8s ease-out 0.1s both; }
-        .title-animate { animation: fadeInUp 0.8s ease-out 0.2s both; }
-        .description-animate { animation: fadeInUp 0.8s ease-out 0.3s both; }
-        .buttons-animate { animation: fadeInUp 0.8s ease-out 0.4s both; }
-        .stats-animate { animation: fadeInUp 0.8s ease-out 0.5s both; }
-        .section-animate { animation: fadeInUp 0.8s ease-out; }
-
-        .card-animate { animation: fadeInUp 0.6s ease-out; }
-        .card-animate:nth-child(1) { animation-delay: 0.1s; }
-        .card-animate:nth-child(2) { animation-delay: 0.2s; }
-        .card-animate:nth-child(3) { animation-delay: 0.3s; }
-
-        /* Enhanced Glassmorphism */
-        .glassmorphic {
-          background: rgba(255, 255, 255, 0.08) !important;
-          backdrop-filter: blur(16px) !important;
-          -webkit-backdrop-filter: blur(16px) !important;
-          border: 1px solid rgba(255, 255, 255, 0.15) !important;
-          box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3) !important;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .gold-text {
+          background: linear-gradient(120deg, #f59e0b, #fcd34d, #d97706);
+          background-size: 200% auto;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          animation: gradientShift 4s ease infinite;
         }
-
-        .glassmorphic:hover {
-          background: rgba(255, 255, 255, 0.12) !important;
-          border-color: rgba(255, 255, 255, 0.3) !important;
-          box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5) !important;
-          transform: translateY(-2px);
+        .section-label {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          font-size: 11px;
+          font-weight: 600;
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
+          color: rgba(212,212,212,0.6);
         }
-
-        @font-face {
-          font-family: "Momo Signature";
-          src: url("/fonts/MomoSignature.ttf") format("truetype");
-          font-weight: 400;
-          font-style: normal;
-          font-display: swap;
+        .section-label span.line {
+          display: block;
+          width: 28px;
+          height: 1px;
+          background: rgba(255,255,255,0.25);
         }
-
-        .momo-signature {
-          font-family: "Momo Signature", cursive;
-        }
-
-        .alex-brush {
-          font-family: var(--font-alex-brush), cursive;
-        }
-
-        .courgette-font {
-          font-family: var(--font-courgette), cursive;
+        .pfp-ring {
+          border-radius: 50%;
+          padding: 3px;
+          background: linear-gradient(135deg, #f59e0b, #fcd34d 40%, #92400e 70%, #f59e0b);
         }
       `}</style>
 
       <div className="flex flex-col gap-0 relative z-10">
-        {/* Hero Section */}
-        <section className="relative flex min-h-screen items-center justify-start overflow-hidden py-24">
-          <div className="hero-content relative z-10 ml-0 flex w-full max-w-6xl flex-col items-start gap-8 px-5 md:ml-8 md:px-10 lg:ml-16">
-            <div className="pointer-events-none absolute inset-0 -z-10 rounded-full bg-radial-gradient from-white/5 to-transparent blur-3xl" />
+        {/* ─────────────────────────────────────────────
+            HERO SECTION — split layout with profile pic
+        ───────────────────────────────────────────── */}
+        <section className="relative min-h-dvh flex items-center overflow-hidden pt-28 pb-16 sm:py-28 px-5 md:px-10 lg:px-16">
+          <div className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-center">
+            {/* ── Left: Text Content ── */}
+            <div className="flex flex-col gap-5 sm:gap-7 order-2 lg:order-1">
+              {/* Availability badge */}
+              <div className="anim-fade-up-1">
+                <span className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-semibold tracking-widest text-neutral-300 uppercase">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                  </span>
+                  Available for work
+                </span>
+              </div>
 
-            <div className="badge-animate">
-              <div className="inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-neutral-200/65">
-                <span className="h-px w-10 bg-white/25" />
-                <span>Turning Ideas into Visual Reality</span>
+              {/* Name + role */}
+              <div className="anim-fade-up-2 flex flex-col gap-3">
+                <p className="text-neutral-400 text-sm tracking-[0.2em] uppercase font-medium">
+                  Hello, I&apos;m
+                </p>
+                <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold leading-none tracking-tight text-white">
+                  Timesh <span className="gold-text">Dillon</span>
+                </h1>
+                <p className="text-neutral-300/80 text-sm md:text-lg tracking-[0.06em] sm:tracking-[0.18em] uppercase">
+                  Designer &nbsp;·&nbsp; Video Editor &nbsp;·&nbsp; Developer
+                </p>
+              </div>
+
+              {/* Bio */}
+              <p className="anim-fade-up-3 text-neutral-300 text-sm sm:text-base md:text-lg leading-relaxed max-w-lg">
+                A passionate creative who blends{" "}
+                <span className="text-amber-400 font-medium">
+                  visual storytelling
+                </span>{" "}
+                with modern technology — building brands, videos, and digital
+                experiences that leave a lasting impression.
+              </p>
+
+              {/* Location */}
+              <div className="anim-fade-up-3 flex items-center gap-2 text-neutral-400 text-sm -mt-2">
+                <MapPin className="w-4 h-4 text-amber-500/80" />
+                <span>Sri Lanka</span>
+              </div>
+
+              {/* CTA Buttons */}
+              {/* Buttons — stacked full-width on mobile, inline from sm up */}
+              <div className="anim-fade-up-4 flex flex-col sm:flex-row sm:flex-wrap gap-3">
+                <Button
+                  asChild
+                  size="lg"
+                  className="w-full sm:w-auto bg-amber-500 hover:bg-amber-400 text-black font-bold gap-2 shadow-lg shadow-amber-500/25 transition-all duration-200"
+                >
+                  <Link href="/projects/posts">
+                    View My Work <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </Button>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="w-full sm:w-auto bg-transparent border-white/25 text-white hover:bg-white/10 hover:border-white/45 gap-2 transition-all duration-200"
+                >
+                  <Link href="/services">
+                    <Tag className="w-4 h-4" /> See Pricing
+                  </Link>
+                </Button>
+                {/* Plain Link — avoids CVA ghost hover:text-accent-foreground conflict */}
+                <Link
+                  href="/contact"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 h-10 px-6 rounded-md text-sm font-medium text-neutral-400 hover:text-amber-400 hover:bg-amber-500/8 transition-colors duration-200"
+                >
+                  <Mail className="w-4 h-4" /> Contact
+                </Link>
+              </div>
+
+              {/* Stats — spread evenly on mobile, left-aligned on sm+ */}
+              <div className="anim-fade-up-5 flex justify-around sm:justify-start flex-nowrap sm:flex-wrap w-full sm:w-auto gap-2 sm:gap-6 pt-4 sm:pt-2 border-t border-white/8 sm:border-t-0">
+                {stats.map((s) => (
+                  <div
+                    key={s.label}
+                    className="flex flex-col items-center sm:items-start"
+                  >
+                    <span className="text-2xl font-bold gold-text">
+                      {s.value}
+                    </span>
+                    <span className="text-[10px] sm:text-xs text-neutral-400 tracking-wider sm:tracking-widest uppercase">
+                      {s.label}
+                    </span>
+                  </div>
+                ))}
               </div>
             </div>
 
-            <div className="flex w-full max-w-5xl flex-col gap-5">
-              <h1 className="title-animate text-left font-extrabold leading-[0.95] tracking-tight text-white drop-shadow-2xl text-6xl sm:text-7xl md:text-8xl lg:text-[8.8rem]">
-                <span className="flex flex-col items-start gap-1 text-white">
-                  <BlurText
-                    text="Hello👋🏻"
-                    delay={80}
-                    animateBy="words"
-                    direction="top"
-                    stepDuration={0.2}
-                    className="justify-start whitespace-nowrap"
-                  />
-                  <span className="whitespace-nowrap">
-                    <span>I'm Timesh </span>
-                    <span className="text-transparent bg-clip-text bg-linear-to-r from-amber-600 via-yellow-300 to-red-500">
-                      Dillon
-                    </span>
-                  </span>
+            {/* ── Right: Profile Picture ── */}
+            <div className="order-1 lg:order-2 flex justify-center items-center">
+              <div className="anim-float relative">
+                {/* Outer decorative ring */}
+                <div className="pfp-ring anim-ring-pulse">
+                  <div className="rounded-full overflow-hidden w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-[340px] lg:h-[340px] relative bg-black">
+                    <Image
+                      src={pfpImage}
+                      alt="Timesh Dillon"
+                      fill
+                      priority
+                      sizes="(max-width: 640px) 256px, (max-width: 768px) 320px, 360px"
+                      className="object-cover object-center"
+                    />
+                  </div>
+                </div>
+
+                {/* Floating skill badges — hidden on xs, shown from sm up */}
+                <div className="hidden sm:flex anim-fade-up-1 absolute -top-4 -right-8 md:-right-10 glass rounded-2xl px-3 py-2 items-center gap-2 text-xs font-semibold text-white shadow-lg">
+                  <Palette className="w-3.5 h-3.5 text-amber-400" />
+                  Graphic Design
+                </div>
+                <div className="hidden sm:flex anim-fade-up-2 absolute -bottom-4 -left-8 md:-left-10 glass rounded-2xl px-3 py-2 items-center gap-2 text-xs font-semibold text-white shadow-lg">
+                  <Code className="w-3.5 h-3.5 text-sky-400" />
+                  Web Dev
+                </div>
+                <div className="hidden sm:flex anim-fade-up-3 absolute top-1/2 -translate-y-1/2 -right-8 md:-right-14 glass rounded-2xl px-3 py-2 items-center gap-2 text-xs font-semibold text-white shadow-lg">
+                  <Video className="w-3.5 h-3.5 text-violet-400" />
+                  Video Edit
+                </div>
+
+                {/* Decorative blur orbs behind the photo */}
+                <div className="absolute inset-0 -z-10 rounded-full bg-amber-600/20 blur-3xl scale-125" />
+              </div>
+            </div>
+          </div>
+
+          {/* Scroll hint — hidden on mobile (hero taller than viewport, would overlap stats) */}
+          <div className="hidden sm:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-1 opacity-40">
+            <span className="text-[10px] tracking-widest uppercase text-neutral-400">
+              Scroll
+            </span>
+            <div className="w-px h-8 bg-gradient-to-b from-white/30 to-transparent" />
+          </div>
+        </section>
+
+        {/* ─────────────────────────────────────────────
+            SERVICES SECTION
+        ───────────────────────────────────────────── */}
+        <section className="py-12 sm:py-20 px-5 md:px-10" id="services">
+          <div className="max-w-6xl mx-auto flex flex-col gap-10">
+            <div className="flex flex-col gap-2 text-center">
+              <div className="flex justify-center">
+                <span className="section-label">
+                  <span className="line" /> Creative &amp; Digital Services{" "}
+                  <span className="line" />
                 </span>
-              </h1>
-
-              <p className="text-left text-base uppercase tracking-[0.24em] text-neutral-300/70 md:text-lg">
-                Designer  •  Video Editor  •  Developer
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-bold text-white">
+                What I Offer
+              </h2>
+              <p className="text-neutral-400 max-w-md mx-auto text-sm">
+                Blending creativity and technology to deliver impactful digital
+                solutions.
               </p>
-
-              <BlurText
-                text="A passionate Designer, Video Editor & Developer crafting beautiful digital experiences that leave a lasting impression."
-                delay={34}
-                animateBy="words"
-                direction="bottom"
-                stepDuration={0.24}
-                className="description-animate -mt-1 max-w-3xl justify-start text-left text-xl leading-relaxed text-neutral-200/90 drop-shadow-md md:text-2xl"
-              />
             </div>
 
-            <div className="buttons-animate flex flex-wrap items-center gap-4 justify-start">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              {[
+                {
+                  title: "Graphic Design",
+                  tag: "Branding & Visuals",
+                  desc: "Compelling brand identities, marketing creatives, and digital visuals that capture attention and communicate with clarity.",
+                  icon: <Palette className="w-6 h-6 text-amber-400" />,
+                },
+                {
+                  title: "Web Development",
+                  tag: "Code & UX",
+                  desc: "Scalable, high-performance websites that combine seamless functionality with refined user experience.",
+                  icon: <Code className="w-6 h-6 text-sky-400" />,
+                },
+                {
+                  title: "Video Editing",
+                  tag: "Motion & Production",
+                  desc: "Raw footage transformed into engaging, high-impact video content that connects with audiences and strengthens brand identity.",
+                  icon: <Video className="w-6 h-6 text-violet-400" />,
+                },
+              ].map((item) => (
+                <Card
+                  key={item.title}
+                  className="glass glass-hover rounded-2xl border-0"
+                >
+                  <CardHeader className="pb-2">
+                    <div className="p-3 rounded-xl bg-white/8 border border-white/8 w-fit mb-3">
+                      {item.icon}
+                    </div>
+                    <CardTitle className="text-white text-lg">
+                      {item.title}
+                    </CardTitle>
+                    <CardDescription className="text-neutral-500 text-xs tracking-wider uppercase">
+                      {item.tag}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="text-neutral-400 text-sm leading-relaxed">
+                    {item.desc}
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-3 mt-2">
               <Button
                 asChild
                 size="lg"
-                className="glassmorphic text-white gap-2 border-white/20 hover:bg-white/20"
+                className="bg-amber-500 hover:bg-amber-400 text-black font-semibold gap-2 shadow-lg shadow-amber-500/20"
               >
                 <Link href="/services">
-                  View Services <ArrowRight className="w-4 h-4" />
+                  <Tag className="w-4 h-4" /> View Pricing
                 </Link>
               </Button>
               <Button
                 asChild
                 size="lg"
                 variant="outline"
-                className="glassmorphic text-neutral-200 hover:text-white hover:bg-white/10 border-white/10"
+                className="glass text-neutral-200 hover:text-white hover:bg-white/10 border-white/15 gap-2"
               >
                 <Link href="/contact">
-                  <Mail className="w-4 h-4 mr-2" /> Contact Me
+                  Get a Quote <ArrowRight className="w-4 h-4" />
                 </Link>
               </Button>
             </div>
           </div>
         </section>
 
-        <Separator className="bg-white/10" />
+        <Separator className="bg-white/8" />
 
-        {/* About Section */}
-        <section
-          className={`flex flex-col gap-10 py-24 px-4 transition-all duration-300 ${
-            isScrolled ? "bg-black/20 backdrop-blur-sm" : ""
-          }`}
-          id="about"
-        >
-          <div className="section-animate flex flex-col gap-2 text-center">
-            <div>
-              <div className="mx-auto inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-neutral-200/65">
-                <span className="h-px w-8 bg-white/25" />
-                <span>Background</span>
-                <span className="h-px w-8 bg-white/25" />
-              </div>
-            </div>
-            <BlurText
-              text="About Me"
-              delay={95}
-              animateBy="letters"
-              direction="top"
-              stepDuration={0.2}
-              className="justify-center text-4xl font-bold text-white drop-shadow-md"
-            />
-            <p className="text-neutral-300 max-w-xl mx-auto text-sm drop-shadow-sm">
-              Where creativity meets purpose — explore the story behind my work.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto w-full">
-            {[
-              {
-                title: "Who I Am",
-                desc: "A visual storyteller specializing in graphic design and video editing, with a growing expertise in building smart digital solutions.",
-                icon: <Star className="w-5 h-5 text-white" />,
-              },
-              {
-                title: "My Story",
-                desc: "I began my journey in graphic design and video editing, working with brands to create impactful visuals, and later expanded into web development to bring my ideas to life through code.",
-                icon: <Layers className="w-5 h-5 text-white" />,
-              },
-              {
-                title: "Experience",
-                desc: "5+ years delivering branding, digital content, video production, and modern UI experiences for clients across industries.",
-                icon: <Code className="w-5 h-5 text-white" />,
-              },
-            ].map((item) => (
-              <div key={item.title} className="card-animate">
-                <Card className="glassmorphic group h-full">
-                  <CardHeader className="flex flex-row items-center gap-3">
-                    <div className="p-2 rounded-lg bg-white/10 group-hover:bg-white/20 transition-colors border border-white/5">
-                      {item.icon}
-                    </div>
-                    <CardTitle className="text-white text-lg">
-                      {item.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="text-neutral-300 text-sm leading-relaxed">
-                    {item.desc}
-                  </CardContent>
-                </Card>
-              </div>
-            ))}
-          </div>
-        </section>
+        {/* ─────────────────────────────────────────────
+            SELECTED WORKS MARQUEE SLIDER
+        ───────────────────────────────────────────── */}
+        <section className="py-10 sm:py-16 overflow-hidden relative">
+          <div className="absolute inset-y-0 left-0  w-20 bg-gradient-to-r from-black/80 to-transparent z-10 pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-black/80 to-transparent z-10 pointer-events-none" />
 
-        <Separator className="bg-white/10" />
-
-        {/* Graphics Section */}
-        <section
-          className={`w-full transition-all duration-300 ${
-            isScrolled ? "bg-black/20 backdrop-blur-sm" : ""
-          }`}
-          id="graphics"
-        >
-          <div className="flex flex-col gap-10 py-24 px-4 max-w-6xl mx-auto w-full">
-            <div className="section-animate flex flex-col gap-2 text-center">
-              <div>
-                <div className="mx-auto inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-neutral-200/65">
-                  <span className="h-px w-8 bg-white/25" />
-                  <span>Graphics</span>
-                  <span className="h-px w-8 bg-white/25" />
-                </div>
-              </div>
-              <BlurText
-                text="Creative Works"
-                delay={95}
-                animateBy="letters"
-                direction="top"
-                stepDuration={0.15}
-                className="justify-center text-4xl font-bold text-white drop-shadow-md"
-              />
-              <p className="text-neutral-300 max-w-xl mx-auto text-sm drop-shadow-sm">
-                A curated collection of my creative work in branding, visual
-                design, and user interface projects that crafted with strategy
-                and precision...
-              </p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[
-                {
-                  title: "Portfolio",
-                  desc: "Explore a curated selection of my latest graphic design, video editing, and digital creative projects crafted for real brands and clients.",
-                  tag: "Featured Projects",
-                  icon: <Star className="w-5 h-5 text-white" />,
-                },
-                {
-                  title: "Branding",
-                  desc: "Strategic logo design, brand identity systems, and cohesive visual languages built to help businesses stand out and stay memorable.",
-                  tag: "Brand Identity",
-                  icon: <Palette className="w-5 h-5 text-white" />,
-                },
-                {
-                  title: "UI Design",
-                  desc: "Modern interface design that balances aesthetics, usability, and seamless user experience across digital platforms.",
-                  tag: "Interface & UX",
-                  icon: <Layers className="w-5 h-5 text-white" />,
-                },
-              ].map((item) => (
-                <div key={item.title}>
-                  <div className="card-animate h-full">
-                    <Card className="glassmorphic group h-full">
-                      <CardHeader className="flex flex-row items-center gap-3">
-                        <div className="p-2 rounded-lg bg-white/10 group-hover:bg-white/20 transition-colors border border-white/5">
-                          {item.icon}
-                        </div>
-                        <div>
-                          <CardTitle className="text-white text-lg">
-                            {item.title}
-                          </CardTitle>
-                          <CardDescription className="text-neutral-400 text-xs">
-                            {item.tag}
-                          </CardDescription>
-                        </div>
-                      </CardHeader>
-                      <CardContent className="text-neutral-300 text-sm leading-relaxed">
-                        {item.desc}
-                      </CardContent>
-                    </Card>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* --- SELECTED WORKS SLIDER WITH NEXT/IMAGE --- */}
-        <section
-          className={`w-full py-16 overflow-hidden relative transition-all duration-300 ${
-            isScrolled ? "bg-black/20 backdrop-blur-sm" : ""
-          }`}
-        >
-          <div className="absolute inset-y-0 left-0 w-16 bg-linear-to-r from-black/15 to-transparent z-10 pointer-events-none" />
-          <div className="absolute inset-y-0 right-0 w-16 bg-linear-to-l from-black/15 to-transparent z-10 pointer-events-none" />
-
-          <div className="flex flex-col gap-6 mb-10 px-4 max-w-6xl mx-auto w-full">
-             <div className="flex items-center gap-3 text-white">
-                <Sparkles className="w-5 h-5 text-amber-400" />
-                <h2 className="text-2xl font-bold tracking-tight">Selected Social Media Content Posts</h2>
-             </div>
+          <div className="flex items-center gap-3 mb-5 sm:mb-8 px-5 md:px-10 max-w-6xl mx-auto">
+            <Sparkles className="w-5 h-5 text-amber-400" />
+            <h2 className="text-2xl font-bold text-white tracking-tight">
+              Selected Social Media Posts
+            </h2>
           </div>
 
-          <div className="flex animate-marquee gap-6 px-6">
-            {/* Double the array map to create a seamless infinite loop */}
+          <div className="flex animate-marquee gap-5 px-5">
             {[...bestWorks, ...bestWorks].map((image, index) => (
               <div
                 key={index}
-                className="relative shrink-0 w-64 sm:w-80 aspect-square rounded-2xl overflow-hidden glassmorphic group cursor-pointer bg-black/30"
+                className="relative shrink-0 w-60 sm:w-72 aspect-square rounded-2xl overflow-hidden glass group cursor-pointer"
               >
                 <Image
                   src={image}
-                  alt={`Selected Work ${index + 1}`}
+                  alt={`Selected Work ${(index % bestWorks.length) + 1}`}
                   fill
-                  unoptimized
-                  priority={index < bestWorks.length}
-                  sizes="(max-width: 640px) 256px, 320px"
-                  className="object-contain p-2 transition-transform duration-700 ease-in-out group-hover:scale-105 opacity-90 group-hover:opacity-100"
+                  sizes="(max-width: 640px) 240px, 288px"
+                  priority={index < 2}
+                  loading={index < 2 ? "eager" : "lazy"}
+                  className="object-contain p-2 transition-transform duration-500 group-hover:scale-105 opacity-90 group-hover:opacity-100"
                 />
-                <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6 z-10">
-
-                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
             ))}
           </div>
         </section>
-        {/* --- END SLIDER --- */}
 
-        <Separator className="bg-white/10" />
-
-        {/* Services Section */}
-        <section
-          className={`w-full transition-all duration-300 ${
-            isScrolled ? "bg-black/20 backdrop-blur-sm" : ""
-          }`}
-          id="services"
-        >
-          <div className="flex flex-col gap-10 py-24 px-4 max-w-6xl mx-auto w-full">
-            <div className="section-animate flex flex-col gap-2 text-center">
-              <div>
-                <div className="mx-auto inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-neutral-200/65">
-                  <span className="h-px w-8 bg-white/25" />
-                  <span>Creative & Digital Services</span>
-                  <span className="h-px w-8 bg-white/25" />
-                </div>
-              </div>
-              <BlurText
-                text="What I Offer"
-                delay={95}
-                animateBy="letters"
-                direction="top"
-                stepDuration={0.15}
-                className="justify-center text-4xl font-bold text-white drop-shadow-md"
-              />
-              <p className="text-neutral-300 max-w-xl mx-auto text-sm drop-shadow-sm">
-                Blending creativity and technology to deliver impactful digital
-                solutions.
-              </p>
+        {/* ─────────────────────────────────────────────
+            CTA SECTION
+        ───────────────────────────────────────────── */}
+        <section className="relative flex flex-col items-center justify-center text-center py-14 sm:py-24 gap-6 overflow-hidden px-5">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-950/10 to-black/40 pointer-events-none" />
+          <div className="relative z-10 glass rounded-3xl p-6 sm:p-10 md:p-14 max-w-2xl w-full flex flex-col items-center gap-5 sm:gap-6">
+            <div className="text-xs tracking-[0.25em] uppercase text-neutral-500 font-semibold">
+              Let&apos;s Collaborate
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[
-                {
-                  title: "Graphic Design",
-                  desc: "Crafting compelling brand identities, marketing creatives, and digital visuals that capture attention and communicate with clarity.",
-                  icon: <Palette className="w-5 h-5 text-white" />,
-                },
-                {
-                  title: "Web Development",
-                  desc: "Developing scalable, high performance websites that combine seamless functionality with refined user experience.",
-                  icon: <Code className="w-5 h-5 text-white" />,
-                },
-                {
-                  title: "Video Editing",
-                  desc: "Transforming raw footage into engaging, high mpact video content that connects with audiences and strengthens brand identity.",
-                  icon: <Video className="w-5 h-5 text-white" />,
-                },
-              ].map((item) => (
-                <div key={item.title}>
-                  <div className="card-animate h-full">
-                    <Card className="glassmorphic group h-full">
-                      <CardHeader className="flex flex-row items-center gap-3">
-                        <div className="p-2 rounded-lg bg-white/10 group-hover:bg-white/20 transition-colors border border-white/5">
-                          {item.icon}
-                        </div>
-                        <CardTitle className="text-white text-lg">
-                          {item.title}
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent className="text-neutral-300 text-sm leading-relaxed">
-                        {item.desc}
-                      </CardContent>
-                    </Card>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <Separator className="bg-white/10" />
-
-        {/* CTA Section */}
-        <section
-          className={`relative flex flex-col items-center justify-center text-center py-28 gap-6 overflow-hidden transition-all duration-300 ${
-            isScrolled ? "bg-black/20 backdrop-blur-sm" : ""
-          }`}
-        >
-          <div className="absolute inset-0 bg-linear-to-b from-neutral-900/0 via-black/20 to-black/50 pointer-events-none" />
-          <div className="section-animate flex flex-col items-center gap-6 z-10 glassmorphic p-12 rounded-3xl mx-4 max-w-3xl">
-            <h2 className="text-4xl font-bold text-white drop-shadow-md">
-              Ready to work <span className="text-orange-600">together?</span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
+              Ready to work <span className="gold-text">together?</span>
             </h2>
-            <p className="text-neutral-200 max-w-md text-sm">
-              Let&apos;s build something amazing. Reach out and let&apos;s discuss your
-              project.
+            <p className="text-neutral-400 max-w-sm text-sm leading-relaxed">
+              Let&apos;s build something amazing. Reach out and let&apos;s
+              discuss your project, idea, or collaboration.
             </p>
-            <Button
-              asChild
-              size="lg"
-              className="bg-white text-black hover:bg-neutral-200 gap-2 shadow-xl mt-4"
-            >
-              <Link href="/contact">
-                Get In Touch <ArrowRight className="w-4 h-4" />
+            {/* CTA buttons — stacked on mobile, inline from sm up */}
+            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 justify-center mt-2 w-full sm:w-auto">
+              <Button
+                asChild
+                size="lg"
+                className="w-full sm:w-auto bg-amber-500 hover:bg-amber-400 text-black font-semibold gap-2 shadow-lg shadow-amber-500/20"
+              >
+                <Link href="/contact">
+                  Get In Touch <ArrowRight className="w-4 h-4" />
+                </Link>
+              </Button>
+              {/* Plain Links — avoid CVA outline/ghost hover:text-accent-foreground conflict */}
+              <Link
+                href="/services"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 h-10 px-6 rounded-md text-sm font-medium border border-amber-500/45 text-amber-400 hover:text-amber-300 hover:bg-amber-500/14 hover:border-amber-500/70 transition-colors duration-200"
+              >
+                <Tag className="w-4 h-4" /> See Pricing
               </Link>
-            </Button>
+              <Link
+                href="/projects/posts"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 h-10 px-6 rounded-md text-sm font-medium text-amber-500/80 hover:text-amber-400 hover:bg-amber-500/8 transition-colors duration-200"
+              >
+                View Work <Sparkles className="w-4 h-4" />
+              </Link>
+            </div>
           </div>
         </section>
       </div>

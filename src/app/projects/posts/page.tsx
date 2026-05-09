@@ -1,18 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardFooter,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Share2, Sparkles } from "lucide-react";
-import { motion } from "framer-motion";
-import { isLowEndAndroidDevice } from "@/lib/device-performance";
+import Image, { StaticImageData } from "next/image";
+import { Palette } from "lucide-react";
 import axel1 from "@/assets/Axela Post1.png";
 import newyear from "@/assets/New Year post.png";
 import tpsl from "@/assets/tpsl.jpg";
@@ -26,259 +15,276 @@ import rvt2 from "@/assets/Diagram Board.png";
 import sen1 from "@/assets/sinhala aurudu flyer.png";
 import sen2 from "@/assets/Toyota oil copy.png";
 import sen3 from "@/assets/fs.png";
-
-
-
-
+import brakePost from "@/assets/Brake-post.png";
+import boardImg from "@/assets/Board 1.png";
+import teeImg from "@/assets/!st Tee updated b.png";
 
 interface Post {
   id: number;
   title: string;
   client: string;
-  description: string;
-  image: string;
+  image: StaticImageData;
   tags: string[];
 }
 
-const POSTS_DATA: Post[] = [
+const POSTS: Post[] = [
   {
     id: 1,
-    title: "Sena Excellent Service Advertisment Flyer",
+    title: "Advertisement Flyer",
     client: "Sena Excellent Service",
-    description: "Designed a high-conversion Instagram ad campaign featuring ",
-    image: "/uploads/posts/1774085333441-cut-and-polish-2.png",
+    image: sen3,
     tags: ["Photoshop", "Ad Design"],
   },
   {
     id: 2,
     title: "Ultimate Car Care Flyer",
     client: "Sena Excellent Service",
-    description: "Designed a vibrant and attention-grabbing flyer for Ultimate Car Care, focusing on clarity, brand identity, and visual appeal. The layout highlights key services, promotions,  combining modern typography with dynamic imagery to attract car owners and enhance customer engagement.",
-    image: "/uploads/posts/1774085602351-ultimate-car-care.png",
-    tags: ["Illustrator", "Social Media", "Photoshop"],
+    image: sen2,
+    tags: ["Illustrator", "Photoshop"],
   },
   {
     id: 3,
-    title: "Multiple Auto Part brand Order flyers",
-    client: "JS Auto Parts",
-    description: "Created two distinct order flyers for JS Auto Parts, each tailored to a specific product line. The first flyer features a sleek design with bold typography and high-quality images to promote the latest car accessories, while the second flyer adopts a more technical layout with detailed product specifications and clear calls-to-action, effectively targeting both casual buyers and automotive enthusiasts.",
-    image: js2.src,
-    tags: ["Brand Identity", "Layout Design", "Photoshop"],
+    title: "Sinhala New Year Flyer",
+    client: "Sena Excellent Service",
+    image: sen1,
+    tags: ["Photoshop", "Seasonal"],
   },
   {
     id: 4,
-    title: "1D Auto Parts Promotional Flyer",
-    client: "JS Auto Parts",
-    description: "Created a promotional flyer for 1D Auto Parts, highlighting their latest products and special offers.",
-    image: js1.src,
-    tags: ["Brand Identity", "Layout Design", "Photoshop"],
-  },
-    {
-    id: 5,
-    title: "Vehicle Rental Service Flyer",
+    title: "Vehicle Rental Flyer",
     client: "JT Car Rentals",
-    description: "Designed a compelling flyer for JT Car Rentals, showcasing their diverse fleet and competitive pricing. The flyer features a clean layout with vibrant imagery of the vehicles, clear pricing information, and strong calls-to-action to encourage bookings.",
-    image: axel1.src,
-    tags: ["Brand Identity", "Photoshop", "Ad Design"],
+    image: axel1,
+    tags: ["Brand Identity", "Ad Design"],
   },
-    {
-    id: 6,
+  {
+    id: 5,
     title: "New Year Wishes Post",
     client: "JT Car Rentals",
-    description: "Created a festive New Year Wishes social media post for JT Car Rentals, incorporating celebratory graphics and a warm message to engage their audience and promote brand goodwill during the holiday season.",
-    image: newyear.src,
-    tags: ["Social Media", "Photoshop", "Ad Design"],
+    image: newyear,
+    tags: ["Social Media", "Photoshop"],
   },
-    {
+  {
+    id: 6,
+    title: "Multiple Auto Part Flyers",
+    client: "JS Auto Parts",
+    image: js2,
+    tags: ["Layout Design", "Photoshop"],
+  },
+  {
     id: 7,
-    title: "Laptop Promotional Flyer",
-    client: "Laptronics Lanka",
-    description: "Designed a sleek promotional flyer for Laptronics Lanka, featuring their latest laptop models. The flyer emphasizes key features, competitive pricing, and includes high-quality images to attract tech-savvy customers and drive sales.",
-    image: lp1.src,
-    tags: ["Brand Identity", "Photoshop", "Ad Design"],
+    title: "Promotional Flyer",
+    client: "JS Auto Parts",
+    image: js1,
+    tags: ["Brand Identity", "Photoshop"],
   },
   {
     id: 8,
-    title: "Laptop Promotional Flyer-II",
+    title: "Laptop Promo Flyer I",
     client: "Laptronics Lanka",
-    description: "Created a second promotional flyer for Laptronics Lanka, highlighting different laptop models and special offers.",
-    image: lp2.src,
-    tags: ["Brand Identity", "Photoshop", "Ad Design"],
+    image: lp1,
+    tags: ["Ad Design", "Photoshop"],
   },
-    {
+  {
     id: 9,
-    title: "Service Card Design for Vehicle Maintenance",
-    client: "RevTech PVT LTD",
-    description: "Designed a service card for RevTech PVT LTD, featuring a clean and professional layout that includes essential information about vehicle maintenance services, contact details, and branding elements to enhance customer engagement and promote the company's offerings effectively.",
-    image: rvt1.src,
-    tags: ["Photoshop", "Service Design", "Brand Identity"],
+    title: "Laptop Promo Flyer II",
+    client: "Laptronics Lanka",
+    image: lp2,
+    tags: ["Ad Design", "Photoshop"],
   },
-    {
+  {
     id: 10,
-    title: "Vehicle Maintenance Diagram Board",
+    title: "Service Card Design",
     client: "RevTech PVT LTD",
-    description: "Created an informative diagram board for RevTech PVT LTD, illustrating the vehicle maintenance process with clear visuals and step-by-step instructions.",
-    image: rvt2.src,
-    tags: ["Photoshop", "Service Design", "Brand Identity"],
+    image: rvt1,
+    tags: ["Service Design", "Brand Identity"],
   },
-    {
+  {
     id: 11,
-    title: " Unwind in Sri lanka travel flyer",
-    client: "Travelpedia UK",
-    description: "Designed a captivating travel flyer for Travelpedia UK, showcasing the serene beauty of Sri Lanka. The flyer features stunning visuals of iconic destinations, vibrant colors, and compelling copy to entice travelers to explore the rich culture and natural wonders of Sri Lanka.",
-    image: tpsl.src,
-    tags: ["Photoshop", "Travel Design", "Brand Identity"],
+    title: "Maintenance Diagram Board",
+    client: "RevTech PVT LTD",
+    image: rvt2,
+    tags: ["Photoshop", "Brand Identity"],
   },
-
-    {
+  {
     id: 12,
+    title: "Unwind in Sri Lanka — Travel Flyer",
+    client: "Travelpedia UK",
+    image: tpsl,
+    tags: ["Travel Design", "Photoshop"],
+  },
+  {
+    id: 13,
     title: "Prague Travel Flyer",
     client: "Travelpedia UK",
-    description: "Designed a vibrant travel flyer for Travelpedia UK, highlighting the charm and attractions of Prague. The flyer features captivating imagery, detailed information about accommodations and activities, and persuasive copy to inspire travelers to visit this enchanting city.",
-    image: tppg.src,
-    tags: ["Photoshop", "Travel Design", "Brand Identity"],
-  },
-      {
-    id: 13,
-    title: "Sinhala New Year Flyer",
-    client: "Sena Excellent Service",
-    description: "Designed a festive Sinhala New Year flyer for Sena Excellent Service, incorporating traditional elements and vibrant colors to celebrate the occasion and promote the company's services during the holiday season.",
-    image: sen1.src,
-    tags: ["Photoshop", "New Year", "Ad Design"],
+    image: tppg,
+    tags: ["Travel Design", "Photoshop"],
   },
   {
     id: 14,
-    title: "Toyota Oil Change Service Flyer",
+    title: "Brake Service Post",
     client: "Sena Excellent Service",
-    description: "Designed a promotional flyer for Toyota Oil Change Service, highlighting the benefits of regular oil changes and the quality of service provided.",
-    image: sen2.src,
-    tags: ["Photoshop", "Service Design", "Brand Identity"],
+    image: brakePost,
+    tags: ["Social Media", "Ad Design"],
   },
   {
     id: 15,
-    title: "Full Service Car Wash Board",
+    title: "Workshop Board Design",
     client: "Sena Excellent Service",
-    description: "Designed a promotional board design for Full Service Car Wash, highlighting the range of services offered and the quality of cleaning provided.",
-    image: sen3.src,
-    tags: ["Photoshop", "Service Design", "Brand Identity"],
+    image: boardImg,
+    tags: ["Brand Identity", "Print"],
+  },
+  {
+    id: 16,
+    title: "T-Shirt Design",
+    client: "Personal",
+    image: teeImg,
+    tags: ["Apparel", "Illustrator"],
   },
 ];
 
-
 export default function SocialMediaWork() {
-  const [socialPosts] = useState<Post[]>(POSTS_DATA);
-  const [isLowEndAndroid, setIsLowEndAndroid] = useState(false);
-
-  useEffect(() => {
-    setIsLowEndAndroid(isLowEndAndroidDevice());
-  }, []);
-
-  const headerVariants = {
-    hidden: isLowEndAndroid ? { opacity: 0 } : { opacity: 0, y: -50 },
-    visible: isLowEndAndroid
-      ? { opacity: 1, transition: { duration: 0.25, ease: "linear" as const } }
-      : { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" as const } },
-  };
-
-  const cardVariants = {
-    hidden: isLowEndAndroid ? { opacity: 0 } : { opacity: 0, y: 50, scale: 0.95 },
-    visible: isLowEndAndroid
-      ? { opacity: 1, transition: { duration: 0.2, ease: "linear" as const } }
-      : { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: "easeOut" as const } },
-  };
-
   return (
     <>
-      <div className="relative z-10 min-h-screen px-6 py-32 max-w-7xl mx-auto">
-        <motion.div
-          variants={headerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: isLowEndAndroid ? 0.1 : 0.8 }}
-          className="text-center mb-20"
-        >
-          <div className="mb-4">
-            <div className="mx-auto inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-neutral-200/65">
-              <span className="h-px w-8 bg-white/25" />
-              <Sparkles className="w-3.5 h-3.5 text-yellow-300" />
-              <span>Visual Storytelling</span>
-              <span className="h-px w-8 bg-white/25" />
+      <style>{`
+        @keyframes fadeUp {
+          from { opacity: 0; transform: translateY(22px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes gradientShift {
+          0%,100% { background-position: 0% 50%; }
+          50%      { background-position: 100% 50%; }
+        }
+
+        .pp-title { animation: fadeUp 0.65s ease-out 0.05s both; }
+        .pp-grid  { animation: fadeUp 0.65s ease-out 0.18s both; }
+
+        .gold-text {
+          background: linear-gradient(120deg,#f59e0b,#fcd34d,#d97706);
+          background-size: 200% auto;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          animation: gradientShift 4s ease infinite;
+        }
+
+        /* Post card */
+        .post-card {
+          background: rgba(255,255,255,0.04);
+          border: 1px solid rgba(255,255,255,0.09);
+          border-radius: 16px;
+          overflow: hidden;
+          transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+        }
+        .post-card:hover {
+          border-color: rgba(255,255,255,0.22);
+          transform: translateY(-4px);
+          box-shadow: 0 20px 40px rgba(0,0,0,0.45);
+        }
+
+        /* Image overlay */
+        .post-img-wrap { position: relative; overflow: hidden; }
+        .post-overlay {
+          position: absolute; inset: 0;
+          background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.15) 50%, transparent 100%);
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+        .post-card:hover .post-overlay { opacity: 1; }
+        .post-card:hover .post-img { transform: scale(1.05); }
+        .post-img {
+          transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        /* Tags */
+        .tag-pill {
+          display: inline-block;
+          padding: 3px 10px;
+          border-radius: 999px;
+          font-size: 11px;
+          font-weight: 500;
+          color: rgba(200,200,200,0.8);
+          background: rgba(255,255,255,0.06);
+          border: 1px solid rgba(255,255,255,0.11);
+        }
+
+        .section-label {
+          display: inline-flex; align-items: center; gap: 10px;
+          font-size: 11px; font-weight: 600;
+          letter-spacing: 0.22em; text-transform: uppercase;
+          color: rgba(212,212,212,0.55);
+        }
+        .section-label .ln {
+          display: block; width: 26px; height: 1px;
+          background: rgba(255,255,255,0.22);
+        }
+      `}</style>
+
+      <div className="relative z-10 min-h-screen py-28 px-5 md:px-10">
+        <div className="max-w-6xl mx-auto flex flex-col gap-14">
+          {/* ── Header ── */}
+          <div className="pp-title flex flex-col gap-4 text-center">
+            <div className="flex justify-center">
+              <span className="section-label">
+                <span className="ln" />
+                <Palette className="w-3.5 h-3.5 text-amber-400" />
+                Visual Storytelling
+                <span className="ln" />
+              </span>
+            </div>
+            <h1 className="text-5xl md:text-6xl font-extrabold text-white tracking-tight">
+              Post <span className="gold-text">Designs</span>
+            </h1>
+            <p className="text-neutral-400 text-base max-w-lg mx-auto leading-relaxed">
+              A curated gallery of social media posts, flyers, and brand
+              creatives crafted for real clients.
+            </p>
+            <div className="flex justify-center gap-4 text-xs text-neutral-500 font-medium">
+              <span>{POSTS.length} projects</span>
+              <span>·</span>
+              <span>Graphic Design</span>
+              <span>·</span>
+              <span>Branding</span>
             </div>
           </div>
-          <h1 className="flex flex-col gap-y-2 title-animate text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight drop-shadow-2xl">
-            <span className="text-white">Social Media</span>
-            <span className="text-transparent bg-clip-text bg-linear-to-r from-pink-500 via-purple-400 to-indigo-500 animate-pulse pb-2">
-              Posts & Designes
-            </span>
-          </h1>
-          <p className="text-neutral-300 text-lg md:text-xl max-w-2xl mx-auto drop-shadow-sm mt-4">
-            A curated gallery of my graphic design work. Show some love with the heart!
-          </p>
-        </motion.div>
 
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-          {socialPosts.map((post) => {
-            return (
-            <motion.div
-              key={post.id}
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: isLowEndAndroid ? 0.05 : 0.2 }}
-              whileHover={isLowEndAndroid ? undefined : { y: -10 }}
-              className="h-full"
-            >
-              <Card className="h-full rounded-2xl shadow-2xl transition-all duration-300 backdrop-blur-xl bg-black/40 border-white/10 hover:border-white/30 overflow-hidden relative group flex flex-col">
-                <div className="relative overflow-hidden aspect-square bg-black/20">
-                  <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10" />
-                  <img
+          {/* ── Grid ── */}
+          <div className="pp-grid grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {POSTS.map((post) => (
+              <div key={post.id} className="post-card group">
+                {/* Image */}
+                <div className="post-img-wrap aspect-square bg-neutral-950">
+                  <Image
                     src={post.image}
                     alt={post.title}
-                    className={`w-full h-full object-contain p-2 transform transition-transform duration-700 ease-in-out ${
-                      isLowEndAndroid ? "" : "group-hover:scale-110"
-                    }`}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="post-img object-contain p-1"
                   />
-                  <div className="absolute top-4 right-4 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform -translate-y-2.5 group-hover:translate-y-0">
-                    <button className="p-2 rounded-full bg-black/50 text-white hover:bg-blue-500 backdrop-blur-md transition-colors">
-                      <Share2 className="w-4 h-4" />
-                    </button>
-                  </div>
+                  {/* hover gradient overlay */}
+                  <div className="post-overlay" />
                 </div>
 
-                <CardHeader className="relative z-10 pt-6">
-                  <div className="flex justify-between items-start gap-4">
-                    <div>
-                      <CardTitle className="text-2xl text-white drop-shadow-sm group-hover:text-purple-300 transition-colors">
-                        {post.title}
-                      </CardTitle>
-                      <CardDescription className="text-neutral-400 font-medium mt-1">
-                        Client: <span className="text-neutral-200">{post.client}</span>
-                      </CardDescription>
-                    </div>
+                {/* Info */}
+                <div className="p-4 flex flex-col gap-2.5">
+                  <div>
+                    <h3 className="text-white text-sm font-semibold leading-snug group-hover:text-amber-400 transition-colors duration-200">
+                      {post.title}
+                    </h3>
+                    <p className="text-neutral-500 text-xs mt-0.5">
+                      {post.client}
+                    </p>
                   </div>
-                </CardHeader>
-
-                <CardContent className="relative z-10 grow">
-                  <p className="text-sm text-neutral-300 leading-relaxed mb-6">
-                    {post.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {post.tags.map((tag, i) => (
-                      <Badge
-                        key={i}
-                        variant="outline"
-                        className="rounded-full bg-white/5 border-white/10 text-neutral-200 hover:bg-purple-500/20 hover:text-purple-200 hover:border-purple-500/50 transition-all"
-                      >
-                        {tag}
-                      </Badge>
+                  <div className="flex flex-wrap gap-1.5">
+                    {post.tags.map((t) => (
+                      <span key={t} className="tag-pill">
+                        {t}
+                      </span>
                     ))}
                   </div>
-                </CardContent>
-
-
-              </Card>
-            </motion.div>
-          )})}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </>
