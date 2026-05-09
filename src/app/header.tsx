@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { Menu, X, FileText } from "lucide-react";
+import { Menu, X, FileText, ChevronDown } from "lucide-react";
 
 interface NavItem {
   label: string;
@@ -26,6 +26,7 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [portfolioOpen, setPortfolioOpen] = useState(false);
 
   /* ── Scroll handler — clamp to ≥0 so iOS rubber-band can't flicker the header ── */
   useEffect(() => {
@@ -224,7 +225,7 @@ export default function Header() {
               Timesh Dillon
             </Link>
 
-            {/* Desktop nav — flat direct links, no dropdowns */}
+            {/* Desktop nav */}
             <nav
               className="hidden md:flex items-center gap-0.5"
               aria-label="Main navigation"
@@ -243,6 +244,38 @@ export default function Header() {
                   {item.label}
                 </Link>
               ))}
+
+              {/* Portfolio dropdown */}
+              <div className="hdr-dd">
+                <button
+                  className={cn(
+                    "px-3.5 py-2 text-sm font-medium rounded-full transition-colors duration-200 flex items-center gap-1.5",
+                    isActive("/projects")
+                      ? "text-white bg-white/12"
+                      : "text-neutral-300 hover:text-white hover:bg-white/8",
+                  )}
+                  aria-expanded="false"
+                >
+                  Portfolio
+                  <ChevronDown className="w-3.5 h-3.5" />
+                </button>
+                <div className="hdr-dd-panel">
+                  <div className="bg-black/90 backdrop-blur-xl border border-white/12 rounded-2xl shadow-xl overflow-hidden">
+                    <Link
+                      href="/projects/posts"
+                      className="block px-4 py-3 text-sm font-medium text-neutral-300 hover:text-white hover:bg-white/8 transition-colors duration-150"
+                    >
+                      Social Media Posts
+                    </Link>
+                    <Link
+                      href="/projects/videos"
+                      className="block px-4 py-3 text-sm font-medium text-neutral-300 hover:text-white hover:bg-white/8 transition-colors duration-150 border-t border-white/8"
+                    >
+                      Video Edits
+                    </Link>
+                  </div>
+                </div>
+              </div>
             </nav>
 
             {/* Right: Resume button + hamburger */}
@@ -293,7 +326,7 @@ export default function Header() {
               style={{ paddingTop: "6px" }}
             >
               <div className="flex flex-col gap-0.5 pt-1">
-                {/* Flat mobile links — no accordion */}
+                {/* Mobile links */}
                 {navItems.map((item) => (
                   <Link
                     key={item.label}
@@ -311,6 +344,37 @@ export default function Header() {
                     )}
                   </Link>
                 ))}
+
+                {/* Portfolio accordion */}
+                <button
+                  onClick={() => setPortfolioOpen(!portfolioOpen)}
+                  className={cn(
+                    "flex items-center justify-between px-4 py-3.5 text-[15px] font-medium rounded-2xl transition-colors duration-150",
+                    portfolioOpen
+                      ? "text-white bg-white/10"
+                      : "text-neutral-300 hover:text-white active:bg-white/10 hover:bg-white/7",
+                  )}
+                >
+                  Portfolio
+                  <ChevronDown
+                    className="w-4 h-4 ml-auto transition-transform duration-200"
+                    style={{ transform: portfolioOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+                  />
+                </button>
+                <div className={cn("mob-sub", portfolioOpen && "is-open")}>
+                  <Link
+                    href="/projects/posts"
+                    className="flex items-center px-8 py-3 text-[15px] font-medium text-neutral-300 hover:text-white hover:bg-white/8 active:bg-white/10 transition-colors duration-150"
+                  >
+                    Social Media Posts
+                  </Link>
+                  <Link
+                    href="/projects/videos"
+                    className="flex items-center px-8 py-3 text-[15px] font-medium text-neutral-300 hover:text-white hover:bg-white/8 active:bg-white/10 transition-colors duration-150"
+                  >
+                    Video Edits
+                  </Link>
+                </div>
 
                 {/* Resume row */}
                 <Link
