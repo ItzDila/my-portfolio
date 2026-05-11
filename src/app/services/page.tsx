@@ -15,7 +15,7 @@ import Link from "next/link";
 const services = [
   {
     title: "Social Media Posts",
-    price: "Rs. 1,500",
+    price: "Rs. 1,800",
     unit: "Starting price per design",
     description:
       "High-impact social media creatives, posters, carousels, and product mockups tailored to your brand identity.",
@@ -32,7 +32,7 @@ const services = [
   },
   {
     title: "Video Editing",
-    price: "Rs. 2,000",
+    price: "Rs. 2,500",
     unit: "Starting price per video",
     description:
       "High-retention video edits for Reels, TikToks, and YouTube — with smooth transitions, captions, and effects.",
@@ -49,7 +49,7 @@ const services = [
   },
   {
     title: "Audio Mixing",
-    price: "Rs. 1,200",
+    price: "Rs. 1,500",
     unit: "Starting price per track",
     description:
       "Professional audio post-production for podcasts, reels, and ads — clean, balanced, and broadcast-ready.",
@@ -75,10 +75,13 @@ const services = [
     iconBg: "bg-amber-500/15 border-amber-500/25",
     popular: true,
     features: [
-      "15 Social Media Posts",
-      "8 Short-form Videos (Reels/TikTok)",
+      "25 Social Media Posts",
+      "10 Short-form Videos (Reels/TikTok)",
+      "Content Creation & Support",
+      "Monthly Strategy Consultation of Content",
+      "Social Media Content Boost",
       "Priority 24/7 Support",
-      "Monthly Strategy Consultation",
+
     ],
   },
 ];
