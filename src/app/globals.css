@@ -139,10 +139,12 @@ html,
 body {
     width: 100%;
     max-width: 100%;
+    height: 100%;
     overflow-x: clip;
     overflow-y: auto;
     overscroll-behavior-x: none;
-    overscroll-behavior-y: auto;
+    /* prevent overscroll/bounce on mobile browsers */
+    overscroll-behavior-y: none;
     -webkit-overflow-scrolling: touch;
 }
 
@@ -189,6 +191,8 @@ label {
     body {
         scrollbar-gutter: auto;
         touch-action: pan-y;
+        /* ensure mobile uses contained overscroll behavior */
+        overscroll-behavior: none;
     }
 
     h1 {
