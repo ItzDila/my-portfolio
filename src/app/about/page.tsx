@@ -26,7 +26,7 @@ import {
 } from "lucide-react";
 
 // ── Profile photo ──
-import pfpImage from "@/assets/pfp.jpg";
+import pfpImage from "../../assets/pfp.png";
 
 // ── Post design images ──
 import axel1 from "@/assets/Axela Post1.png";

@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 
 // Profile picture
-import pfpImage from "@/assets/pfp.jpg";
+import pfpImage from "../assets/pfp.png";
 
 // Work showcase images
 import tpslImage from "@/assets/tpsl.jpg";

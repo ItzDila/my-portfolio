@@ -5,7 +5,7 @@ import jsPDF from "jspdf";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Mail, MapPin, Phone, Globe, Github } from "lucide-react";
-import profilePhoto from "@/assets/pfp.png";
+import profilePhoto from "../../assets/pfp.png";
 
 const skills = [
   "Adobe Photoshop",

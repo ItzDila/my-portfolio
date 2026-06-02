@@ -15,7 +15,7 @@ import {
   Code,
   Film,
 } from "lucide-react";
-import pfpImage from "@/assets/pfp.jpg";
+import pfpImage from "../../assets/pfp.png";
 
 const EMAIL = "ktimeshdilan007@gmail.com";
 
