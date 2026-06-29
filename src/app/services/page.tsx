@@ -9,13 +9,15 @@ import {
   Sparkles,
   Music2,
   Mail,
+  Clapperboard,
 } from "lucide-react";
 import Link from "next/link";
+import { Brush } from "lucide-react";
 
 const services = [
   {
     title: "Social Media Posts",
-    price: "Rs. 1,800",
+    price: "Rs. 3,800",
     unit: "Starting price per design",
     description:
       "High-impact social media creatives, posters, carousels, and product mockups tailored to your brand identity.",
@@ -31,8 +33,25 @@ const services = [
     ],
   },
   {
+  title: "Motion Design Flyers",
+  price: "Rs. 6,500",
+  unit: "Starting price per design",
+  description:
+    "Eye-catching animated social media flyers and promotional motion graphics designed to boost engagement and showcase your brand.",
+  icon: Clapperboard,
+  iconColor: "text-pink-400",
+  iconBg: "bg-pink-500/15 border-pink-500/25",
+  popular: false,
+  features: [
+    "Custom animated motion graphics",
+    "Brand color & typography matching",
+    "HD/Full HD video export",
+    "2 rounds of revisions",
+  ],
+},
+  {
     title: "Video Editing",
-    price: "Rs. 2,500",
+    price: "Rs. 5,000",
     unit: "Starting price per video",
     description:
       "High-retention video edits for Reels, TikToks, and YouTube — with smooth transitions, captions, and effects.",
@@ -49,7 +68,7 @@ const services = [
   },
   {
     title: "Audio Mixing",
-    price: "Rs. 1,500",
+    price: "Rs. 2,500",
     unit: "Starting price per track",
     description:
       "Professional audio post-production for podcasts, reels, and ads — clean, balanced, and broadcast-ready.",
@@ -65,8 +84,27 @@ const services = [
     ],
   },
   {
+  title: "Starter Branding",
+  price: "Rs. 50,000",
+  unit: "Starting package",
+  description:
+    "Complete starter branding solution for new businesses, including logo design, social media branding kit, and signage design to establish a strong brand identity.",
+  icon: Brush,
+  iconColor: "text-blue-400",
+  iconBg: "bg-blue-500/15 border-blue-500/25",
+  popular: true,
+  features: [
+    "Custom logo design (2 concepts)",
+    "Social media banner set (5 designs)",
+    "Business signboard design",
+    "Brand color & typography guide",
+    "2 rounds of revisions",
+    "High-resolution source files included",
+  ],
+},
+  {
     title: "Monthly Retainer",
-    price: "Rs. 100,000",
+    price: "Rs. 150,000",
     unit: "Per month — all-inclusive",
     description:
       "The complete package for brands needing consistent, high-quality content every month with priority support.",
@@ -186,13 +224,13 @@ export default function Services() {
           </div>
 
           {/* ── Pricing Cards ── */}
-          <div className="s-f2 grid sm:grid-cols-2 lg:grid-cols-4 gap-5 items-stretch">
+          <div className="s-f2 mx-auto grid w-full max-w-5xl grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 items-stretch justify-items-center">
             {services.map((svc) => {
               const Icon = svc.icon;
               return (
                 <div
                   key={svc.title}
-                  className={`s-card svc-card${svc.popular ? " popular" : ""} relative`}
+                  className={`s-card svc-card${svc.popular ? " popular" : ""} relative h-full w-full max-w-[360px]`}
                 >
                   {/* Popular top accent bar */}
                   {svc.popular && (
@@ -206,7 +244,7 @@ export default function Services() {
                     </div>
                   )}
 
-                  <div className="p-6 flex flex-col gap-5 grow">
+                  <div className="p-6 flex h-full min-h-[420px] flex-col gap-5">
                     {/* Icon + Title */}
                     <div className="flex flex-col gap-3">
                       <div
@@ -258,7 +296,7 @@ export default function Services() {
                     {/* CTA button */}
                     <Link
                       href="/contact"
-                      className={`mt-4 w-full py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 text-sm font-semibold transition-all duration-200 ${
+                      className={`mt-auto w-full py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 text-sm font-semibold transition-all duration-200 ${
                         svc.popular
                           ? "bg-amber-500 hover:bg-amber-400 text-black shadow-lg shadow-amber-500/20"
                           : "bg-white/8 hover:bg-white/15 text-white border border-white/10 hover:border-white/25"

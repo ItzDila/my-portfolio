@@ -61,6 +61,13 @@ export default function LoadingScreen() {
         .ls-dot { animation: ls-dot 1.2s ease-in-out infinite; }
         .ls-dot:nth-child(2) { animation-delay: .18s; }
         .ls-dot:nth-child(3) { animation-delay: .36s; }
+        .ls-bg-orb {
+          position: absolute;
+          border-radius: 9999px;
+          filter: blur(72px);
+          opacity: 0.85;
+          pointer-events: none;
+        }
       `}</style>
 
       <div
@@ -69,7 +76,7 @@ export default function LoadingScreen() {
           position: "fixed",
           inset: 0,
           zIndex: 9999,
-          background: "#060606",
+          background: "linear-gradient(180deg, #050505 0%, #090909 45%, #111111 100%)",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -86,6 +93,50 @@ export default function LoadingScreen() {
           paddingRight: "env(safe-area-inset-right)",
         }}
       >
+        <div
+          className="ls-bg-orb"
+          style={{
+            top: "12%",
+            left: "-10%",
+            width: "clamp(220px, 30vw, 420px)",
+            height: "clamp(220px, 30vw, 420px)",
+            background:
+              "radial-gradient(circle, rgba(251,191,36,0.34) 0%, rgba(251,191,36,0.14) 36%, transparent 70%)",
+          }}
+        />
+        <div
+          className="ls-bg-orb"
+          style={{
+            right: "-12%",
+            bottom: "-10%",
+            width: "clamp(260px, 36vw, 520px)",
+            height: "clamp(260px, 36vw, 520px)",
+            background:
+              "radial-gradient(circle, rgba(146,64,14,0.28) 0%, rgba(251,191,36,0.08) 28%, transparent 72%)",
+          }}
+        />
+        <div
+          className="ls-bg-orb"
+          style={{
+            left: "42%",
+            top: "48%",
+            width: "clamp(140px, 20vw, 280px)",
+            height: "clamp(140px, 20vw, 280px)",
+            background:
+              "radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(251,191,36,0.06) 35%, transparent 72%)",
+          }}
+        />
+
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background:
+              "linear-gradient(135deg, rgba(251,191,36,0.06) 0%, transparent 28%, transparent 72%, rgba(251,191,36,0.05) 100%)",
+            pointerEvents: "none",
+          }}
+        />
+
         {/* ── Brand mark ── */}
         <div
           style={{
